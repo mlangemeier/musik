@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎵 MUSIK 2.4</title>
+    <title>🎵 MUSIK 3.0</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -36,12 +36,20 @@
             -webkit-font-smoothing: antialiased; transition: background-color 0.3s ease, color 0.3s ease; 
         }
         
-        .app-container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
-        .app-header { margin-bottom: 2rem; }
+        .app-container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-header { flex-shrink: 0; margin-bottom: 1.5rem; }
         
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .app-header h1 { 
-            font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; 
+            font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; 
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
             display: flex; align-items: center; gap: 1rem;
@@ -56,45 +64,42 @@
         }
         .version-badge:hover { transform: scale(1.05); background: var(--accent-hover); }
 
-        .add-form { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
-        .add-form input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); padding: 0.8rem 1.2rem; border-radius: var(--radius); font-size: 1rem; transition: var(--transition); }
+        .add-form { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+        .add-form input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); padding: 0.7rem 1rem; border-radius: var(--radius); font-size: 0.95rem; transition: var(--transition); }
         .add-form input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2); }
         
-        .toolbar { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+        .toolbar { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 0.75rem; }
         .search-box { display: flex; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 0 1rem; flex: 1; min-width: 200px; }
-        .search-box input { background: transparent; border: none; color: var(--text-primary); padding: 0.6rem; width: 100%; outline: none; }
+        .search-box input { background: transparent; border: none; color: var(--text-primary); padding: 0.5rem; width: 100%; outline: none; }
         
         .filter-wrapper { display: flex; align-items: center; gap: 0.5rem; }
         .filter-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
         
-        select, .btn-secondary, .btn-primary { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.6rem 1rem; border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition); font-family: inherit; }
+        select, .btn-secondary, .btn-primary { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 0.9rem; border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition); font-family: inherit; }
         select:hover, .btn-secondary:hover { background: var(--bg-hover); color: var(--text-primary); }
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
         .btn-primary:hover { background: var(--accent-hover); }
         
         .stickers-bar { 
             display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; 
-            padding: 0.75rem; background: var(--bg-secondary); 
+            padding: 0.6rem; background: var(--bg-secondary); 
             border: 1px solid var(--border); border-radius: var(--radius);
-            margin-bottom: 2rem;
         }
-        .stickers-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; margin-right: 0.5rem; }
+        .stickers-label { color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; margin-right: 0.5rem; }
         
         .sticker-filter {
             background: var(--bg-card); border: 2px solid var(--border); border-radius: 20px;
-            padding: 0.4rem 0.8rem; cursor: pointer; transition: var(--transition);
-            display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600;
+            padding: 0.35rem 0.7rem; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 600;
             color: var(--text-secondary); position: relative;
         }
         .sticker-filter:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
         .sticker-filter.active { background: var(--accent); border-color: var(--accent); color: white; }
-        .sticker-filter .sticker-icon { font-size: 1rem; }
+        .sticker-filter .sticker-icon { font-size: 0.95rem; }
         
         .sub-menu {
             position: absolute;
             top: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -104,13 +109,18 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             z-index: 100;
             min-width: max-content;
+            left: 50%;
+            transform: translateX(-50%);
         }
+        .sub-menu.align-left { left: 0; transform: none; }
+        .sub-menu.align-right { left: auto; right: 0; transform: none; }
+        
         .sub-menu-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
-            padding: 0.5rem 0.75rem;
+            padding: 0.4rem 0.6rem;
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
@@ -120,49 +130,202 @@
         }
         .sub-menu-item:hover { background: var(--bg-hover); color: var(--text-primary); }
         .sub-menu-item.active { background: var(--accent); color: white; border-color: var(--accent-hover); }
-        .sub-menu-item .sub-icon { font-size: 1.3rem; }
-        
-        .library-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
-        .library-header h2 { font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; margin: 0; }
-        .count { color: var(--text-secondary); font-weight: normal; font-size: 1.1rem; }
-        
+        .sub-menu-item .sub-icon { font-size: 1.2rem; }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .column-header {
+            flex-shrink: 0;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+        }
+
+        .column-header h2 {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .count { color: var(--text-secondary); font-weight: normal; font-size: 1rem; }
+
+        .column-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .column-content::-webkit-scrollbar { width: 8px; }
+        .column-content::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 4px; }
+        .column-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .column-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        .playlist-section {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .playlist-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+            align-items: center;
+        }
+
+        .playlist-input {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .playlist-input:focus { outline: none; border-color: var(--accent); }
+
         .btn-play-playlist { 
             background: var(--success); color: white; border: none; 
-            padding: 0.8rem 1.5rem; border-radius: 30px; font-weight: bold; 
-            font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; border-radius: 30px; font-weight: bold; 
+            font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); transition: transform 0.2s;
         }
         .btn-play-playlist:hover { transform: scale(1.05); background: #059669; }
+        
+        .btn-icon-small {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .btn-icon-small:hover { background: var(--bg-hover); color: var(--text-primary); }
 
-        .track-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .playlist-items-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 0.75rem;
+            padding-right: 0.3rem;
+        }
+
+        .playlist-items-container::-webkit-scrollbar { width: 6px; }
+        .playlist-items-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .playlist-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            cursor: move;
+            margin-bottom: 0.4rem;
+        }
+        
+        .playlist-item:hover { background: var(--bg-hover); border-color: var(--accent); }
+        .playlist-item.dragging { opacity: 0.5; border-color: var(--accent); }
+        
+        .playlist-item-number {
+            background: var(--accent);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .playlist-item-info { flex: 1; min-width: 0; }
+        .playlist-item-title { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .playlist-item-artist { font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .playlist-empty { text-align: center; color: var(--text-secondary); padding: 2rem 1rem; font-style: italic; font-size: 0.9rem; }
+
+        .saved-playlists { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+        .saved-playlists-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-secondary); }
+
+        .saved-playlist-item {
+            background: var(--bg-card);
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+            border: 1px solid var(--border);
+        }
+
+        .saved-playlist-info { flex: 1; min-width: 0; }
+        .saved-playlist-name { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .saved-playlist-count { font-size: 0.75rem; color: var(--text-secondary); }
+        .saved-playlist-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+        
+        .track-list { display: flex; flex-direction: column; gap: 0.5rem; }
         
         .track-card { 
             background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); 
-            padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; 
+            padding: 0.9rem; display: flex; justify-content: space-between; align-items: center; 
             transition: var(--transition); box-shadow: var(--card-shadow);
         }
-        .track-card:hover { background: var(--bg-hover); border-color: var(--accent); transform: translateY(-2px); }
-        .track-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 700px; }
-        .track-stickers { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .track-card:hover { background: var(--bg-hover); border-color: var(--accent); transform: translateY(-1px); }
+        .track-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .track-stickers { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
         .sticker-tag { 
-            background: var(--accent); color: white; padding: 2px 8px; border-radius: 12px; 
-            font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;
+            background: var(--accent); color: white; padding: 1px 6px; border-radius: 10px; 
+            font-size: 0.7rem; font-weight: 600; display: inline-flex; align-items: center; gap: 3px;
         }
-        .track-actions { display: flex; gap: 0.5rem; opacity: 0.7; transition: var(--transition); }
+        .track-actions { display: flex; gap: 0.3rem; opacity: 0.7; transition: var(--transition); flex-shrink: 0; }
         .track-card:hover .track-actions { opacity: 1; }
         
-        .btn-icon { background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: var(--transition); font-size: 1.2rem; }
+        .btn-icon { background: transparent; border: none; color: var(--text-secondary); padding: 0.4rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: var(--transition); font-size: 1.1rem; }
         .btn-icon:hover { background: rgba(139, 92, 246, 0.1); color: var(--accent); }
         .btn-play:hover { color: var(--success) !important; } .btn-delete:hover { color: var(--error) !important; }
-        .active-fav { color: #FBBF24 !important; } .active-playlist { color: var(--accent) !important; }
-        .playlist-order { position: absolute; top: -4px; right: -4px; background: var(--accent); color: white; font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .btn-add-playlist:hover { color: var(--accent) !important; }
+        .active-fav { color: #FBBF24 !important; }
         
-        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.75rem; font-weight: 500; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); animation: slideIn 0.3s ease-out forwards; z-index: 1000; }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.8rem 1.2rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.6rem; font-weight: 500; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); animation: slideIn 0.3s ease-out forwards; z-index: 1000; font-size: 0.9rem; }
         .toast-success { background: #064E3B; color: #A7F3D0; border: 1px solid #10B981; }
         .toast-error { background: #7F1D1D; color: #FCA5A5; border: 1px solid #EF4444; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
-        .empty-state { text-align: center; color: var(--text-secondary); padding: 4rem 0; font-size: 1.1rem; }
+        .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1rem; }
         
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
         .modal-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--text-primary); }
@@ -172,29 +335,30 @@
         .btn-close { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.5rem; }
         .btn-close:hover { color: var(--text-primary); }
 
-        .sticker-box { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+        .sticker-box { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
         .sticker-item {
             background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 20px;
-            padding: 0.4rem 0.8rem; cursor: pointer; transition: var(--transition);
-            display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600;
+            padding: 0.3rem 0.6rem; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; font-weight: 600;
             color: var(--text-secondary); position: relative;
         }
         .sticker-item:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
         .sticker-item.active { background: var(--accent); border-color: var(--accent); color: white; }
-        .sticker-item .sticker-icon { font-size: 1rem; }
+        .sticker-item .sticker-icon { font-size: 0.9rem; }
         
         .btn-toggle-stickers { 
             background: transparent; border: none; color: var(--accent); 
-            cursor: pointer; font-size: 0.85rem; margin-top: 0.5rem;
+            cursor: pointer; font-size: 0.8rem; margin-top: 0.3rem;
             text-decoration: underline; padding: 0;
         }
         .btn-toggle-stickers:hover { color: var(--accent-hover); }
 
-        @media (max-width: 768px) { 
-            .track-card { flex-direction: column; align-items: flex-start; gap: 1rem; } 
+        @media (max-width: 900px) { 
+            .main-content { grid-template-columns: 1fr; }
+            .column { min-height: 400px; }
+            .track-card { flex-direction: column; align-items: flex-start; gap: 0.75rem; } 
             .track-actions { width: 100%; justify-content: space-around; opacity: 1; } 
-            .track-title { max-width: 100%; } 
-            .header-top { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .header-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
         }
     </style>
 </head>
@@ -204,26 +368,141 @@
     <script type="text/babel">
         const { useState, useEffect, useContext, createContext, useCallback, useRef } = React;
 
-        //  CORRECTION 1 : Icônes Duo restaurées (👫)
+        // 🌟 DONNÉES PAR DÉFAUT (pré-chargées à l'ouverture)
+        const DEFAULT_TRACKS = [
+            { id: "49ebbfec-bdcc-49c9-8545-088323b5095f", titre: "Fly me to the moon Frank Sinatra", artiste: "kermitlovesmusicVEVO", lien: "https://www.youtube.com/watch?v=u910kj9xYSE", favori: false, stickers: ["old", "single", "eng"] },
+            { id: "0700dd99-61bf-42bc-bd85-ad314a84b5c5", titre: "Ben E. King - Stand By Me", artiste: "Soulful Sounds", lien: "https://www.youtube.com/watch?v=hwZNL7QVJjE", favori: false, stickers: ["old", "eng"] },
+            { id: "5947122b-dd72-417f-856f-6bb73639cb96", titre: "Jamiroquai - Virtual Insanity", artiste: "JamiroquaiVEVO", lien: "https://www.youtube.com/watch?v=4JkIs37a2JE", favori: true, stickers: ["single", "eng"] },
+            { id: "5ad08118-5cd0-4048-a264-e9ad9d5580e0", titre: "Elvis Presley - If I Can Dream", artiste: "ElvisPresleyVEVO", lien: "https://www.youtube.com/watch?v=u-pP_dCenJA", favori: false, stickers: ["eng", "single"] },
+            { id: "58a857e1-0692-45c2-911a-05ff9051d1ef", titre: "Eagles - Hotel California", artiste: "Eagles", lien: "https://www.youtube.com/watch?v=09839DpTctU", favori: false, stickers: ["groupe", "eng", "rock"] },
+            { id: "6d2c9685-04d9-45f6-a5db-81c75fefd23b", titre: "Nirvana - Smells Like Teen Spirit", artiste: "NirvanaVEVO", lien: "https://www.youtube.com/watch?v=R3XIGon2RjY", favori: false, stickers: ["eng", "groupe", "rock"] },
+            { id: "6f2f76f4-8e0d-4ef7-b91d-29d354edc1e7", titre: "Red Hot Chili Peppers - Californication - Live at Slane Castle", artiste: "000Christoph000", lien: "https://www.youtube.com/watch?v=Z0AXjUy1_gY", favori: false, stickers: ["groupe", "eng", "rock"] },
+            { id: "84144c6a-67d8-4108-9d28-31fa897e64ca", titre: "Guns N' Roses - November Rain HD Remastered", artiste: "RATSREVUS", lien: "https://www.youtube.com/watch?v=Rz6__sLHPNA", favori: false, stickers: [] },
+            { id: "b98df10d-14a2-4241-9d7c-457cda11e8f0", titre: "U2 - With Or Without You", artiste: "U2VEVO", lien: "https://www.youtube.com/watch?v=ujNeHIo7oTE", favori: true, stickers: ["rock", "groupe", "eng"] },
+            { id: "6033bef3-9228-413a-a666-39b0cb38867c", titre: "Dire Straits - Sultans Of Swing", artiste: "DireStraitsVEVO", lien: "https://www.youtube.com/watch?v=h0ffIJ7ZO4U", favori: true, stickers: ["groupe", "eng", "rock"] },
+            { id: "8d782a41-697c-4759-bb8c-2eff531f5547", titre: "The Police - Roxanne", artiste: "ThePoliceVEVO", lien: "https://www.youtube.com/watch?v=3T1c7GkzRQQ", favori: false, stickers: ["eng", "rock", "groupe"] },
+            { id: "7bd36de7-00fa-406f-8874-a5d70f27a624", titre: "Bruce Springsteen - Streets of Philadelphia", artiste: "BruceSpringsteenVEVO", lien: "https://www.youtube.com/watch?v=4z2DtNW79sQ", favori: true, stickers: ["eng", "single"] },
+            { id: "eb2e20e4-60a4-4a92-8d66-e4005d917263", titre: "The Offspring - Self Esteem", artiste: "Epitaph Records", lien: "https://www.youtube.com/watch?v=Abrn8aVQ76Q", favori: true, stickers: ["groupe", "eng", "rock"] },
+            { id: "6e718f38-026b-46b5-b8c9-2f243e1fef5a", titre: "Elvis Presley - My Way", artiste: "ElvisPresleyVEVO", lien: "https://www.youtube.com/watch?v=ixbcvKCl4Jc", favori: true, stickers: ["single", "eng"] },
+            { id: "f15df5c1-ef95-4488-9c6f-b970ee6b5cb3", titre: "Johnny et Bruel - Et puis je sais au SDF du 11 septembre 1998", artiste: "Med.Renwick", lien: "https://www.youtube.com/watch?v=ZE7-B38DkbQ", favori: false, stickers: ["duo", "fr"] },
+            { id: "bfc4984d-2943-4ae7-9b1e-4d81966dd55a", titre: "Led Zeppelin - Immigrant Song", artiste: "Led Zeppelin", lien: "https://www.youtube.com/watch?v=RlNhD0oS5pk", favori: true, stickers: ["groupe", "eng", "rock"] },
+            { id: "c403a082-9d9a-488f-805e-94b5448d3fb4", titre: "Claude Francois - Comme D'Habitude", artiste: "nilinmavisi", lien: "https://www.youtube.com/watch?v=w22haP4hgsQ", favori: false, stickers: ["love", "fr", "old", "lyrics"] },
+            { id: "fa2e6f13-3ccd-4e26-ab8c-ab61c2432a35", titre: "Bruce Springsteen - My Hometown", artiste: "BruceSpringsteenVEVO", lien: "https://www.youtube.com/watch?v=KZ3BJYx43y0", favori: false, stickers: ["single", "eng"] },
+            { id: "982e08da-fc44-44e8-832c-9e09b6a4e6c2", titre: "Johnny Hallyday - Je serai là", artiste: "JohnnyHallydayVEVO", lien: "https://www.youtube.com/watch?v=RfeESr5-7Fg", favori: false, stickers: ["single", "fr", "lyrics", "rock"] },
+            { id: "d1e893df-48ff-468c-818f-fef111b50518", titre: "Bob Marley - redemption song", artiste: "Isabel Carvalho", lien: "https://www.youtube.com/watch?v=kOFu6b3w6c0", favori: false, stickers: ["reggae", "eng"] },
+            { id: "4cac4ef2-cf7a-45ed-b2d7-e1f8ca989245", titre: "Unchained Melody - Elvis Presley", artiste: "Madera a la deriva", lien: "https://www.youtube.com/watch?v=WClMVWVMEXc", favori: false, stickers: ["love", "eng"] },
+            { id: "3fcfac30-584c-4489-b060-c1ea2c4d70ab", titre: "Nirvana - The Man Who Sold The World", artiste: "NirvanaVEVO", lien: "https://www.youtube.com/watch?v=fregObNcHC8", favori: false, stickers: ["rock", "unplugged", "eng", "groupe"] },
+            { id: "20c8b683-94cf-4b6d-88b6-7f91560db831", titre: "Depeche Mode - Enjoy The Silence", artiste: "DepecheModeVEVO", lien: "https://www.youtube.com/watch?v=-_3dc6X-Iwo", favori: true, stickers: ["groupe", "eng"] },
+            { id: "4692bbd8-d64c-4ac3-89c2-25b18a646a5b", titre: "Axel Bauer - Eteins La Lumière", artiste: "AxelBauerVEVO", lien: "https://www.youtube.com/watch?v=7mpZh5JKVDM", favori: false, stickers: ["fr", "single", "rock"] },
+            { id: "8116b2a9-c4e2-49ed-ad4e-047e61795c56", titre: "Noir Désir - L'homme pressé", artiste: "NoirDesirVEVO", lien: "https://www.youtube.com/watch?v=by1RRP9wa_Y", favori: false, stickers: ["rock", "groupe", "fr"] },
+            { id: "656da6fb-462f-4faa-ac57-a2dfd6bbc2a1", titre: "Léa", artiste: "Louise Attaque - Topic", lien: "https://www.youtube.com/watch?v=8OjPpfvfoAE", favori: false, stickers: [] },
+            { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
+            { id: "59fb170b-e774-422f-8ef4-2dceb08143a0", titre: "Louise Attaque - Léa", artiste: "LouiseAttaqueVEVO", lien: "https://www.youtube.com/watch?v=Wt6eHMIhVxI", favori: false, stickers: ["fr", "groupe"] },
+            { id: "803c5b50-812b-41a6-81e7-d62c75b1fc9e", titre: "Radiohead - Creep", artiste: "Radiohead", lien: "https://www.youtube.com/watch?v=XFkzRNyygfk", favori: false, stickers: ["rock", "eng", "groupe"] },
+            { id: "2fa59390-b701-4903-905e-739733f20b2a", titre: "Rage Against The Machine - Killing In the Name", artiste: "RATMVEVO", lien: "https://www.youtube.com/watch?v=bWXazVhlyxQ", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "39f2a8dc-d88c-4c53-abd9-befa1cf330bf", titre: "Eminem - Lose Yourself", artiste: "EminemMusic", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", favori: false, stickers: ["single", "eng", "rock"] },
+            { id: "df3f9ebc-44bf-4e5d-9c83-4d1778e72b6d", titre: "Amy Winehouse - Back To Black", artiste: "AmyWinehouseVEVO", lien: "https://www.youtube.com/watch?v=TJAfLE39ZZ8", favori: false, stickers: ["eng", "single"] },
+            { id: "08de917c-e0da-4ce3-aa2e-73fe7557bb23", titre: "The Cranberries - Zombie 1999 Live Video", artiste: "NEA ZIXNH", lien: "https://www.youtube.com/watch?v=8MuhFxaT7zo", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "af82d3d3-8c13-4358-aa5b-a79f412993db", titre: "Oasis - Wonderwall", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica: Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
+            { id: "a882bb72-cb43-4476-8385-29fd8c05f553", titre: "The Cure - In Between Days", artiste: "TheCureVEVO", lien: "https://www.youtube.com/watch?v=scif2vfg1ug", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "67120939-1f68-4d21-aa7b-f836d5518025", titre: "David Bowie - Heroes", artiste: "Broken Ridge Records", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", favori: false, stickers: ["rock", "single", "eng"] },
+            { id: "c5a13c9b-0ee9-4ddb-b520-56aacc46e04e", titre: "ALAIN BASHUNG - La Nuit je mens.avi", artiste: "Thierry airborne", lien: "https://www.youtube.com/watch?v=qAfmdtS7QHo", favori: false, stickers: ["single", "fr"] },
+            { id: "6ec07e26-c1ec-4669-89f2-f6f08659ed27", titre: "Noir Désir - Tostaky", artiste: "Universal Music France", lien: "https://www.youtube.com/watch?v=e4il2GbaJyc", favori: false, stickers: ["rock", "groupe", "fr"] },
+            { id: "4ad0bf6d-2725-4688-a783-96e12b631241", titre: "Mark Knopfler - Brothers In Arms", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", favori: false, stickers: ["rock", "single", "love", "eng"] },
+            { id: "880b6ddc-b3ee-4266-b5fa-4d5d594b7beb", titre: "Sting - Message In A Bottle", artiste: "StingVEVO", lien: "https://www.youtube.com/watch?v=s2o4zxtqNZ4", favori: false, stickers: ["groupe", "eng", "rock"] },
+            { id: "ab76bb90-23d5-45ad-95c9-dcb17a2fce31", titre: "U2 - Beautiful Day", artiste: "U2VEVO", lien: "https://www.youtube.com/watch?v=co6WMzDOh1o", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "4e195f82-2787-400c-a14a-1459c6f08774", titre: "Purple Rain", artiste: "Prince - Topic", lien: "https://www.youtube.com/watch?v=y3Ov7PVHHag", favori: false, stickers: ["love", "eng", "single", "lyrics"] },
+            { id: "2fbcb3a3-d2ae-45c7-9327-11736d7fa394", titre: "The Verve - Bitter Sweet Symphony", artiste: "TheVerveVEVO", lien: "https://www.youtube.com/watch?v=1lyu1KKwC74", favori: false, stickers: [] },
+            { id: "b214a00e-be1c-48c2-9a03-db692a075a01", titre: "Daft Punk ft. Pharell Williams Get lucky Extended Version Original Video Full HD", artiste: "pfigueroah", lien: "https://www.youtube.com/watch?v=0QVOc1aagSE", favori: false, stickers: [] },
+            { id: "ac956c89-e330-47f2-9b6f-9f575fe2d5ce", titre: "Gary Moore - Parisienne Walkways - Live HD", artiste: "AgoraVoxFrance", lien: "https://www.youtube.com/watch?v=vkUpfw4Hf3w", favori: false, stickers: [] },
+            { id: "627b006e-c416-4f68-bcc1-add57f3c09d5", titre: "Creep - Radiohead", artiste: "Fire Bloom", lien: "https://www.youtube.com/watch?v=FLi1kDeVIww", favori: false, stickers: [] },
+            { id: "4599e9fa-c4be-450a-815c-252ab43d640b", titre: "Iggy Pop - The Passenger", artiste: "Iggy Pop Official", lien: "https://www.youtube.com/watch?v=-fWw7FE9tTo", favori: false, stickers: [] },
+            { id: "a7ffc6ab-3fd8-437e-8599-784edf5470aa", titre: "The White Stripes - Seven Nation Army", artiste: "The White Stripes", lien: "https://www.youtube.com/watch?v=0J2QdDbelmY", favori: false, stickers: ["eng", "rock"] },
+            { id: "88892c9e-75a4-4344-9de5-9d27821168a2", titre: "The Rolling Stones - Sympathy For The Devil", artiste: "ABKCOVEVO", lien: "https://www.youtube.com/watch?v=Jwtyn-L-2gQ", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "d3330641-d234-4ce9-9393-b68f06ecd1b6", titre: "Louis Bertignac - Ces idées là - Lyrics", artiste: "Lapluscanoncmoi", lien: "https://www.youtube.com/watch?v=Kxili0oILY4", favori: false, stickers: ["fr", "lyrics"] },
+            { id: "e9389a1f-bdbd-470a-adcd-2d763eecf5bc", titre: "Noir Desir - Le vent nous portera", artiste: "νταλικέρης", lien: "https://www.youtube.com/watch?v=Ysts-SVelTU", favori: false, stickers: ["rock", "fr"] },
+            { id: "bf3a489c-9eb5-4bd1-a9b1-2b4a12dbdc43", titre: "suspicious minds", artiste: "malwebb", lien: "https://www.youtube.com/watch?v=G7gBZmQXn14", favori: false, stickers: ["lyrics", "rock", "single", "eng"] },
+            { id: "6cd7cb96-2e53-4211-bf65-615369e57f76", titre: "Murray Head - Say It Ain't So Joe", artiste: "Murray Head", lien: "https://www.youtube.com/watch?v=jo4cw-kLeZ0", favori: false, stickers: [] },
+            { id: "ec36598d-e67a-417b-9a33-37a44f04965e", titre: "AaRON - U Turn", artiste: "AaRON", lien: "https://www.youtube.com/watch?v=wJRh0PlWB6g", favori: false, stickers: [] },
+            { id: "b42725f4-df09-4299-a218-6b9abb60472c", titre: "Pink Floyd - Wish You Were Here HD Lyrics + Subtitulada en Español", artiste: "Bruce Springsteen: Esp", lien: "https://www.youtube.com/watch?v=AjvA7n183Ts", favori: false, stickers: [] },
+            { id: "9afffa46-4af5-4e58-a597-952e95bd3947", titre: "Scorpions - Still Loving You", artiste: "Scorpions", lien: "https://www.youtube.com/watch?v=EC-woADwShQ", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
+            { id: "3bef41f2-5e27-4921-9eef-77d34a12fe55", titre: "Bob Marley & The Wailers - No Woman, No Cry", artiste: "BobMarleyVEVO", lien: "https://www.youtube.com/watch?v=mZ6VezKMoRY", favori: false, stickers: ["single", "eng", "reggae"] },
+            { id: "40235939-9040-4fee-8bcf-a463533fbb9c", titre: "Gary Moore - Still Got The Blues", artiste: "MLG", lien: "https://www.youtube.com/watch?v=DoYfTTFA-0k", favori: false, stickers: ["lyrics", "eng", "single"] },
+            { id: "b835e0eb-7efa-43e0-ba6f-337e81820e43", titre: "ZZ Top - La Grange | Stages", artiste: "GIGS", lien: "https://www.youtube.com/watch?v=Gg9cNGHl-bg", favori: false, stickers: [] },
+            { id: "b70d09ca-23be-4fe1-bf29-8c466bb004bb", titre: "AC/DC - Thunderstruck", artiste: "acdcVEVO", lien: "https://www.youtube.com/watch?v=n_GFN3a0yj0", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "326435bc-219c-4a8f-a924-aa3a7343eca8", titre: "Bruce Springsteen - I'm On Fire", artiste: "zhd", lien: "https://www.youtube.com/watch?v=vqp_bGxFrOM", favori: false, stickers: ["eng", "rock"] },
+            { id: "2b9e7027-0561-4295-9f04-2d0eed40c24a", titre: "Phil Collins - In The Air Tonight", artiste: "Phil Collins", lien: "https://www.youtube.com/watch?v=YkADj0TPrJA", favori: false, stickers: ["eng", "single"] },
+            { id: "633032bf-8f51-410a-b271-ed2f7591112d", titre: "Elvis Presley - Always On My Mind", artiste: "Amelia Hops", lien: "https://www.youtube.com/watch?v=wTRSlZEq_l0", favori: false, stickers: ["rock", "single", "eng", "lyrics"] },
+            { id: "b4f4be2b-8e73-4ddd-8bc4-ad6ad9702bb8", titre: "Michel Polnareff : Goodbye Marylou", artiste: "Costantino", lien: "https://www.youtube.com/watch?v=sl0Jcyx-F6Y", favori: false, stickers: ["single", "fr", "love", "lyrics"] },
+            { id: "6e468a61-b6ed-4e63-b47a-d54e6ab905b7", titre: "La Corrida", artiste: "Francis Cabrel - Topic", lien: "https://www.youtube.com/watch?v=7Q6S19Vvh6s", favori: false, stickers: [] },
+            { id: "86acc9ca-e383-4a97-af9a-4e1a1492d52c", titre: "Frank Sinatra - My Way | Live from The Main Event at Madison Square Garden", artiste: "Frank Sinatra", lien: "https://www.youtube.com/watch?v=w019MzRosmk", favori: false, stickers: ["old", "eng", "love", "lyrics"] },
+            { id: "9760d551-8144-42ba-b0a7-018672ded11a", titre: "Louis Armstrong - What A Wonderful World", artiste: "LouisArmstrongVEVO", lien: "https://www.youtube.com/watch?v=CaCSuzR4DwM", favori: false, stickers: ["lyrics", "single", "eng", "old"] },
+            { id: "b7e8db5e-83b3-47a4-951f-13c5ce14f61d", titre: "Simon & Garfunkel - The Sound of Silence", artiste: "SimonGarfunkelVEVO", lien: "https://www.youtube.com/watch?v=NAEppFUWLfc", favori: false, stickers: ["eng", "duo"] },
+            { id: "ed667585-a6ba-490a-ab93-0e4f1cd852ba", titre: "John Lennon - Imagine - 1971", artiste: "luciano pinto", lien: "https://www.youtube.com/watch?v=iOs9Osz3UFQ", favori: false, stickers: ["lyrics", "single", "eng"] },
+            { id: "f63d39d1-654c-4266-857e-e1afc5000ece", titre: "Christophe - Les mots bleus", artiste: "Christophe", lien: "https://www.youtube.com/watch?v=OqZY0Kztm3Q", favori: false, stickers: ["lyrics", "fr", "single"] },
+            { id: "bbb9b7cb-b6dd-4b27-bfb8-ccb6cd9cacc0", titre: "Fatal Bazooka feat. Vitoo - Mauvaise Foi nocturne", artiste: "FAT TV", lien: "https://www.youtube.com/watch?v=x-biTuOrYkk", favori: false, stickers: ["delire", "duo", "fr"] },
+            { id: "c6d3d013-ccba-4ebc-a1ca-e6a37ccf94e7", titre: "M - Machistador", artiste: "100% Chanson Française", lien: "https://www.youtube.com/watch?v=w3sSGZlWLP4", favori: false, stickers: ["fr"] },
+            { id: "65bfab9d-734d-41dc-b8eb-d7ed237132a0", titre: "Benjamin Biolay - Comment est ta peine ?", artiste: "Les Victoires de la Musique", lien: "https://www.youtube.com/watch?v=Fmbuk6n9zHs", favori: false, stickers: ["fr"] },
+            { id: "71de80f1-ea16-48bf-9fe7-5b078f5c8fff", titre: "James Brown - It's A Man's Man's Man's World 1966", artiste: "Stella Marinova", lien: "https://www.youtube.com/watch?v=5q4-REqaZlg", favori: false, stickers: [] },
+            { id: "d45da1f7-2e66-4fe2-b94f-27681aeb3e50", titre: "Talkin' Bout a Revolution", artiste: "Tracy Chapman - Topic", lien: "https://www.youtube.com/watch?v=721JQZw6Spg", favori: false, stickers: [] }
+        ];
+
+        const DEFAULT_PLAYLISTS = [
+            {
+                id: "26e68a5c-6f4a-41e1-9a44-db9e6d6e274a",
+                name: "ma premiere",
+                tracks: [
+                    { id: "67120939-1f68-4d21-aa7b-f836d5518025", titre: "David Bowie - Heroes", artiste: "Broken Ridge Records", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", favori: false, stickers: ["rock", "single", "eng"] },
+                    { id: "39f2a8dc-d88c-4c53-abd9-befa1cf330bf", titre: "Eminem - Lose Yourself", artiste: "EminemMusic", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", favori: false, stickers: ["single", "eng", "rock"] },
+                    { id: "4ad0bf6d-2725-4688-a783-96e12b631241", titre: "Mark Knopfler - Brothers In Arms", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", favori: false, stickers: ["rock", "single", "love", "eng"] },
+                    { id: "af82d3d3-8c13-4358-aa5b-a79f412993db", titre: "Oasis - Wonderwall", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", favori: false, stickers: ["rock", "groupe", "eng"] }
+                ],
+                createdAt: 1789241433463
+            },
+            {
+                id: "ee58f333-b927-4253-96a7-c0f0e11a2312",
+                name: "love",
+                tracks: [
+                    { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica: Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
+                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
+                    { id: "4ad0bf6d-2725-4688-a783-96e12b631241", titre: "Mark Knopfler - Brothers In Arms", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", favori: false, stickers: ["rock", "single", "love", "eng"] },
+                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] }
+                ],
+                createdAt: 1789244109929
+            }
+        ];
+
         const STICKERS_DISPONIBLES = [
-            { id: 'rock', label: 'Rock', icon: '🎸' },
-            { id: 'unplugged', label: 'Unplugged', icon: '🎤' },
-            { id: 'reggae', label: 'Reggae', icon: '🌴' },
             { 
-                id: 'groupe', 
-                label: 'Formation', 
-                icon: '👥',
-                hasSubMenu: true,
+                id: 'genre', label: 'Genre', icon: '🎵', hasSubMenu: true,
+                subChoices: [
+                    { id: 'rock', label: 'Rock', icon: '🎸' },
+                    { id: 'reggae', label: 'Reggae', icon: '🌴' },
+                    { id: 'rap', label: 'Rap', icon: '🎤' },
+                    { id: 'pop', label: 'Pop', icon: '🎶' }
+                ]
+            },
+            { id: 'unplugged', label: 'Unplugged', icon: '🎙️' },
+            { 
+                id: 'groupe', label: 'Formation', icon: '👥', hasSubMenu: true,
                 subChoices: [
                     { id: 'groupe', label: 'Groupe', icon: '👥' },
                     { id: 'duo', label: 'Duo', icon: '👫' },
-                    { id: 'single', label: 'Single', icon: '🧍' }
+                    { id: 'single', label: 'Single', icon: '' }
                 ]
             },
-            { id: 'eng', label: 'ENG', icon: '🇬' },
-            { id: 'fr', label: 'FR', icon: '🇫' },
+            { 
+                id: 'langue', label: 'Langue', icon: '🗣️', hasSubMenu: true,
+                subChoices: [
+                    { id: 'eng', label: 'ENG', icon: '🇬🇧' },
+                    { id: 'fr', label: 'FR', icon: '🇫🇷' }
+                ]
+            },
             { id: 'love', label: 'Love', icon: '❤️' },
-            { id: 'old', label: 'OLD', icon: '🕰️' }
+            { id: 'old', label: 'OLD', icon: '🕰️' },
+            { id: 'lyrics', label: 'Lyrics', icon: '📝' },
+            { id: 'delire', label: 'Delire', icon: '🎭' }
         ];
 
         const getStickerInfo = (stickerId) => {
@@ -253,65 +532,57 @@
                 this.artiste = data.artiste || '';
                 this.lien = data.lien || ''; 
                 this.favori = data.favori || false;
-                this.playlist = data.playlist || false; 
-                this.ordrePlaylist = data.ordrePlaylist || 0;
-                this.dateSelectionPlaylist = data.dateSelectionPlaylist || 0;
                 this.stickers = data.stickers || [];
             }
             toggleFavorite() { return new Track({ ...this, favori: !this.favori }); }
-            togglePlaylist() {
-                const isNowInPlaylist = !this.playlist;
-                return new Track({ ...this, playlist: isNowInPlaylist, dateSelectionPlaylist: isNowInPlaylist ? Date.now() : 0 });
-            }
             toggleSticker(stickerId) {
                 const hasSticker = this.stickers.includes(stickerId);
-                const newStickers = hasSticker 
-                    ? this.stickers.filter(s => s !== stickerId)
-                    : [...this.stickers, stickerId];
+                const newStickers = hasSticker ? this.stickers.filter(s => s !== stickerId) : [...this.stickers, stickerId];
                 return new Track({ ...this, stickers: newStickers });
             }
             setFormation(formationId) {
                 const formations = ['groupe', 'duo', 'single'];
                 const cleaned = this.stickers.filter(s => !formations.includes(s));
-                if (this.stickers.includes(formationId)) {
-                    return new Track({ ...this, stickers: cleaned });
-                }
+                if (this.stickers.includes(formationId)) return new Track({ ...this, stickers: cleaned });
                 return new Track({ ...this, stickers: [...cleaned, formationId] });
+            }
+            setGenre(genreId) {
+                const genres = ['rock', 'reggae', 'rap', 'pop'];
+                const cleaned = this.stickers.filter(s => !genres.includes(s));
+                if (this.stickers.includes(genreId)) return new Track({ ...this, stickers: cleaned });
+                return new Track({ ...this, stickers: [...cleaned, genreId] });
+            }
+            setLangue(langueId) {
+                const langues = ['eng', 'fr'];
+                const cleaned = this.stickers.filter(s => !langues.includes(s));
+                if (this.stickers.includes(langueId)) return new Track({ ...this, stickers: cleaned });
+                return new Track({ ...this, stickers: [...cleaned, langueId] });
             }
         }
 
         const normaliser = (texte) => texte.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
         const estDoublon = (tracks, nouveau) => tracks.some(t => t.lien === nouveau.lien || normaliser(t.titre) === normaliser(nouveau.titre));
 
-        // 🌟 CORRECTION 2 : Filtrage cumulatif (AND) au lieu de disjonctif (OR)
         const trierEtFiltrer = (tracks, { search, filter, stickerFilter }) => {
             let result = [...tracks];
             if (filter === 'favoris') result = result.filter(t => t.favori);
-            if (filter === 'playlist') result = result.filter(t => t.playlist);
             if (search) { 
                 const q = search.toLowerCase(); 
                 result = result.filter(t => t.titre.toLowerCase().includes(q) || t.artiste.toLowerCase().includes(q)); 
             }
-            //  NOUVEAU : Tous les stickers sélectionnés doivent être présents (AND)
             if (stickerFilter && stickerFilter.length > 0) {
-                result = result.filter(t => 
-                    stickerFilter.every(sticker => t.stickers.includes(sticker))
-                );
+                result = result.filter(t => stickerFilter.every(sticker => t.stickers.includes(sticker)));
             }
             return result.reverse();
         };
 
-        const recalculerOrdrePlaylist = (tracks) => {
-            let updated = tracks.map(t => t.playlist ? t : new Track({ ...t, ordrePlaylist: 0 }));
-            const inPlaylist = updated.filter(t => t.playlist).sort((a, b) => a.dateSelectionPlaylist - b.dateSelectionPlaylist);
-            inPlaylist.forEach((t, index) => { t.ordrePlaylist = index + 1; });
-            return updated;
-        };
-
         const STORAGE_KEY = 'musik_library';
+        const PLAYLISTS_KEY = 'musik_playlists';
         const THEME_KEY = 'musik_theme';
         const loadTracks = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         const saveTracks = (tracks) => localStorage.setItem(STORAGE_KEY, JSON.stringify(tracks));
+        const loadPlaylists = () => JSON.parse(localStorage.getItem(PLAYLISTS_KEY) || '[]');
+        const savePlaylists = (playlists) => localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(playlists));
 
         const API_KEY = "AIzaSyDToXoQ5a9-rRz9dkUre-HP6yJTSjeX-FM"; 
         const extraireVideoId = (url) => { const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/; const match = url.match(regex); return match ? match[1] : null; };
@@ -323,15 +594,11 @@
             const response = await fetch(apiUrl);
             const data = await response.json();
             if (!data.items || data.items.length === 0) throw new Error("Vidéo introuvable");
-            return { 
-                titre: data.items[0].snippet.title, 
-                artiste: data.items[0].snippet.channelTitle, 
-                lien: url 
-            };
+            return { titre: data.items[0].snippet.title, artiste: data.items[0].snippet.channelTitle, lien: url };
         };
 
-        const exportToJson = (tracks) => {
-            const data = { version: "2.4", dateExport: new Date().toISOString(), morceaux: tracks };
+        const exportToJson = (tracks, playlists) => {
+            const data = { version: "3.0", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
@@ -344,7 +611,8 @@
                 try {
                     const content = JSON.parse(e.target.result);
                     const tracks = Array.isArray(content) ? content : content.morceaux || [];
-                    resolve(tracks);
+                    const playlists = content.playlists || [];
+                    resolve({ tracks, playlists });
                 } catch (err) { reject(new Error("Fichier JSON invalide")); }
             };
             reader.readAsText(file);
@@ -353,7 +621,8 @@
         const MusicContext = createContext();
         const initialState = { 
             tracks: [], search: '', filter: 'toutes', stickerFilter: [],
-            toast: null, modal: null, theme: localStorage.getItem(THEME_KEY) || 'dark'
+            toast: null, modal: null, theme: localStorage.getItem(THEME_KEY) || 'dark',
+            playlists: [], currentPlaylist: []
         };
 
         function reducer(state, action) {
@@ -367,6 +636,11 @@
                 case 'SHOW_MODAL': return { ...state, modal: action.payload };
                 case 'HIDE_MODAL': return { ...state, modal: null };
                 case 'TOGGLE_THEME': return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' };
+                case 'SET_PLAYLISTS': return { ...state, playlists: action.payload };
+                case 'SET_CURRENT_PLAYLIST': return { ...state, currentPlaylist: action.payload };
+                case 'ADD_TO_PLAYLIST': return { ...state, currentPlaylist: [...state.currentPlaylist, action.payload] };
+                case 'REMOVE_FROM_PLAYLIST': return { ...state, currentPlaylist: state.currentPlaylist.filter((_, idx) => idx !== action.payload) };
+                case 'REORDER_PLAYLIST': return { ...state, currentPlaylist: action.payload };
                 default: return state;
             }
         }
@@ -380,15 +654,32 @@
                 localStorage.setItem(THEME_KEY, state.theme);
             }, [state.theme]);
 
+            // 🌟 CHARGEMENT : Utilise les données par défaut si localStorage vide
             useEffect(() => {
                 const saved = loadTracks();
-                const cleaned = saved.map(t => new Track(t));
-                dispatch({ type: 'SET_TRACKS', payload: cleaned });
+                const savedPlaylists = loadPlaylists();
+                
+                // Si localStorage vide, utilise les données par défaut
+                const tracksToLoad = saved.length > 0 ? saved : DEFAULT_TRACKS;
+                const playlistsToLoad = savedPlaylists.length > 0 ? savedPlaylists : DEFAULT_PLAYLISTS;
+                
+                dispatch({ type: 'SET_TRACKS', payload: tracksToLoad.map(t => new Track(t)) });
+                dispatch({ type: 'SET_PLAYLISTS', payload: playlistsToLoad });
+                
+                // Sauvegarde les données par défaut si localStorage était vide
+                if (saved.length === 0) {
+                    saveTracks(tracksToLoad);
+                }
+                if (savedPlaylists.length === 0) {
+                    savePlaylists(playlistsToLoad);
+                }
             }, []);
 
             useEffect(() => {
                 if (state.tracks.length > 0 || localStorage.getItem(STORAGE_KEY)) saveTracks(state.tracks);
             }, [state.tracks]);
+
+            useEffect(() => { savePlaylists(state.playlists); }, [state.playlists]);
 
             const showToast = useCallback((message, type = 'success') => {
                 dispatch({ type: 'SHOW_TOAST', payload: { message, type } });
@@ -405,40 +696,60 @@
             };
 
             const toggleFavorite = (id) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === id ? t.toggleFavorite() : t) });
-            const togglePlaylist = (id) => {
-                let updated = state.tracks.map(t => t.id === id ? t.togglePlaylist() : t);
-                dispatch({ type: 'SET_TRACKS', payload: recalculerOrdrePlaylist(updated) });
-            };
-            const toggleSticker = (trackId, stickerId) => {
-                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.toggleSticker(stickerId) : t) });
-            };
-            const setFormation = (trackId, formationId) => {
-                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
-            };
+            const toggleSticker = (trackId, stickerId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.toggleSticker(stickerId) : t) });
+            const setFormation = (trackId, formationId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
+            const setGenre = (trackId, genreId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setGenre(genreId) : t) });
+            const setLangue = (trackId, langueId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setLangue(langueId) : t) });
             const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("🗑️ Supprimé"); };
 
-            const playFullPlaylist = () => {
-                const playlistTracks = state.tracks
-                    .filter(t => t.playlist)
-                    .sort((a, b) => a.ordrePlaylist - b.ordrePlaylist);
-                
-                if (playlistTracks.length === 0) {
-                    showToast("Aucun morceau dans la playlist", "error");
-                    return;
-                }
+            const addToPlaylist = (track) => { dispatch({ type: 'ADD_TO_PLAYLIST', payload: track }); showToast("➕ Ajouté au panier"); };
+            const removeFromPlaylist = (index) => dispatch({ type: 'REMOVE_FROM_PLAYLIST', payload: index });
+            const reorderPlaylist = (newOrder) => dispatch({ type: 'REORDER_PLAYLIST', payload: newOrder });
 
-                const ids = playlistTracks.map(t => extraireVideoId(t.lien)).filter(id => id);
-                if (ids.length === 0) {
-                    showToast("Liens YouTube invalides", "error");
-                    return;
-                }
+            const saveCurrentPlaylist = (name) => {
+                if (state.currentPlaylist.length === 0) { showToast("Panier vide !", "error"); return; }
+                const newPlaylist = { id: crypto.randomUUID(), name: name || `Playlist ${state.playlists.length + 1}`, tracks: state.currentPlaylist, createdAt: Date.now() };
+                dispatch({ type: 'SET_PLAYLISTS', payload: [...state.playlists, newPlaylist] });
+                dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: [] });
+                showToast(`💾 Playlist "${newPlaylist.name}" sauvegardée !`);
+            };
 
-                const url = `https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`;
-                window.open(url, '_blank');
+            const duplicatePlaylist = (playlistId) => {
+                const playlist = state.playlists.find(p => p.id === playlistId);
+                if (!playlist) return;
+                dispatch({ type: 'SET_PLAYLISTS', payload: [...state.playlists, { ...playlist, id: crypto.randomUUID(), name: `${playlist.name} (copie)`, createdAt: Date.now() }] });
+                showToast("📋 Playlist dupliquée !");
+            };
+
+            const loadPlaylistToCart = (playlistId) => {
+                const playlist = state.playlists.find(p => p.id === playlistId);
+                if (!playlist) return;
+                dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: [...playlist.tracks] });
+                showToast("🛒 Playlist chargée dans le panier");
+            };
+
+            const deletePlaylist = (playlistId) => {
+                dispatch({ type: 'SET_PLAYLISTS', payload: state.playlists.filter(p => p.id !== playlistId) });
+                showToast("🗑️ Playlist supprimée");
+            };
+
+            const playPlaylist = (tracks) => {
+                if (tracks.length === 0) { showToast("Aucun morceau !", "error"); return; }
+                const ids = tracks.map(t => extraireVideoId(t.lien)).filter(id => id);
+                if (ids.length === 0) { showToast("Liens YouTube invalides", "error"); return; }
+                window.open(`https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`, '_blank');
                 showToast(`▶ Lecture de ${ids.length} morceaux...`);
             };
 
-            return <MusicContext.Provider value={{ state, dispatch, addTrack, toggleFavorite, togglePlaylist, toggleSticker, setFormation, deleteTrack, showToast, playFullPlaylist }}>{children}</MusicContext.Provider>;
+            return (
+                <MusicContext.Provider value={{ 
+                    state, dispatch, addTrack, toggleFavorite, toggleSticker, setFormation, setGenre, setLangue,
+                    deleteTrack, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
+                    saveCurrentPlaylist, duplicatePlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist
+                }}>
+                    {children}
+                </MusicContext.Provider>
+            );
         }
         const useMusic = () => useContext(MusicContext);
 
@@ -446,7 +757,7 @@
             const { state } = useMusic();
             if (!state.toast) return null;
             const isError = state.toast.type === 'error';
-            return <div className={`toast ${isError ? 'toast-error' : 'toast-success'}`}>{isError ? '' : '✅'} <span>{state.toast.message}</span></div>;
+            return <div className={`toast ${isError ? 'toast-error' : 'toast-success'}`}>{isError ? '❌' : '✅'} <span>{state.toast.message}</span></div>;
         }
 
         function Modal() {
@@ -465,66 +776,51 @@
             );
         }
 
-        function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect }) {
+        function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect, onGenreSelect, onLangueSelect }) {
             const [showSubMenu, setShowSubMenu] = useState(false);
-            const subMenuRef = useRef(null);
+            const [menuPosition, setMenuPosition] = useState('center');
+            const containerRef = useRef(null);
 
             useEffect(() => {
                 const handleClickOutside = (event) => {
-                    if (subMenuRef.current && !subMenuRef.current.contains(event.target)) {
-                        setShowSubMenu(false);
-                    }
+                    if (containerRef.current && !containerRef.current.contains(event.target)) setShowSubMenu(false);
                 };
-                if (showSubMenu) {
-                    document.addEventListener('mousedown', handleClickOutside);
-                }
+                if (showSubMenu) document.addEventListener('mousedown', handleClickOutside);
                 return () => document.removeEventListener('mousedown', handleClickOutside);
             }, [showSubMenu]);
 
-            const activeSubChoice = sticker.hasSubMenu 
-                ? sticker.subChoices.find(sub => activeFilters.includes(sub.id))
-                : null;
-            
-            const isActive = sticker.hasSubMenu ? !!activeSubChoice : activeFilters.includes(sticker.id);
-
-            const handleClick = () => {
-                if (sticker.hasSubMenu) {
-                    setShowSubMenu(!showSubMenu);
-                } else {
-                    onToggle(sticker.id);
+            useEffect(() => {
+                if (showSubMenu && containerRef.current) {
+                    const rect = containerRef.current.getBoundingClientRect();
+                    const menuWidth = 250;
+                    const margin = 10;
+                    if (rect.left < menuWidth / 2 + margin) setMenuPosition('left');
+                    else if (rect.right > window.innerWidth - menuWidth / 2 - margin) setMenuPosition('right');
+                    else setMenuPosition('center');
                 }
-            };
+            }, [showSubMenu]);
+
+            const activeSubChoice = sticker.hasSubMenu ? sticker.subChoices.find(sub => activeFilters.includes(sub.id)) : null;
+            const isActive = sticker.hasSubMenu ? !!activeSubChoice : activeFilters.includes(sticker.id);
+            
+            const handleSelect = 
+                sticker.id === 'genre' ? onGenreSelect : 
+                sticker.id === 'langue' ? onLangueSelect : 
+                onSubSelect;
 
             return (
-                <div style={{ position: 'relative' }} ref={subMenuRef}>
-                    <div 
-                        className={`sticker-filter ${isActive ? 'active' : ''}`}
-                        onClick={handleClick}
-                        title={sticker.hasSubMenu ? 'Choisir la formation' : `Filtrer par ${sticker.label}`}
-                    >
-                        <span className="sticker-icon">
-                            {activeSubChoice ? activeSubChoice.icon : sticker.icon}
-                        </span>
-                        <span>
-                            {activeSubChoice ? activeSubChoice.label : sticker.label}
-                        </span>
+                <div style={{ position: 'relative' }} ref={containerRef}>
+                    <div className={`sticker-filter ${isActive ? 'active' : ''}`} onClick={() => sticker.hasSubMenu ? setShowSubMenu(!showSubMenu) : onToggle(sticker.id)}>
+                        <span className="sticker-icon">{activeSubChoice ? activeSubChoice.icon : sticker.icon}</span>
+                        <span>{activeSubChoice ? activeSubChoice.label : sticker.label}</span>
                     </div>
-
                     {sticker.hasSubMenu && showSubMenu && (
-                        <div className="sub-menu">
+                        <div className={`sub-menu align-${menuPosition}`}>
                             {sticker.subChoices.map(sub => {
                                 const isSubActive = activeFilters.includes(sub.id);
                                 return (
-                                    <div 
-                                        key={sub.id}
-                                        className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onSubSelect(sub.id);
-                                            setShowSubMenu(false);
-                                        }}
-                                        title={isSubActive ? `Désactiver ${sub.label}` : `Activer ${sub.label}`}
-                                    >
+                                    <div key={sub.id} className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
+                                        onClick={(e) => { e.stopPropagation(); handleSelect(sub.id); setShowSubMenu(false); }}>
                                         <span className="sub-icon">{sub.icon}</span>
                                         <span>{sub.label}</span>
                                     </div>
@@ -536,66 +832,51 @@
             );
         }
 
-        function StickerBoxItem({ sticker, currentStickers, onToggle, onSubSelect }) {
+        function StickerBoxItem({ sticker, currentStickers, onToggle, onSubSelect, onGenreSelect, onLangueSelect }) {
             const [showSubMenu, setShowSubMenu] = useState(false);
-            const subMenuRef = useRef(null);
+            const [menuPosition, setMenuPosition] = useState('center');
+            const containerRef = useRef(null);
 
             useEffect(() => {
                 const handleClickOutside = (event) => {
-                    if (subMenuRef.current && !subMenuRef.current.contains(event.target)) {
-                        setShowSubMenu(false);
-                    }
+                    if (containerRef.current && !containerRef.current.contains(event.target)) setShowSubMenu(false);
                 };
-                if (showSubMenu) {
-                    document.addEventListener('mousedown', handleClickOutside);
-                }
+                if (showSubMenu) document.addEventListener('mousedown', handleClickOutside);
                 return () => document.removeEventListener('mousedown', handleClickOutside);
             }, [showSubMenu]);
 
-            const activeSubChoice = sticker.hasSubMenu 
-                ? sticker.subChoices.find(sub => currentStickers.includes(sub.id))
-                : null;
-            
-            const isActive = sticker.hasSubMenu ? !!activeSubChoice : currentStickers.includes(sticker.id);
-
-            const handleClick = () => {
-                if (sticker.hasSubMenu) {
-                    setShowSubMenu(!showSubMenu);
-                } else {
-                    onToggle(sticker.id);
+            useEffect(() => {
+                if (showSubMenu && containerRef.current) {
+                    const rect = containerRef.current.getBoundingClientRect();
+                    const menuWidth = 250;
+                    const margin = 10;
+                    if (rect.left < menuWidth / 2 + margin) setMenuPosition('left');
+                    else if (rect.right > window.innerWidth - menuWidth / 2 - margin) setMenuPosition('right');
+                    else setMenuPosition('center');
                 }
-            };
+            }, [showSubMenu]);
+
+            const activeSubChoice = sticker.hasSubMenu ? sticker.subChoices.find(sub => currentStickers.includes(sub.id)) : null;
+            const isActive = sticker.hasSubMenu ? !!activeSubChoice : currentStickers.includes(sticker.id);
+            
+            const handleSelect = 
+                sticker.id === 'genre' ? onGenreSelect : 
+                sticker.id === 'langue' ? onLangueSelect : 
+                onSubSelect;
 
             return (
-                <div style={{ position: 'relative' }} ref={subMenuRef}>
-                    <div 
-                        className={`sticker-item ${isActive ? 'active' : ''}`}
-                        onClick={handleClick}
-                        title={sticker.hasSubMenu ? 'Choisir la formation' : (isActive ? `Retirer ${sticker.label}` : `Ajouter ${sticker.label}`)}
-                    >
-                        <span className="sticker-icon">
-                            {activeSubChoice ? activeSubChoice.icon : sticker.icon}
-                        </span>
-                        <span>
-                            {activeSubChoice ? activeSubChoice.label : sticker.label}
-                        </span>
+                <div style={{ position: 'relative' }} ref={containerRef}>
+                    <div className={`sticker-item ${isActive ? 'active' : ''}`} onClick={() => sticker.hasSubMenu ? setShowSubMenu(!showSubMenu) : onToggle(sticker.id)}>
+                        <span className="sticker-icon">{activeSubChoice ? activeSubChoice.icon : sticker.icon}</span>
+                        <span>{activeSubChoice ? activeSubChoice.label : sticker.label}</span>
                     </div>
-
                     {sticker.hasSubMenu && showSubMenu && (
-                        <div className="sub-menu">
+                        <div className={`sub-menu align-${menuPosition}`}>
                             {sticker.subChoices.map(sub => {
                                 const isSubActive = currentStickers.includes(sub.id);
                                 return (
-                                    <div 
-                                        key={sub.id}
-                                        className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onSubSelect(sub.id);
-                                            setShowSubMenu(false);
-                                        }}
-                                        title={isSubActive ? `Désactiver ${sub.label}` : `Activer ${sub.label}`}
-                                    >
+                                    <div key={sub.id} className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
+                                        onClick={(e) => { e.stopPropagation(); handleSelect(sub.id); setShowSubMenu(false); }}>
                                         <span className="sub-icon">{sub.icon}</span>
                                         <span>{sub.label}</span>
                                     </div>
@@ -608,82 +889,143 @@
         }
 
         function StickerBox({ trackId, currentStickers }) {
-            const { toggleSticker, setFormation } = useMusic();
+            const { toggleSticker, setFormation, setGenre, setLangue } = useMusic();
             return (
                 <div className="sticker-box">
                     {STICKERS_DISPONIBLES.map(sticker => (
-                        <StickerBoxItem 
-                            key={sticker.id}
-                            sticker={sticker}
-                            currentStickers={currentStickers}
-                            onToggle={(id) => toggleSticker(trackId, id)}
+                        <StickerBoxItem key={sticker.id} sticker={sticker} currentStickers={currentStickers}
+                            onToggle={(id) => toggleSticker(trackId, id)} 
                             onSubSelect={(id) => setFormation(trackId, id)}
-                        />
+                            onGenreSelect={(id) => setGenre(trackId, id)}
+                            onLangueSelect={(id) => setLangue(trackId, id)} />
                     ))}
                 </div>
             );
         }
 
         function TrackCard({ track }) {
-            const { toggleFavorite, togglePlaylist, deleteTrack } = useMusic();
+            const { toggleFavorite, deleteTrack, addToPlaylist } = useMusic();
             const [showStickers, setShowStickers] = useState(false);
 
             return (
                 <div className="track-card">
-                    <div className="track-info" style={{ flex: 1 }}>
+                    <div className="track-info" style={{ flex: 1, minWidth: 0 }}>
                         <h3 className="track-title" title={track.titre}>{track.titre}</h3>
-                        
                         {track.stickers.length > 0 && (
                             <div className="track-stickers">
                                 {track.stickers.map(stickerId => {
                                     const sticker = getStickerInfo(stickerId);
-                                    return sticker ? (
-                                        <span key={stickerId} className="sticker-tag">
-                                            {sticker.icon} {sticker.label}
-                                        </span>
-                                    ) : null;
+                                    return sticker ? <span key={stickerId} className="sticker-tag">{sticker.icon} {sticker.label}</span> : null;
                                 })}
                             </div>
                         )}
-                        <button 
-                            onClick={() => setShowStickers(!showStickers)}
-                            className="btn-toggle-stickers"
-                        >
-                            {showStickers ? '✕ Fermer' : '️ Gérer les stickers'}
+                        <button onClick={() => setShowStickers(!showStickers)} className="btn-toggle-stickers">
+                            {showStickers ? '✕ Fermer' : '🏷️ Gérer les stickers'}
                         </button>
                         {showStickers && <StickerBox trackId={track.id} currentStickers={track.stickers} />}
                     </div>
                     <div className="track-actions">
                         <button onClick={() => window.open(track.lien, '_blank')} className="btn-icon btn-play" title="Écouter">▶</button>
                         <button onClick={() => toggleFavorite(track.id)} className={`btn-icon ${track.favori ? 'active-fav' : ''}`} title="Favori">{track.favori ? '★' : '☆'}</button>
-                        <button onClick={() => togglePlaylist(track.id)} className={`btn-icon ${track.playlist ? 'active-playlist' : ''}`} title="Playlist">
-                            {track.playlist ? <>{track.ordrePlaylist} <span className="playlist-order">✓</span></> : '☐'}
-                        </button>
-                        <button onClick={() => deleteTrack(track.id)} className="btn-icon btn-delete" title="Supprimer"></button>
+                        <button onClick={() => addToPlaylist(track)} className="btn-icon btn-add-playlist" title="Ajouter au panier">🛒</button>
+                        <button onClick={() => deleteTrack(track.id)} className="btn-icon btn-delete" title="Supprimer">🗑</button>
                     </div>
                 </div>
             );
         }
 
-        function MusicApp() {
-            const { state, dispatch, addTrack, showToast, playFullPlaylist } = useMusic();
-            const [urlInput, setUrlInput] = useState('');
-            const fileInputRef = React.useRef(null);
+        function PlaylistSection() {
+            const { state, removeFromPlaylist, reorderPlaylist, saveCurrentPlaylist, duplicatePlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist, showToast } = useMusic();
+            const [playlistName, setPlaylistName] = useState('');
+            const [draggedIndex, setDraggedIndex] = useState(null);
 
-            const filteredTracks = trierEtFiltrer(state.tracks, { 
-                search: state.search, 
-                filter: state.filter,
-                stickerFilter: state.stickerFilter
-            });
-            const isPlaylistView = state.filter === 'playlist';
+            const handleDragStart = (index) => setDraggedIndex(index);
+            const handleDragOver = (e, index) => {
+                e.preventDefault();
+                if (draggedIndex === null || draggedIndex === index) return;
+                const newOrder = [...state.currentPlaylist];
+                const draggedItem = newOrder[draggedIndex];
+                newOrder.splice(draggedIndex, 1);
+                newOrder.splice(index, 0, draggedItem);
+                reorderPlaylist(newOrder);
+                setDraggedIndex(index);
+            };
+            const handleDragEnd = () => setDraggedIndex(null);
+            const handleSave = () => {
+                if (!playlistName.trim()) { showToast("Nom de playlist requis !", "error"); return; }
+                saveCurrentPlaylist(playlistName);
+                setPlaylistName('');
+            };
+
+            return (
+                <div className="playlist-section">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        <h2 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                            🛒 Panier ({state.currentPlaylist.length})
+                        </h2>
+                        <button className="btn-play-playlist" onClick={() => playPlaylist(state.currentPlaylist)} disabled={state.currentPlaylist.length === 0}>
+                            ▶ PLAY
+                        </button>
+                    </div>
+                    <div className="playlist-controls">
+                        <input type="text" className="playlist-input" placeholder="Nom de la playlist..." value={playlistName} onChange={(e) => setPlaylistName(e.target.value)} />
+                        <button className="btn-primary" onClick={handleSave} style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}>💾 Sauvegarder</button>
+                    </div>
+                    <div className="playlist-items-container">
+                        {state.currentPlaylist.length === 0 ? (
+                            <div className="playlist-empty">🛒 Panier vide<br/><small>Ajoutez des morceaux depuis la bibliothèque avec le bouton 🛒</small></div>
+                        ) : (
+                            state.currentPlaylist.map((track, index) => (
+                                <div key={`${track.id}-${index}`} className={`playlist-item ${draggedIndex === index ? 'dragging' : ''}`}
+                                    draggable onDragStart={() => handleDragStart(index)} onDragOver={(e) => handleDragOver(e, index)} onDragEnd={handleDragEnd}>
+                                    <div className="playlist-item-number">{index + 1}</div>
+                                    <div className="playlist-item-info">
+                                        <div className="playlist-item-title">{track.titre}</div>
+                                        <div className="playlist-item-artist">{track.artiste}</div>
+                                    </div>
+                                    <button className="btn-icon-small" onClick={() => removeFromPlaylist(index)} title="Retirer">✕</button>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                    {state.playlists.length > 0 && (
+                        <div className="saved-playlists">
+                            <div className="saved-playlists-title">📁 Playlists sauvegardées :</div>
+                            {state.playlists.map(playlist => (
+                                <div key={playlist.id} className="saved-playlist-item">
+                                    <div className="saved-playlist-info">
+                                        <div className="saved-playlist-name">{playlist.name}</div>
+                                        <div className="saved-playlist-count">{playlist.tracks.length} morceaux</div>
+                                    </div>
+                                    <div className="saved-playlist-actions">
+                                        <button className="btn-icon-small" onClick={() => loadPlaylistToCart(playlist.id)} title="Charger">📂</button>
+                                        <button className="btn-icon-small" onClick={() => duplicatePlaylist(playlist.id)} title="Dupliquer"></button>
+                                        <button className="btn-icon-small" onClick={() => playPlaylist(playlist.tracks)} title="Lire">▶</button>
+                                        <button className="btn-icon-small" onClick={() => deletePlaylist(playlist.id)} title="Supprimer"></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function MusicApp() {
+            const { state, dispatch, addTrack, showToast } = useMusic();
+            const [urlInput, setUrlInput] = useState('');
+            const fileInputRef = useRef(null);
+
+            const filteredTracks = trierEtFiltrer(state.tracks, { search: state.search, filter: state.filter, stickerFilter: state.stickerFilter });
 
             const handleAdd = async () => { if (!urlInput.trim()) return; await addTrack(urlInput); setUrlInput(''); };
             const handleImport = async (e) => {
                 const file = e.target.files[0]; if (!file) return;
                 try {
-                    const imported = await importFromJson(file);
-                    dispatch({ type: 'SET_TRACKS', payload: imported.map(t => new Track(t)) });
-                    showToast(`${imported.length} morceaux importés !`);
+                    const { tracks, playlists } = await importFromJson(file);
+                    dispatch({ type: 'SET_TRACKS', payload: tracks.map(t => new Track(t)) });
+                    if (playlists.length > 0) dispatch({ type: 'SET_PLAYLISTS', payload: playlists });
+                    showToast(`${tracks.length} morceaux importés !`);
                 } catch (err) { showToast(err.message, 'error'); }
             };
 
@@ -692,10 +1034,7 @@
             const toggleStickerFilter = (stickerId) => {
                 const current = state.stickerFilter;
                 const hasSticker = current.includes(stickerId);
-                const newFilter = hasSticker 
-                    ? current.filter(s => s !== stickerId)
-                    : [...current, stickerId];
-                dispatch({ type: 'SET_STICKER_FILTER', payload: newFilter });
+                dispatch({ type: 'SET_STICKER_FILTER', payload: hasSticker ? current.filter(s => s !== stickerId) : [...current, stickerId] });
             };
 
             const selectFormationFilter = (formationId) => {
@@ -703,21 +1042,32 @@
                 const current = state.stickerFilter;
                 const isCurrentlyActive = current.includes(formationId);
                 const cleaned = current.filter(s => !formations.includes(s));
-                if (isCurrentlyActive) {
-                    dispatch({ type: 'SET_STICKER_FILTER', payload: cleaned });
-                } else {
-                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...cleaned, formationId] });
-                }
+                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, formationId] });
+            };
+
+            const selectGenreFilter = (genreId) => {
+                const genres = ['rock', 'reggae', 'rap', 'pop'];
+                const current = state.stickerFilter;
+                const isCurrentlyActive = current.includes(genreId);
+                const cleaned = current.filter(s => !genres.includes(s));
+                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, genreId] });
+            };
+
+            const selectLangueFilter = (langueId) => {
+                const langues = ['eng', 'fr'];
+                const current = state.stickerFilter;
+                const isCurrentlyActive = current.includes(langueId);
+                const cleaned = current.filter(s => !langues.includes(s));
+                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, langueId] });
             };
 
             return (
                 <div className="app-container">
                     <header className="app-header">
                         <div className="header-top">
-                            <h1>
-                                🎵 MUSIK 
-                                <span className="version-badge" onClick={() => openModal(' Historique des Versions', `🎵 MUSIK v2.4\n\n✅ Nouveau sticker OLD ️\n✅ Sticker Formation (Groupe/Duo/Single)\n✅ Filtrage cumulatif (AND)\n✅ Système de Stickers complet\n✅ Interface simplifiée\n✅ Lecture Playlist YouTube\n✅ Nettoyage automatique des titres\n✅ Mode Clair/Sombre`)}>
-                                    v2.4 ℹ️
+                            <h1>🎵 MUSIK 
+                                <span className="version-badge" onClick={() => openModal('📜 Historique des Versions', `🎵 MUSIK v3.0\n\n✅ Layout 2 colonnes (Bibliothèque / Panier)\n✅ Système Playlist Panier\n✅ Drag & Drop réorganisation\n✅ Nommer/Dupliquer/Supprimer playlists\n✅ Bouton PLAY intégré\n✅ Stickers GENRE (Rock/Reggae/Rap/Pop)\n✅ Sticker LANGUE (ENG/FR)\n✅ Sticker Formation (Groupe/Duo/Single)\n✅ Sticker Lyrics \n✅ Sticker Delire 🎭\n✅ Bibliothèque pré-chargée\n✅ Filtrage cumulatif (AND)\n✅ Nettoyage automatique des titres\n✅ Mode Clair/Sombre`)}>
+                                    v3.0 ℹ️
                                 </span>
                             </h1>
                             <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Changer le thème">
@@ -732,17 +1082,14 @@
                         
                         <div className="toolbar">
                             <div className="search-box">🔍 <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
-                            
                             <div className="filter-wrapper">
                                 <span className="filter-label">Filtre :</span>
                                 <select value={state.filter} onChange={(e) => dispatch({ type: 'SET_FILTER', payload: e.target.value })}>
-                                    <option value="toutes"> Toutes</option>
+                                    <option value="toutes">📚 Toutes</option>
                                     <option value="favoris">⭐ Favoris</option>
-                                    <option value="playlist">🎵 Playlist</option>
                                 </select>
                             </div>
-                            
-                            <button onClick={() => exportToJson(state.tracks)} className="btn-secondary" title="Exporter">📥</button>
+                            <button onClick={() => exportToJson(state.tracks, state.playlists)} className="btn-secondary" title="Exporter">📥</button>
                             <button onClick={() => fileInputRef.current.click()} className="btn-secondary" title="Importer">📂</button>
                             <input type="file" ref={fileInputRef} accept=".json" onChange={handleImport} hidden />
                         </div>
@@ -750,35 +1097,36 @@
                         <div className="stickers-bar">
                             <span className="stickers-label">🏷️ Stickers :</span>
                             {STICKERS_DISPONIBLES.map(sticker => (
-                                <StickerFilterItem 
-                                    key={sticker.id}
-                                    sticker={sticker}
-                                    activeFilters={state.stickerFilter}
-                                    onToggle={toggleStickerFilter}
+                                <StickerFilterItem key={sticker.id} sticker={sticker} activeFilters={state.stickerFilter}
+                                    onToggle={toggleStickerFilter} 
                                     onSubSelect={selectFormationFilter}
-                                />
+                                    onGenreSelect={selectGenreFilter}
+                                    onLangueSelect={selectLangueFilter} />
                             ))}
                         </div>
                     </header>
 
-                    <main className="library">
-                        <div className="library-header">
-                            <h2>
-                                {state.filter === 'favoris' ? '⭐ Favoris' : state.filter === 'playlist' ? '🎵 Playlist' : '📚 Bibliothèque'} 
-                                <span className="count">({filteredTracks.length})</span>
-                            </h2>
-                            
-                            {isPlaylistView && filteredTracks.length > 0 && (
-                                <button onClick={playFullPlaylist} className="btn-play-playlist">
-                                    ▶ Lire la Playlist
-                                </button>
-                            )}
+                    <div className="main-content">
+                        <div className="column">
+                            <div className="column-header">
+                                <h2>{state.filter === 'favoris' ? '⭐ Favoris' : '📚 Bibliothèque'} <span className="count">({filteredTracks.length})</span></h2>
+                            </div>
+                            <div className="column-content">
+                                <div className="track-list">
+                                    {filteredTracks.length === 0 ? (
+                                        <p className="empty-state">Aucun morceau trouvé. Ajoutez-en un via YouTube !</p>
+                                    ) : (
+                                        filteredTracks.map(track => <TrackCard key={track.id} track={track} />)
+                                    )}
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="track-list">
-                            {filteredTracks.length === 0 ? <p className="empty-state">Aucun morceau trouvé. Ajoutez-en un via YouTube !</p> : filteredTracks.map(track => <TrackCard key={track.id} track={track} />)}
+                        <div className="column">
+                            <PlaylistSection />
                         </div>
-                    </main>
+                    </div>
+
                     <Toast />
                     <Modal />
                 </div>
