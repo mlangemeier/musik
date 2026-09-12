@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎵 MUSIK 2.4</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #0A0A0C; --bg-secondary: #121216; --bg-card: #1A1A20;
+            --bg-hover: #25252D; --text-primary: #F5F5F7; --text-secondary: #A1A1AA;
+            --accent: #8B5CF6; --accent-hover: #7C3AED; --success: #10B981;
+            --error: #EF4444; --border: #27272A; --radius: 12px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode {
+            --bg-primary: #F8FAFC; --bg-secondary: #FFFFFF; --bg-card: #FFFFFF;
+            --bg-hover: #F1F5F9; --text-primary: #0F172A; --text-secondary: #64748B;
+            --accent: #7C3AED; --accent-hover: #6D28D9; --border: #E2E8F0; 
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: var(--bg-primary); color: var(--text-primary); 
+            font-family: 'Inter', sans-serif; line-height: 1.5; 
+            -webkit-font-smoothing: antialiased; transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+        
+        .app-container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .app-header { margin-bottom: 2rem; }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .app-header h1 { 
+            font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; 
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            display: flex; align-items: center; gap: 1rem;
+        }
+        
+        .version-badge { 
+            font-size: 0.9rem; background: var(--accent); color: white; 
+            padding: 4px 10px; border-radius: 20px; vertical-align: middle; 
+            -webkit-text-fill-color: white; cursor: pointer; 
+            transition: transform 0.2s, background 0.2s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .version-badge:hover { transform: scale(1.05); background: var(--accent-hover); }
+
+        .add-form { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .add-form input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); padding: 0.8rem 1.2rem; border-radius: var(--radius); font-size: 1rem; transition: var(--transition); }
+        .add-form input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2); }
+        
+        .toolbar { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+        .search-box { display: flex; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 0 1rem; flex: 1; min-width: 200px; }
+        .search-box input { background: transparent; border: none; color: var(--text-primary); padding: 0.6rem; width: 100%; outline: none; }
+        
+        .filter-wrapper { display: flex; align-items: center; gap: 0.5rem; }
+        .filter-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+        
+        select, .btn-secondary, .btn-primary { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.6rem 1rem; border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition); font-family: inherit; }
+        select:hover, .btn-secondary:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        
+        .stickers-bar { 
+            display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; 
+            padding: 0.75rem; background: var(--bg-secondary); 
+            border: 1px solid var(--border); border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+        .stickers-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; margin-right: 0.5rem; }
+        
+        .sticker-filter {
+            background: var(--bg-card); border: 2px solid var(--border); border-radius: 20px;
+            padding: 0.4rem 0.8rem; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600;
+            color: var(--text-secondary); position: relative;
+        }
+        .sticker-filter:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
+        .sticker-filter.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .sticker-filter .sticker-icon { font-size: 1rem; }
+        
+        .sub-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 100;
+            min-width: max-content;
+        }
+        .sub-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border: 2px solid transparent;
+        }
+        .sub-menu-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .sub-menu-item.active { background: var(--accent); color: white; border-color: var(--accent-hover); }
+        .sub-menu-item .sub-icon { font-size: 1.3rem; }
+        
+        .library-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .library-header h2 { font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+        .count { color: var(--text-secondary); font-weight: normal; font-size: 1.1rem; }
+        
+        .btn-play-playlist { 
+            background: var(--success); color: white; border: none; 
+            padding: 0.8rem 1.5rem; border-radius: 30px; font-weight: bold; 
+            font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); transition: transform 0.2s;
+        }
+        .btn-play-playlist:hover { transform: scale(1.05); background: #059669; }
+
+        .track-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        
+        .track-card { 
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); 
+            padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; 
+            transition: var(--transition); box-shadow: var(--card-shadow);
+        }
+        .track-card:hover { background: var(--bg-hover); border-color: var(--accent); transform: translateY(-2px); }
+        .track-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 700px; }
+        .track-stickers { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .sticker-tag { 
+            background: var(--accent); color: white; padding: 2px 8px; border-radius: 12px; 
+            font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .track-actions { display: flex; gap: 0.5rem; opacity: 0.7; transition: var(--transition); }
+        .track-card:hover .track-actions { opacity: 1; }
+        
+        .btn-icon { background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: var(--transition); font-size: 1.2rem; }
+        .btn-icon:hover { background: rgba(139, 92, 246, 0.1); color: var(--accent); }
+        .btn-play:hover { color: var(--success) !important; } .btn-delete:hover { color: var(--error) !important; }
+        .active-fav { color: #FBBF24 !important; } .active-playlist { color: var(--accent) !important; }
+        .playlist-order { position: absolute; top: -4px; right: -4px; background: var(--accent); color: white; font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.75rem; font-weight: 500; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); animation: slideIn 0.3s ease-out forwards; z-index: 1000; }
+        .toast-success { background: #064E3B; color: #A7F3D0; border: 1px solid #10B981; }
+        .toast-error { background: #7F1D1D; color: #FCA5A5; border: 1px solid #EF4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        .empty-state { text-align: center; color: var(--text-secondary); padding: 4rem 0; font-size: 1.1rem; }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--text-primary); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .modal-header h3 { font-size: 1.5rem; font-weight: 700; }
+        .modal-body { color: var(--text-secondary); white-space: pre-wrap; font-family: 'Inter', monospace; line-height: 1.6; font-size: 0.95rem; }
+        .btn-close { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.5rem; }
+        .btn-close:hover { color: var(--text-primary); }
+
+        .sticker-box { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+        .sticker-item {
+            background: var(--bg-secondary); border: 2px solid var(--border); border-radius: 20px;
+            padding: 0.4rem 0.8rem; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600;
+            color: var(--text-secondary); position: relative;
+        }
+        .sticker-item:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
+        .sticker-item.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .sticker-item .sticker-icon { font-size: 1rem; }
+        
+        .btn-toggle-stickers { 
+            background: transparent; border: none; color: var(--accent); 
+            cursor: pointer; font-size: 0.85rem; margin-top: 0.5rem;
+            text-decoration: underline; padding: 0;
+        }
+        .btn-toggle-stickers:hover { color: var(--accent-hover); }
+
+        @media (max-width: 768px) { 
+            .track-card { flex-direction: column; align-items: flex-start; gap: 1rem; } 
+            .track-actions { width: 100%; justify-content: space-around; opacity: 1; } 
+            .track-title { max-width: 100%; } 
+            .header-top { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useContext, createContext, useCallback, useRef } = React;
+
+        //  CORRECTION 1 : Icônes Duo restaurées (👫)
+        const STICKERS_DISPONIBLES = [
+            { id: 'rock', label: 'Rock', icon: '🎸' },
+            { id: 'unplugged', label: 'Unplugged', icon: '🎤' },
+            { id: 'reggae', label: 'Reggae', icon: '🌴' },
+            { 
+                id: 'groupe', 
+                label: 'Formation', 
+                icon: '👥',
+                hasSubMenu: true,
+                subChoices: [
+                    { id: 'groupe', label: 'Groupe', icon: '👥' },
+                    { id: 'duo', label: 'Duo', icon: '👫' },
+                    { id: 'single', label: 'Single', icon: '🧍' }
+                ]
+            },
+            { id: 'eng', label: 'ENG', icon: '🇬' },
+            { id: 'fr', label: 'FR', icon: '🇫' },
+            { id: 'love', label: 'Love', icon: '❤️' },
+            { id: 'old', label: 'OLD', icon: '🕰️' }
+        ];
+
+        const getStickerInfo = (stickerId) => {
+            for (const sticker of STICKERS_DISPONIBLES) {
+                if (sticker.hasSubMenu) {
+                    const sub = sticker.subChoices.find(s => s.id === stickerId);
+                    if (sub) return sub;
+                }
+                if (sticker.id === stickerId) return sticker;
+            }
+            return null;
+        };
+
+        const nettoyerTitre = (titre) => {
+            if (!titre) return '';
+            let nettoye = titre;
+            nettoye = nettoye.replace(/\s*\([^)]*\)/g, '');
+            nettoye = nettoye.replace(/\s*\[[^\]]*\]/g, '');
+            nettoye = nettoye.trim().replace(/\s+/g, ' ');
+            return nettoye;
+        };
+
+        class Track {
+            constructor(data) {
+                this.id = data.id || crypto.randomUUID();
+                this.titre = nettoyerTitre(data.titre || '');
+                this.artiste = data.artiste || '';
+                this.lien = data.lien || ''; 
+                this.favori = data.favori || false;
+                this.playlist = data.playlist || false; 
+                this.ordrePlaylist = data.ordrePlaylist || 0;
+                this.dateSelectionPlaylist = data.dateSelectionPlaylist || 0;
+                this.stickers = data.stickers || [];
+            }
+            toggleFavorite() { return new Track({ ...this, favori: !this.favori }); }
+            togglePlaylist() {
+                const isNowInPlaylist = !this.playlist;
+                return new Track({ ...this, playlist: isNowInPlaylist, dateSelectionPlaylist: isNowInPlaylist ? Date.now() : 0 });
+            }
+            toggleSticker(stickerId) {
+                const hasSticker = this.stickers.includes(stickerId);
+                const newStickers = hasSticker 
+                    ? this.stickers.filter(s => s !== stickerId)
+                    : [...this.stickers, stickerId];
+                return new Track({ ...this, stickers: newStickers });
+            }
+            setFormation(formationId) {
+                const formations = ['groupe', 'duo', 'single'];
+                const cleaned = this.stickers.filter(s => !formations.includes(s));
+                if (this.stickers.includes(formationId)) {
+                    return new Track({ ...this, stickers: cleaned });
+                }
+                return new Track({ ...this, stickers: [...cleaned, formationId] });
+            }
+        }
+
+        const normaliser = (texte) => texte.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        const estDoublon = (tracks, nouveau) => tracks.some(t => t.lien === nouveau.lien || normaliser(t.titre) === normaliser(nouveau.titre));
+
+        // 🌟 CORRECTION 2 : Filtrage cumulatif (AND) au lieu de disjonctif (OR)
+        const trierEtFiltrer = (tracks, { search, filter, stickerFilter }) => {
+            let result = [...tracks];
+            if (filter === 'favoris') result = result.filter(t => t.favori);
+            if (filter === 'playlist') result = result.filter(t => t.playlist);
+            if (search) { 
+                const q = search.toLowerCase(); 
+                result = result.filter(t => t.titre.toLowerCase().includes(q) || t.artiste.toLowerCase().includes(q)); 
+            }
+            //  NOUVEAU : Tous les stickers sélectionnés doivent être présents (AND)
+            if (stickerFilter && stickerFilter.length > 0) {
+                result = result.filter(t => 
+                    stickerFilter.every(sticker => t.stickers.includes(sticker))
+                );
+            }
+            return result.reverse();
+        };
+
+        const recalculerOrdrePlaylist = (tracks) => {
+            let updated = tracks.map(t => t.playlist ? t : new Track({ ...t, ordrePlaylist: 0 }));
+            const inPlaylist = updated.filter(t => t.playlist).sort((a, b) => a.dateSelectionPlaylist - b.dateSelectionPlaylist);
+            inPlaylist.forEach((t, index) => { t.ordrePlaylist = index + 1; });
+            return updated;
+        };
+
+        const STORAGE_KEY = 'musik_library';
+        const THEME_KEY = 'musik_theme';
+        const loadTracks = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const saveTracks = (tracks) => localStorage.setItem(STORAGE_KEY, JSON.stringify(tracks));
+
+        const API_KEY = "AIzaSyDToXoQ5a9-rRz9dkUre-HP6yJTSjeX-FM"; 
+        const extraireVideoId = (url) => { const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/; const match = url.match(regex); return match ? match[1] : null; };
+        
+        const recupererInfosYoutube = async (url) => {
+            const videoId = extraireVideoId(url);
+            if (!videoId) throw new Error("Lien YouTube invalide");
+            const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${API_KEY}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (!data.items || data.items.length === 0) throw new Error("Vidéo introuvable");
+            return { 
+                titre: data.items[0].snippet.title, 
+                artiste: data.items[0].snippet.channelTitle, 
+                lien: url 
+            };
+        };
+
+        const exportToJson = (tracks) => {
+            const data = { version: "2.4", dateExport: new Date().toISOString(), morceaux: tracks };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        const importFromJson = (file) => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const content = JSON.parse(e.target.result);
+                    const tracks = Array.isArray(content) ? content : content.morceaux || [];
+                    resolve(tracks);
+                } catch (err) { reject(new Error("Fichier JSON invalide")); }
+            };
+            reader.readAsText(file);
+        });
+
+        const MusicContext = createContext();
+        const initialState = { 
+            tracks: [], search: '', filter: 'toutes', stickerFilter: [],
+            toast: null, modal: null, theme: localStorage.getItem(THEME_KEY) || 'dark'
+        };
+
+        function reducer(state, action) {
+            switch (action.type) {
+                case 'SET_TRACKS': return { ...state, tracks: action.payload };
+                case 'SET_SEARCH': return { ...state, search: action.payload };
+                case 'SET_FILTER': return { ...state, filter: action.payload };
+                case 'SET_STICKER_FILTER': return { ...state, stickerFilter: action.payload };
+                case 'SHOW_TOAST': return { ...state, toast: action.payload };
+                case 'HIDE_TOAST': return { ...state, toast: null };
+                case 'SHOW_MODAL': return { ...state, modal: action.payload };
+                case 'HIDE_MODAL': return { ...state, modal: null };
+                case 'TOGGLE_THEME': return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' };
+                default: return state;
+            }
+        }
+
+        function MusicProvider({ children }) {
+            const [state, dispatch] = React.useReducer(reducer, initialState);
+
+            useEffect(() => {
+                if (state.theme === 'light') document.body.classList.add('light-mode');
+                else document.body.classList.remove('light-mode');
+                localStorage.setItem(THEME_KEY, state.theme);
+            }, [state.theme]);
+
+            useEffect(() => {
+                const saved = loadTracks();
+                const cleaned = saved.map(t => new Track(t));
+                dispatch({ type: 'SET_TRACKS', payload: cleaned });
+            }, []);
+
+            useEffect(() => {
+                if (state.tracks.length > 0 || localStorage.getItem(STORAGE_KEY)) saveTracks(state.tracks);
+            }, [state.tracks]);
+
+            const showToast = useCallback((message, type = 'success') => {
+                dispatch({ type: 'SHOW_TOAST', payload: { message, type } });
+                setTimeout(() => dispatch({ type: 'HIDE_TOAST' }), 3000);
+            }, []);
+
+            const addTrack = async (url) => {
+                try {
+                    const infos = await recupererInfosYoutube(url);
+                    if (estDoublon(state.tracks, infos)) { showToast("️ Doublon détecté !", "error"); return; }
+                    dispatch({ type: 'SET_TRACKS', payload: [...state.tracks, new Track(infos)] });
+                    showToast("🎵 Morceau ajouté !");
+                } catch (err) { showToast(`❌ ${err.message}`, "error"); }
+            };
+
+            const toggleFavorite = (id) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === id ? t.toggleFavorite() : t) });
+            const togglePlaylist = (id) => {
+                let updated = state.tracks.map(t => t.id === id ? t.togglePlaylist() : t);
+                dispatch({ type: 'SET_TRACKS', payload: recalculerOrdrePlaylist(updated) });
+            };
+            const toggleSticker = (trackId, stickerId) => {
+                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.toggleSticker(stickerId) : t) });
+            };
+            const setFormation = (trackId, formationId) => {
+                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
+            };
+            const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("🗑️ Supprimé"); };
+
+            const playFullPlaylist = () => {
+                const playlistTracks = state.tracks
+                    .filter(t => t.playlist)
+                    .sort((a, b) => a.ordrePlaylist - b.ordrePlaylist);
+                
+                if (playlistTracks.length === 0) {
+                    showToast("Aucun morceau dans la playlist", "error");
+                    return;
+                }
+
+                const ids = playlistTracks.map(t => extraireVideoId(t.lien)).filter(id => id);
+                if (ids.length === 0) {
+                    showToast("Liens YouTube invalides", "error");
+                    return;
+                }
+
+                const url = `https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`;
+                window.open(url, '_blank');
+                showToast(`▶ Lecture de ${ids.length} morceaux...`);
+            };
+
+            return <MusicContext.Provider value={{ state, dispatch, addTrack, toggleFavorite, togglePlaylist, toggleSticker, setFormation, deleteTrack, showToast, playFullPlaylist }}>{children}</MusicContext.Provider>;
+        }
+        const useMusic = () => useContext(MusicContext);
+
+        function Toast() {
+            const { state } = useMusic();
+            if (!state.toast) return null;
+            const isError = state.toast.type === 'error';
+            return <div className={`toast ${isError ? 'toast-error' : 'toast-success'}`}>{isError ? '' : '✅'} <span>{state.toast.message}</span></div>;
+        }
+
+        function Modal() {
+            const { state, dispatch } = useMusic();
+            if (!state.modal) return null;
+            return (
+                <div className="modal-overlay" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>{state.modal.title}</h3>
+                            <button className="btn-close" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>✕</button>
+                        </div>
+                        <div className="modal-body">{state.modal.content}</div>
+                    </div>
+                </div>
+            );
+        }
+
+        function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect }) {
+            const [showSubMenu, setShowSubMenu] = useState(false);
+            const subMenuRef = useRef(null);
+
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    if (subMenuRef.current && !subMenuRef.current.contains(event.target)) {
+                        setShowSubMenu(false);
+                    }
+                };
+                if (showSubMenu) {
+                    document.addEventListener('mousedown', handleClickOutside);
+                }
+                return () => document.removeEventListener('mousedown', handleClickOutside);
+            }, [showSubMenu]);
+
+            const activeSubChoice = sticker.hasSubMenu 
+                ? sticker.subChoices.find(sub => activeFilters.includes(sub.id))
+                : null;
+            
+            const isActive = sticker.hasSubMenu ? !!activeSubChoice : activeFilters.includes(sticker.id);
+
+            const handleClick = () => {
+                if (sticker.hasSubMenu) {
+                    setShowSubMenu(!showSubMenu);
+                } else {
+                    onToggle(sticker.id);
+                }
+            };
+
+            return (
+                <div style={{ position: 'relative' }} ref={subMenuRef}>
+                    <div 
+                        className={`sticker-filter ${isActive ? 'active' : ''}`}
+                        onClick={handleClick}
+                        title={sticker.hasSubMenu ? 'Choisir la formation' : `Filtrer par ${sticker.label}`}
+                    >
+                        <span className="sticker-icon">
+                            {activeSubChoice ? activeSubChoice.icon : sticker.icon}
+                        </span>
+                        <span>
+                            {activeSubChoice ? activeSubChoice.label : sticker.label}
+                        </span>
+                    </div>
+
+                    {sticker.hasSubMenu && showSubMenu && (
+                        <div className="sub-menu">
+                            {sticker.subChoices.map(sub => {
+                                const isSubActive = activeFilters.includes(sub.id);
+                                return (
+                                    <div 
+                                        key={sub.id}
+                                        className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onSubSelect(sub.id);
+                                            setShowSubMenu(false);
+                                        }}
+                                        title={isSubActive ? `Désactiver ${sub.label}` : `Activer ${sub.label}`}
+                                    >
+                                        <span className="sub-icon">{sub.icon}</span>
+                                        <span>{sub.label}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function StickerBoxItem({ sticker, currentStickers, onToggle, onSubSelect }) {
+            const [showSubMenu, setShowSubMenu] = useState(false);
+            const subMenuRef = useRef(null);
+
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    if (subMenuRef.current && !subMenuRef.current.contains(event.target)) {
+                        setShowSubMenu(false);
+                    }
+                };
+                if (showSubMenu) {
+                    document.addEventListener('mousedown', handleClickOutside);
+                }
+                return () => document.removeEventListener('mousedown', handleClickOutside);
+            }, [showSubMenu]);
+
+            const activeSubChoice = sticker.hasSubMenu 
+                ? sticker.subChoices.find(sub => currentStickers.includes(sub.id))
+                : null;
+            
+            const isActive = sticker.hasSubMenu ? !!activeSubChoice : currentStickers.includes(sticker.id);
+
+            const handleClick = () => {
+                if (sticker.hasSubMenu) {
+                    setShowSubMenu(!showSubMenu);
+                } else {
+                    onToggle(sticker.id);
+                }
+            };
+
+            return (
+                <div style={{ position: 'relative' }} ref={subMenuRef}>
+                    <div 
+                        className={`sticker-item ${isActive ? 'active' : ''}`}
+                        onClick={handleClick}
+                        title={sticker.hasSubMenu ? 'Choisir la formation' : (isActive ? `Retirer ${sticker.label}` : `Ajouter ${sticker.label}`)}
+                    >
+                        <span className="sticker-icon">
+                            {activeSubChoice ? activeSubChoice.icon : sticker.icon}
+                        </span>
+                        <span>
+                            {activeSubChoice ? activeSubChoice.label : sticker.label}
+                        </span>
+                    </div>
+
+                    {sticker.hasSubMenu && showSubMenu && (
+                        <div className="sub-menu">
+                            {sticker.subChoices.map(sub => {
+                                const isSubActive = currentStickers.includes(sub.id);
+                                return (
+                                    <div 
+                                        key={sub.id}
+                                        className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onSubSelect(sub.id);
+                                            setShowSubMenu(false);
+                                        }}
+                                        title={isSubActive ? `Désactiver ${sub.label}` : `Activer ${sub.label}`}
+                                    >
+                                        <span className="sub-icon">{sub.icon}</span>
+                                        <span>{sub.label}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function StickerBox({ trackId, currentStickers }) {
+            const { toggleSticker, setFormation } = useMusic();
+            return (
+                <div className="sticker-box">
+                    {STICKERS_DISPONIBLES.map(sticker => (
+                        <StickerBoxItem 
+                            key={sticker.id}
+                            sticker={sticker}
+                            currentStickers={currentStickers}
+                            onToggle={(id) => toggleSticker(trackId, id)}
+                            onSubSelect={(id) => setFormation(trackId, id)}
+                        />
+                    ))}
+                </div>
+            );
+        }
+
+        function TrackCard({ track }) {
+            const { toggleFavorite, togglePlaylist, deleteTrack } = useMusic();
+            const [showStickers, setShowStickers] = useState(false);
+
+            return (
+                <div className="track-card">
+                    <div className="track-info" style={{ flex: 1 }}>
+                        <h3 className="track-title" title={track.titre}>{track.titre}</h3>
+                        
+                        {track.stickers.length > 0 && (
+                            <div className="track-stickers">
+                                {track.stickers.map(stickerId => {
+                                    const sticker = getStickerInfo(stickerId);
+                                    return sticker ? (
+                                        <span key={stickerId} className="sticker-tag">
+                                            {sticker.icon} {sticker.label}
+                                        </span>
+                                    ) : null;
+                                })}
+                            </div>
+                        )}
+                        <button 
+                            onClick={() => setShowStickers(!showStickers)}
+                            className="btn-toggle-stickers"
+                        >
+                            {showStickers ? '✕ Fermer' : '️ Gérer les stickers'}
+                        </button>
+                        {showStickers && <StickerBox trackId={track.id} currentStickers={track.stickers} />}
+                    </div>
+                    <div className="track-actions">
+                        <button onClick={() => window.open(track.lien, '_blank')} className="btn-icon btn-play" title="Écouter">▶</button>
+                        <button onClick={() => toggleFavorite(track.id)} className={`btn-icon ${track.favori ? 'active-fav' : ''}`} title="Favori">{track.favori ? '★' : '☆'}</button>
+                        <button onClick={() => togglePlaylist(track.id)} className={`btn-icon ${track.playlist ? 'active-playlist' : ''}`} title="Playlist">
+                            {track.playlist ? <>{track.ordrePlaylist} <span className="playlist-order">✓</span></> : '☐'}
+                        </button>
+                        <button onClick={() => deleteTrack(track.id)} className="btn-icon btn-delete" title="Supprimer"></button>
+                    </div>
+                </div>
+            );
+        }
+
+        function MusicApp() {
+            const { state, dispatch, addTrack, showToast, playFullPlaylist } = useMusic();
+            const [urlInput, setUrlInput] = useState('');
+            const fileInputRef = React.useRef(null);
+
+            const filteredTracks = trierEtFiltrer(state.tracks, { 
+                search: state.search, 
+                filter: state.filter,
+                stickerFilter: state.stickerFilter
+            });
+            const isPlaylistView = state.filter === 'playlist';
+
+            const handleAdd = async () => { if (!urlInput.trim()) return; await addTrack(urlInput); setUrlInput(''); };
+            const handleImport = async (e) => {
+                const file = e.target.files[0]; if (!file) return;
+                try {
+                    const imported = await importFromJson(file);
+                    dispatch({ type: 'SET_TRACKS', payload: imported.map(t => new Track(t)) });
+                    showToast(`${imported.length} morceaux importés !`);
+                } catch (err) { showToast(err.message, 'error'); }
+            };
+
+            const openModal = (title, content) => dispatch({ type: 'SHOW_MODAL', payload: { title, content } });
+
+            const toggleStickerFilter = (stickerId) => {
+                const current = state.stickerFilter;
+                const hasSticker = current.includes(stickerId);
+                const newFilter = hasSticker 
+                    ? current.filter(s => s !== stickerId)
+                    : [...current, stickerId];
+                dispatch({ type: 'SET_STICKER_FILTER', payload: newFilter });
+            };
+
+            const selectFormationFilter = (formationId) => {
+                const formations = ['groupe', 'duo', 'single'];
+                const current = state.stickerFilter;
+                const isCurrentlyActive = current.includes(formationId);
+                const cleaned = current.filter(s => !formations.includes(s));
+                if (isCurrentlyActive) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: cleaned });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...cleaned, formationId] });
+                }
+            };
+
+            return (
+                <div className="app-container">
+                    <header className="app-header">
+                        <div className="header-top">
+                            <h1>
+                                🎵 MUSIK 
+                                <span className="version-badge" onClick={() => openModal(' Historique des Versions', `🎵 MUSIK v2.4\n\n✅ Nouveau sticker OLD ️\n✅ Sticker Formation (Groupe/Duo/Single)\n✅ Filtrage cumulatif (AND)\n✅ Système de Stickers complet\n✅ Interface simplifiée\n✅ Lecture Playlist YouTube\n✅ Nettoyage automatique des titres\n✅ Mode Clair/Sombre`)}>
+                                    v2.4 ℹ️
+                                </span>
+                            </h1>
+                            <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Changer le thème">
+                                {state.theme === 'dark' ? '☀️' : '🌙'}
+                            </button>
+                        </div>
+
+                        <div className="add-form">
+                            <input type="text" placeholder="Coller un lien YouTube..." value={urlInput} onChange={(e) => setUrlInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleAdd()} />
+                            <button onClick={handleAdd} className="btn-primary">➕ Ajouter</button>
+                        </div>
+                        
+                        <div className="toolbar">
+                            <div className="search-box">🔍 <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
+                            
+                            <div className="filter-wrapper">
+                                <span className="filter-label">Filtre :</span>
+                                <select value={state.filter} onChange={(e) => dispatch({ type: 'SET_FILTER', payload: e.target.value })}>
+                                    <option value="toutes"> Toutes</option>
+                                    <option value="favoris">⭐ Favoris</option>
+                                    <option value="playlist">🎵 Playlist</option>
+                                </select>
+                            </div>
+                            
+                            <button onClick={() => exportToJson(state.tracks)} className="btn-secondary" title="Exporter">📥</button>
+                            <button onClick={() => fileInputRef.current.click()} className="btn-secondary" title="Importer">📂</button>
+                            <input type="file" ref={fileInputRef} accept=".json" onChange={handleImport} hidden />
+                        </div>
+
+                        <div className="stickers-bar">
+                            <span className="stickers-label">🏷️ Stickers :</span>
+                            {STICKERS_DISPONIBLES.map(sticker => (
+                                <StickerFilterItem 
+                                    key={sticker.id}
+                                    sticker={sticker}
+                                    activeFilters={state.stickerFilter}
+                                    onToggle={toggleStickerFilter}
+                                    onSubSelect={selectFormationFilter}
+                                />
+                            ))}
+                        </div>
+                    </header>
+
+                    <main className="library">
+                        <div className="library-header">
+                            <h2>
+                                {state.filter === 'favoris' ? '⭐ Favoris' : state.filter === 'playlist' ? '🎵 Playlist' : '📚 Bibliothèque'} 
+                                <span className="count">({filteredTracks.length})</span>
+                            </h2>
+                            
+                            {isPlaylistView && filteredTracks.length > 0 && (
+                                <button onClick={playFullPlaylist} className="btn-play-playlist">
+                                    ▶ Lire la Playlist
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="track-list">
+                            {filteredTracks.length === 0 ? <p className="empty-state">Aucun morceau trouvé. Ajoutez-en un via YouTube !</p> : filteredTracks.map(track => <TrackCard key={track.id} track={track} />)}
+                        </div>
+                    </main>
+                    <Toast />
+                    <Modal />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            <React.StrictMode>
+                <MusicProvider>
+                    <MusicApp />
+                </MusicProvider>
+            </React.StrictMode>
+        );
+    </script>
+</body>
+</html>
