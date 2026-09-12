@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎵 MUSIK 3.0</title>
+    <title>🎵 MUSIK 3.1</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -154,6 +154,11 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
         .column-header h2 {
@@ -165,6 +170,29 @@
         }
 
         .count { color: var(--text-secondary); font-weight: normal; font-size: 1rem; }
+
+        .btn-play-library {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-play-library:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+        .btn-play-library:active { transform: scale(0.98); }
+        .btn-play-library .play-icon { font-size: 1.2rem; }
 
         .column-content {
             flex: 1;
@@ -305,7 +333,50 @@
             transition: var(--transition); box-shadow: var(--card-shadow);
         }
         .track-card:hover { background: var(--bg-hover); border-color: var(--accent); transform: translateY(-1px); }
-        .track-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        
+        .track-title { 
+            font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .track-title:hover { background: rgba(139, 92, 246, 0.1); }
+        
+        .track-artist {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.2s;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin-bottom: 0.3rem;
+        }
+        .track-artist:hover { background: rgba(139, 92, 246, 0.1); }
+        
+        .edit-input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+        .edit-input:focus {
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+        .edit-hint {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            font-style: italic;
+        }
+
         .track-stickers { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
         .sticker-tag { 
             background: var(--accent); color: white; padding: 1px 6px; border-radius: 10px; 
@@ -327,13 +398,194 @@
         
         .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1rem; }
         
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--text-primary); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        .modal-header h3 { font-size: 1.5rem; font-weight: 700; }
-        .modal-body { color: var(--text-secondary); white-space: pre-wrap; font-family: 'Inter', monospace; line-height: 1.6; font-size: 0.95rem; }
-        .btn-close { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.5rem; }
-        .btn-close:hover { color: var(--text-primary); }
+        /* 🌟 NOUVEAU : Modal moderne v3.1 */
+        .modal-overlay { 
+            position: fixed; inset: 0; 
+            background: rgba(0,0,0,0.6); 
+            display: flex; align-items: center; justify-content: center; 
+            z-index: 1000; 
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content { 
+            background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            border-radius: 16px; 
+            padding: 0;
+            max-width: 560px; 
+            width: 90%; 
+            max-height: 80vh; 
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-hover) 100%);
+        }
+        
+        .modal-header h3 { 
+            font-size: 1.1rem; 
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-close-btn { 
+            background: transparent; 
+            border: none; 
+            color: var(--text-secondary); 
+            cursor: pointer; 
+            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close-btn:hover { 
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        
+        .modal-body { 
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-body::-webkit-scrollbar { width: 6px; }
+        .modal-body::-webkit-scrollbar-track { background: transparent; }
+        .modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        
+        /* Timeline moderne */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -1.5rem;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-card);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        
+        .timeline-item.current .timeline-dot {
+            background: var(--success);
+            box-shadow: 0 0 0 2px var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 2px var(--success); }
+            50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2); }
+        }
+        
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .version-tag {
+            background: var(--accent);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .timeline-item.current .version-tag {
+            background: var(--success);
+        }
+        
+        .version-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .timeline-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            color: var(--success);
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .timeline-item.current .feature-icon {
+            color: var(--success);
+        }
 
         .sticker-box { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
         .sticker-item {
@@ -359,6 +611,8 @@
             .track-card { flex-direction: column; align-items: flex-start; gap: 0.75rem; } 
             .track-actions { width: 100%; justify-content: space-around; opacity: 1; } 
             .header-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+            .column-header { flex-direction: column; align-items: flex-start; }
+            .btn-play-library { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -368,7 +622,119 @@
     <script type="text/babel">
         const { useState, useEffect, useContext, createContext, useCallback, useRef } = React;
 
-        // 🌟 DONNÉES PAR DÉFAUT (pré-chargées à l'ouverture)
+        // 🌟 NOUVEAU : Données de l'historique des versions structurées
+        const VERSIONS_HISTORY = [
+            {
+                version: "3.1",
+                date: "Aujourd'hui",
+                title: "Interface & Design",
+                current: true,
+                features: [
+                    "Modal historique redesignée avec timeline moderne",
+                    "Animations fluides (fade, slide, pulse)",
+                    "Glassmorphism et backdrop blur",
+                    "Indicateur visuel de version actuelle",
+                    "Scrollbar personnalisée dans la modale"
+                ]
+            },
+            {
+                version: "3.0",
+                date: "12/09/2026",
+                title: "Édition & PLAY intelligent",
+                current: false,
+                features: [
+                    "Édition inline du titre et artiste (double-clic)",
+                    "Sauvegarde automatique des modifications",
+                    "Bouton PLAY Bibliothèque intelligent",
+                    "Détection automatique des filtres actifs",
+                    "Bibliothèque pré-chargée avec 80 chansons"
+                ]
+            },
+            {
+                version: "2.4",
+                date: "12/09/2026",
+                title: "Nouveaux stickers",
+                current: false,
+                features: [
+                    "Sticker Lyrics 📝 pour les paroles",
+                    "Sticker Delire  pour l'ambiance",
+                    "Filtrage cumulatif (AND) amélioré",
+                    "Correction icônes Import et OLD"
+                ]
+            },
+            {
+                version: "2.3",
+                date: "12/09/2026",
+                title: "Stickers avancés",
+                current: false,
+                features: [
+                    "Système Genre (Rock/Reggae/Rap/Pop)",
+                    "Système Langue (ENG/FR)",
+                    "Sous-menus avec positionnement intelligent",
+                    "Sélection exclusive par catégorie"
+                ]
+            },
+            {
+                version: "2.2",
+                date: "12/09/2026",
+                title: "Système de stickers",
+                current: false,
+                features: [
+                    "8 stickers disponibles avec icônes",
+                    "Filtrage par stickers multiples",
+                    "Boîte à stickers par carte",
+                    "Persistance dans localStorage et JSON"
+                ]
+            },
+            {
+                version: "2.1",
+                date: "12/09/2026",
+                title: "Playlist & Historique",
+                current: false,
+                features: [
+                    "Lecture Playlist YouTube globale",
+                    "Badge version interactif",
+                    "Nettoyage automatique des titres",
+                    "Historique des versions intégré"
+                ]
+            },
+            {
+                version: "2.0",
+                date: "12/09/2026",
+                title: "Refonte majeure",
+                current: false,
+                features: [
+                    "Architecture React & Clean Code",
+                    "UI/UX Moderne (Dark/Light Mode)",
+                    "Modals & Toasts (fin des popups)",
+                    "Persistance du thème"
+                ]
+            },
+            {
+                version: "1.5",
+                date: "11/09/2026",
+                title: "Filtres dynamiques",
+                current: false,
+                features: [
+                    "Filtre Toutes / Favoris / Playlist",
+                    "Compteur dynamique",
+                    "Interface simplifiée"
+                ]
+            },
+            {
+                version: "1.0",
+                date: "09/09/2026",
+                title: "Version initiale",
+                current: false,
+                features: [
+                    "Ajout YouTube & Détection doublons",
+                    "Export/Import JSON",
+                    "Recherche & Tri",
+                    "Sauvegarde locale"
+                ]
+            }
+        ];
+
         const DEFAULT_TRACKS = [
             { id: "49ebbfec-bdcc-49c9-8545-088323b5095f", titre: "Fly me to the moon Frank Sinatra", artiste: "kermitlovesmusicVEVO", lien: "https://www.youtube.com/watch?v=u910kj9xYSE", favori: false, stickers: ["old", "single", "eng"] },
             { id: "0700dd99-61bf-42bc-bd85-ad314a84b5c5", titre: "Ben E. King - Stand By Me", artiste: "Soulful Sounds", lien: "https://www.youtube.com/watch?v=hwZNL7QVJjE", favori: false, stickers: ["old", "eng"] },
@@ -376,15 +742,15 @@
             { id: "5ad08118-5cd0-4048-a264-e9ad9d5580e0", titre: "Elvis Presley - If I Can Dream", artiste: "ElvisPresleyVEVO", lien: "https://www.youtube.com/watch?v=u-pP_dCenJA", favori: false, stickers: ["eng", "single"] },
             { id: "58a857e1-0692-45c2-911a-05ff9051d1ef", titre: "Eagles - Hotel California", artiste: "Eagles", lien: "https://www.youtube.com/watch?v=09839DpTctU", favori: false, stickers: ["groupe", "eng", "rock"] },
             { id: "6d2c9685-04d9-45f6-a5db-81c75fefd23b", titre: "Nirvana - Smells Like Teen Spirit", artiste: "NirvanaVEVO", lien: "https://www.youtube.com/watch?v=R3XIGon2RjY", favori: false, stickers: ["eng", "groupe", "rock"] },
-            { id: "6f2f76f4-8e0d-4ef7-b91d-29d354edc1e7", titre: "Red Hot Chili Peppers - Californication - Live at Slane Castle", artiste: "000Christoph000", lien: "https://www.youtube.com/watch?v=Z0AXjUy1_gY", favori: false, stickers: ["groupe", "eng", "rock"] },
-            { id: "84144c6a-67d8-4108-9d28-31fa897e64ca", titre: "Guns N' Roses - November Rain HD Remastered", artiste: "RATSREVUS", lien: "https://www.youtube.com/watch?v=Rz6__sLHPNA", favori: false, stickers: [] },
+            { id: "6f2f76f4-8e0d-4ef7-b91d-29d354edc1e7", titre: "Red Hot Chili Peppers - Californication", artiste: "000Christoph000", lien: "https://www.youtube.com/watch?v=Z0AXjUy1_gY", favori: false, stickers: ["groupe", "eng", "rock"] },
+            { id: "84144c6a-67d8-4108-9d28-31fa897e64ca", titre: "Guns N' Roses - November Rain", artiste: "RATSREVUS", lien: "https://www.youtube.com/watch?v=Rz6__sLHPNA", favori: false, stickers: [] },
             { id: "b98df10d-14a2-4241-9d7c-457cda11e8f0", titre: "U2 - With Or Without You", artiste: "U2VEVO", lien: "https://www.youtube.com/watch?v=ujNeHIo7oTE", favori: true, stickers: ["rock", "groupe", "eng"] },
             { id: "6033bef3-9228-413a-a666-39b0cb38867c", titre: "Dire Straits - Sultans Of Swing", artiste: "DireStraitsVEVO", lien: "https://www.youtube.com/watch?v=h0ffIJ7ZO4U", favori: true, stickers: ["groupe", "eng", "rock"] },
             { id: "8d782a41-697c-4759-bb8c-2eff531f5547", titre: "The Police - Roxanne", artiste: "ThePoliceVEVO", lien: "https://www.youtube.com/watch?v=3T1c7GkzRQQ", favori: false, stickers: ["eng", "rock", "groupe"] },
             { id: "7bd36de7-00fa-406f-8874-a5d70f27a624", titre: "Bruce Springsteen - Streets of Philadelphia", artiste: "BruceSpringsteenVEVO", lien: "https://www.youtube.com/watch?v=4z2DtNW79sQ", favori: true, stickers: ["eng", "single"] },
             { id: "eb2e20e4-60a4-4a92-8d66-e4005d917263", titre: "The Offspring - Self Esteem", artiste: "Epitaph Records", lien: "https://www.youtube.com/watch?v=Abrn8aVQ76Q", favori: true, stickers: ["groupe", "eng", "rock"] },
             { id: "6e718f38-026b-46b5-b8c9-2f243e1fef5a", titre: "Elvis Presley - My Way", artiste: "ElvisPresleyVEVO", lien: "https://www.youtube.com/watch?v=ixbcvKCl4Jc", favori: true, stickers: ["single", "eng"] },
-            { id: "f15df5c1-ef95-4488-9c6f-b970ee6b5cb3", titre: "Johnny et Bruel - Et puis je sais au SDF du 11 septembre 1998", artiste: "Med.Renwick", lien: "https://www.youtube.com/watch?v=ZE7-B38DkbQ", favori: false, stickers: ["duo", "fr"] },
+            { id: "f15df5c1-ef95-4488-9c6f-b970ee6b5cb3", titre: "Johnny et Bruel - Et puis je sais", artiste: "Med.Renwick", lien: "https://www.youtube.com/watch?v=ZE7-B38DkbQ", favori: false, stickers: ["duo", "fr"] },
             { id: "bfc4984d-2943-4ae7-9b1e-4d81966dd55a", titre: "Led Zeppelin - Immigrant Song", artiste: "Led Zeppelin", lien: "https://www.youtube.com/watch?v=RlNhD0oS5pk", favori: true, stickers: ["groupe", "eng", "rock"] },
             { id: "c403a082-9d9a-488f-805e-94b5448d3fb4", titre: "Claude Francois - Comme D'Habitude", artiste: "nilinmavisi", lien: "https://www.youtube.com/watch?v=w22haP4hgsQ", favori: false, stickers: ["love", "fr", "old", "lyrics"] },
             { id: "fa2e6f13-3ccd-4e26-ab8c-ab61c2432a35", titre: "Bruce Springsteen - My Hometown", artiste: "BruceSpringsteenVEVO", lien: "https://www.youtube.com/watch?v=KZ3BJYx43y0", favori: false, stickers: ["single", "eng"] },
@@ -396,55 +762,55 @@
             { id: "4692bbd8-d64c-4ac3-89c2-25b18a646a5b", titre: "Axel Bauer - Eteins La Lumière", artiste: "AxelBauerVEVO", lien: "https://www.youtube.com/watch?v=7mpZh5JKVDM", favori: false, stickers: ["fr", "single", "rock"] },
             { id: "8116b2a9-c4e2-49ed-ad4e-047e61795c56", titre: "Noir Désir - L'homme pressé", artiste: "NoirDesirVEVO", lien: "https://www.youtube.com/watch?v=by1RRP9wa_Y", favori: false, stickers: ["rock", "groupe", "fr"] },
             { id: "656da6fb-462f-4faa-ac57-a2dfd6bbc2a1", titre: "Léa", artiste: "Louise Attaque - Topic", lien: "https://www.youtube.com/watch?v=8OjPpfvfoAE", favori: false, stickers: [] },
-            { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
+            { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
             { id: "59fb170b-e774-422f-8ef4-2dceb08143a0", titre: "Louise Attaque - Léa", artiste: "LouiseAttaqueVEVO", lien: "https://www.youtube.com/watch?v=Wt6eHMIhVxI", favori: false, stickers: ["fr", "groupe"] },
             { id: "803c5b50-812b-41a6-81e7-d62c75b1fc9e", titre: "Radiohead - Creep", artiste: "Radiohead", lien: "https://www.youtube.com/watch?v=XFkzRNyygfk", favori: false, stickers: ["rock", "eng", "groupe"] },
             { id: "2fa59390-b701-4903-905e-739733f20b2a", titre: "Rage Against The Machine - Killing In the Name", artiste: "RATMVEVO", lien: "https://www.youtube.com/watch?v=bWXazVhlyxQ", favori: false, stickers: ["rock", "groupe", "eng"] },
             { id: "39f2a8dc-d88c-4c53-abd9-befa1cf330bf", titre: "Eminem - Lose Yourself", artiste: "EminemMusic", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", favori: false, stickers: ["single", "eng", "rock"] },
             { id: "df3f9ebc-44bf-4e5d-9c83-4d1778e72b6d", titre: "Amy Winehouse - Back To Black", artiste: "AmyWinehouseVEVO", lien: "https://www.youtube.com/watch?v=TJAfLE39ZZ8", favori: false, stickers: ["eng", "single"] },
-            { id: "08de917c-e0da-4ce3-aa2e-73fe7557bb23", titre: "The Cranberries - Zombie 1999 Live Video", artiste: "NEA ZIXNH", lien: "https://www.youtube.com/watch?v=8MuhFxaT7zo", favori: false, stickers: ["rock", "groupe", "eng"] },
+            { id: "08de917c-e0da-4ce3-aa2e-73fe7557bb23", titre: "The Cranberries - Zombie", artiste: "NEA ZIXNH", lien: "https://www.youtube.com/watch?v=8MuhFxaT7zo", favori: false, stickers: ["rock", "groupe", "eng"] },
             { id: "af82d3d3-8c13-4358-aa5b-a79f412993db", titre: "Oasis - Wonderwall", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", favori: false, stickers: ["rock", "groupe", "eng"] },
-            { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica: Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
+            { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica - Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
             { id: "a882bb72-cb43-4476-8385-29fd8c05f553", titre: "The Cure - In Between Days", artiste: "TheCureVEVO", lien: "https://www.youtube.com/watch?v=scif2vfg1ug", favori: false, stickers: ["rock", "groupe", "eng"] },
             { id: "67120939-1f68-4d21-aa7b-f836d5518025", titre: "David Bowie - Heroes", artiste: "Broken Ridge Records", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", favori: false, stickers: ["rock", "single", "eng"] },
-            { id: "c5a13c9b-0ee9-4ddb-b520-56aacc46e04e", titre: "ALAIN BASHUNG - La Nuit je mens.avi", artiste: "Thierry airborne", lien: "https://www.youtube.com/watch?v=qAfmdtS7QHo", favori: false, stickers: ["single", "fr"] },
+            { id: "c5a13c9b-0ee9-4ddb-b520-56aacc46e04e", titre: "ALAIN BASHUNG - La Nuit je mens", artiste: "Thierry airborne", lien: "https://www.youtube.com/watch?v=qAfmdtS7QHo", favori: false, stickers: ["single", "fr"] },
             { id: "6ec07e26-c1ec-4669-89f2-f6f08659ed27", titre: "Noir Désir - Tostaky", artiste: "Universal Music France", lien: "https://www.youtube.com/watch?v=e4il2GbaJyc", favori: false, stickers: ["rock", "groupe", "fr"] },
             { id: "4ad0bf6d-2725-4688-a783-96e12b631241", titre: "Mark Knopfler - Brothers In Arms", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", favori: false, stickers: ["rock", "single", "love", "eng"] },
             { id: "880b6ddc-b3ee-4266-b5fa-4d5d594b7beb", titre: "Sting - Message In A Bottle", artiste: "StingVEVO", lien: "https://www.youtube.com/watch?v=s2o4zxtqNZ4", favori: false, stickers: ["groupe", "eng", "rock"] },
             { id: "ab76bb90-23d5-45ad-95c9-dcb17a2fce31", titre: "U2 - Beautiful Day", artiste: "U2VEVO", lien: "https://www.youtube.com/watch?v=co6WMzDOh1o", favori: false, stickers: ["rock", "groupe", "eng"] },
             { id: "4e195f82-2787-400c-a14a-1459c6f08774", titre: "Purple Rain", artiste: "Prince - Topic", lien: "https://www.youtube.com/watch?v=y3Ov7PVHHag", favori: false, stickers: ["love", "eng", "single", "lyrics"] },
             { id: "2fbcb3a3-d2ae-45c7-9327-11736d7fa394", titre: "The Verve - Bitter Sweet Symphony", artiste: "TheVerveVEVO", lien: "https://www.youtube.com/watch?v=1lyu1KKwC74", favori: false, stickers: [] },
-            { id: "b214a00e-be1c-48c2-9a03-db692a075a01", titre: "Daft Punk ft. Pharell Williams Get lucky Extended Version Original Video Full HD", artiste: "pfigueroah", lien: "https://www.youtube.com/watch?v=0QVOc1aagSE", favori: false, stickers: [] },
-            { id: "ac956c89-e330-47f2-9b6f-9f575fe2d5ce", titre: "Gary Moore - Parisienne Walkways - Live HD", artiste: "AgoraVoxFrance", lien: "https://www.youtube.com/watch?v=vkUpfw4Hf3w", favori: false, stickers: [] },
+            { id: "b214a00e-be1c-48c2-9a03-db692a075a01", titre: "Daft Punk ft. Pharell Williams Get lucky", artiste: "pfigueroah", lien: "https://www.youtube.com/watch?v=0QVOc1aagSE", favori: false, stickers: [] },
+            { id: "ac956c89-e330-47f2-9b6f-9f575fe2d5ce", titre: "Gary Moore - Parisienne Walkways", artiste: "AgoraVoxFrance", lien: "https://www.youtube.com/watch?v=vkUpfw4Hf3w", favori: false, stickers: [] },
             { id: "627b006e-c416-4f68-bcc1-add57f3c09d5", titre: "Creep - Radiohead", artiste: "Fire Bloom", lien: "https://www.youtube.com/watch?v=FLi1kDeVIww", favori: false, stickers: [] },
             { id: "4599e9fa-c4be-450a-815c-252ab43d640b", titre: "Iggy Pop - The Passenger", artiste: "Iggy Pop Official", lien: "https://www.youtube.com/watch?v=-fWw7FE9tTo", favori: false, stickers: [] },
             { id: "a7ffc6ab-3fd8-437e-8599-784edf5470aa", titre: "The White Stripes - Seven Nation Army", artiste: "The White Stripes", lien: "https://www.youtube.com/watch?v=0J2QdDbelmY", favori: false, stickers: ["eng", "rock"] },
             { id: "88892c9e-75a4-4344-9de5-9d27821168a2", titre: "The Rolling Stones - Sympathy For The Devil", artiste: "ABKCOVEVO", lien: "https://www.youtube.com/watch?v=Jwtyn-L-2gQ", favori: false, stickers: ["rock", "groupe", "eng"] },
-            { id: "d3330641-d234-4ce9-9393-b68f06ecd1b6", titre: "Louis Bertignac - Ces idées là - Lyrics", artiste: "Lapluscanoncmoi", lien: "https://www.youtube.com/watch?v=Kxili0oILY4", favori: false, stickers: ["fr", "lyrics"] },
+            { id: "d3330641-d234-4ce9-9393-b68f06ecd1b6", titre: "Louis Bertignac - Ces idées là", artiste: "Lapluscanoncmoi", lien: "https://www.youtube.com/watch?v=Kxili0oILY4", favori: false, stickers: ["fr", "lyrics"] },
             { id: "e9389a1f-bdbd-470a-adcd-2d763eecf5bc", titre: "Noir Desir - Le vent nous portera", artiste: "νταλικέρης", lien: "https://www.youtube.com/watch?v=Ysts-SVelTU", favori: false, stickers: ["rock", "fr"] },
             { id: "bf3a489c-9eb5-4bd1-a9b1-2b4a12dbdc43", titre: "suspicious minds", artiste: "malwebb", lien: "https://www.youtube.com/watch?v=G7gBZmQXn14", favori: false, stickers: ["lyrics", "rock", "single", "eng"] },
             { id: "6cd7cb96-2e53-4211-bf65-615369e57f76", titre: "Murray Head - Say It Ain't So Joe", artiste: "Murray Head", lien: "https://www.youtube.com/watch?v=jo4cw-kLeZ0", favori: false, stickers: [] },
             { id: "ec36598d-e67a-417b-9a33-37a44f04965e", titre: "AaRON - U Turn", artiste: "AaRON", lien: "https://www.youtube.com/watch?v=wJRh0PlWB6g", favori: false, stickers: [] },
-            { id: "b42725f4-df09-4299-a218-6b9abb60472c", titre: "Pink Floyd - Wish You Were Here HD Lyrics + Subtitulada en Español", artiste: "Bruce Springsteen: Esp", lien: "https://www.youtube.com/watch?v=AjvA7n183Ts", favori: false, stickers: [] },
+            { id: "b42725f4-df09-4299-a218-6b9abb60472c", titre: "Pink Floyd - Wish You Were Here", artiste: "Bruce Springsteen: Esp", lien: "https://www.youtube.com/watch?v=AjvA7n183Ts", favori: false, stickers: [] },
             { id: "9afffa46-4af5-4e58-a597-952e95bd3947", titre: "Scorpions - Still Loving You", artiste: "Scorpions", lien: "https://www.youtube.com/watch?v=EC-woADwShQ", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
-            { id: "3bef41f2-5e27-4921-9eef-77d34a12fe55", titre: "Bob Marley & The Wailers - No Woman, No Cry", artiste: "BobMarleyVEVO", lien: "https://www.youtube.com/watch?v=mZ6VezKMoRY", favori: false, stickers: ["single", "eng", "reggae"] },
+            { id: "3bef41f2-5e27-4921-9eef-77d34a12fe55", titre: "Bob Marley - No Woman, No Cry", artiste: "BobMarleyVEVO", lien: "https://www.youtube.com/watch?v=mZ6VezKMoRY", favori: false, stickers: ["single", "eng", "reggae"] },
             { id: "40235939-9040-4fee-8bcf-a463533fbb9c", titre: "Gary Moore - Still Got The Blues", artiste: "MLG", lien: "https://www.youtube.com/watch?v=DoYfTTFA-0k", favori: false, stickers: ["lyrics", "eng", "single"] },
-            { id: "b835e0eb-7efa-43e0-ba6f-337e81820e43", titre: "ZZ Top - La Grange | Stages", artiste: "GIGS", lien: "https://www.youtube.com/watch?v=Gg9cNGHl-bg", favori: false, stickers: [] },
+            { id: "b835e0eb-7efa-43e0-ba6f-337e81820e43", titre: "ZZ Top - La Grange", artiste: "GIGS", lien: "https://www.youtube.com/watch?v=Gg9cNGHl-bg", favori: false, stickers: [] },
             { id: "b70d09ca-23be-4fe1-bf29-8c466bb004bb", titre: "AC/DC - Thunderstruck", artiste: "acdcVEVO", lien: "https://www.youtube.com/watch?v=n_GFN3a0yj0", favori: false, stickers: ["rock", "groupe", "eng"] },
             { id: "326435bc-219c-4a8f-a924-aa3a7343eca8", titre: "Bruce Springsteen - I'm On Fire", artiste: "zhd", lien: "https://www.youtube.com/watch?v=vqp_bGxFrOM", favori: false, stickers: ["eng", "rock"] },
             { id: "2b9e7027-0561-4295-9f04-2d0eed40c24a", titre: "Phil Collins - In The Air Tonight", artiste: "Phil Collins", lien: "https://www.youtube.com/watch?v=YkADj0TPrJA", favori: false, stickers: ["eng", "single"] },
             { id: "633032bf-8f51-410a-b271-ed2f7591112d", titre: "Elvis Presley - Always On My Mind", artiste: "Amelia Hops", lien: "https://www.youtube.com/watch?v=wTRSlZEq_l0", favori: false, stickers: ["rock", "single", "eng", "lyrics"] },
-            { id: "b4f4be2b-8e73-4ddd-8bc4-ad6ad9702bb8", titre: "Michel Polnareff : Goodbye Marylou", artiste: "Costantino", lien: "https://www.youtube.com/watch?v=sl0Jcyx-F6Y", favori: false, stickers: ["single", "fr", "love", "lyrics"] },
+            { id: "b4f4be2b-8e73-4ddd-8bc4-ad6ad9702bb8", titre: "Michel Polnareff - Goodbye Marylou", artiste: "Costantino", lien: "https://www.youtube.com/watch?v=sl0Jcyx-F6Y", favori: false, stickers: ["single", "fr", "love", "lyrics"] },
             { id: "6e468a61-b6ed-4e63-b47a-d54e6ab905b7", titre: "La Corrida", artiste: "Francis Cabrel - Topic", lien: "https://www.youtube.com/watch?v=7Q6S19Vvh6s", favori: false, stickers: [] },
-            { id: "86acc9ca-e383-4a97-af9a-4e1a1492d52c", titre: "Frank Sinatra - My Way | Live from The Main Event at Madison Square Garden", artiste: "Frank Sinatra", lien: "https://www.youtube.com/watch?v=w019MzRosmk", favori: false, stickers: ["old", "eng", "love", "lyrics"] },
+            { id: "86acc9ca-e383-4a97-af9a-4e1a1492d52c", titre: "Frank Sinatra - My Way", artiste: "Frank Sinatra", lien: "https://www.youtube.com/watch?v=w019MzRosmk", favori: false, stickers: ["old", "eng", "love", "lyrics"] },
             { id: "9760d551-8144-42ba-b0a7-018672ded11a", titre: "Louis Armstrong - What A Wonderful World", artiste: "LouisArmstrongVEVO", lien: "https://www.youtube.com/watch?v=CaCSuzR4DwM", favori: false, stickers: ["lyrics", "single", "eng", "old"] },
             { id: "b7e8db5e-83b3-47a4-951f-13c5ce14f61d", titre: "Simon & Garfunkel - The Sound of Silence", artiste: "SimonGarfunkelVEVO", lien: "https://www.youtube.com/watch?v=NAEppFUWLfc", favori: false, stickers: ["eng", "duo"] },
-            { id: "ed667585-a6ba-490a-ab93-0e4f1cd852ba", titre: "John Lennon - Imagine - 1971", artiste: "luciano pinto", lien: "https://www.youtube.com/watch?v=iOs9Osz3UFQ", favori: false, stickers: ["lyrics", "single", "eng"] },
+            { id: "ed667585-a6ba-490a-ab93-0e4f1cd852ba", titre: "John Lennon - Imagine", artiste: "luciano pinto", lien: "https://www.youtube.com/watch?v=iOs9Osz3UFQ", favori: false, stickers: ["lyrics", "single", "eng"] },
             { id: "f63d39d1-654c-4266-857e-e1afc5000ece", titre: "Christophe - Les mots bleus", artiste: "Christophe", lien: "https://www.youtube.com/watch?v=OqZY0Kztm3Q", favori: false, stickers: ["lyrics", "fr", "single"] },
-            { id: "bbb9b7cb-b6dd-4b27-bfb8-ccb6cd9cacc0", titre: "Fatal Bazooka feat. Vitoo - Mauvaise Foi nocturne", artiste: "FAT TV", lien: "https://www.youtube.com/watch?v=x-biTuOrYkk", favori: false, stickers: ["delire", "duo", "fr"] },
+            { id: "bbb9b7cb-b6dd-4b27-bfb8-ccb6cd9cacc0", titre: "Fatal Bazooka - Mauvaise Foi nocturne", artiste: "FAT TV", lien: "https://www.youtube.com/watch?v=x-biTuOrYkk", favori: false, stickers: ["delire", "duo", "fr"] },
             { id: "c6d3d013-ccba-4ebc-a1ca-e6a37ccf94e7", titre: "M - Machistador", artiste: "100% Chanson Française", lien: "https://www.youtube.com/watch?v=w3sSGZlWLP4", favori: false, stickers: ["fr"] },
             { id: "65bfab9d-734d-41dc-b8eb-d7ed237132a0", titre: "Benjamin Biolay - Comment est ta peine ?", artiste: "Les Victoires de la Musique", lien: "https://www.youtube.com/watch?v=Fmbuk6n9zHs", favori: false, stickers: ["fr"] },
-            { id: "71de80f1-ea16-48bf-9fe7-5b078f5c8fff", titre: "James Brown - It's A Man's Man's Man's World 1966", artiste: "Stella Marinova", lien: "https://www.youtube.com/watch?v=5q4-REqaZlg", favori: false, stickers: [] },
+            { id: "71de80f1-ea16-48bf-9fe7-5b078f5c8fff", titre: "James Brown - It's A Man's Man's Man's World", artiste: "Stella Marinova", lien: "https://www.youtube.com/watch?v=5q4-REqaZlg", favori: false, stickers: [] },
             { id: "d45da1f7-2e66-4fe2-b94f-27681aeb3e50", titre: "Talkin' Bout a Revolution", artiste: "Tracy Chapman - Topic", lien: "https://www.youtube.com/watch?v=721JQZw6Spg", favori: false, stickers: [] }
         ];
 
@@ -464,10 +830,10 @@
                 id: "ee58f333-b927-4253-96a7-c0f0e11a2312",
                 name: "love",
                 tracks: [
-                    { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica: Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
-                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
+                    { id: "7aedcfcb-276c-4d92-915e-c79456ab8e83", titre: "Metallica - Nothing Else Matters", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", favori: false, stickers: ["rock", "groupe", "eng", "love"] },
+                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] },
                     { id: "4ad0bf6d-2725-4688-a783-96e12b631241", titre: "Mark Knopfler - Brothers In Arms", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", favori: false, stickers: ["rock", "single", "love", "eng"] },
-                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody.", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] }
+                    { id: "97f56d1e-0909-4672-b57a-f2cce033ed02", titre: "Queen - Bohemian Rhapsody", artiste: "rigel2011", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", favori: false, stickers: ["love", "groupe", "eng", "rock"] }
                 ],
                 createdAt: 1789244109929
             }
@@ -475,12 +841,12 @@
 
         const STICKERS_DISPONIBLES = [
             { 
-                id: 'genre', label: 'Genre', icon: '🎵', hasSubMenu: true,
+                id: 'genre', label: 'Genre', icon: '', hasSubMenu: true,
                 subChoices: [
                     { id: 'rock', label: 'Rock', icon: '🎸' },
                     { id: 'reggae', label: 'Reggae', icon: '🌴' },
                     { id: 'rap', label: 'Rap', icon: '🎤' },
-                    { id: 'pop', label: 'Pop', icon: '🎶' }
+                    { id: 'pop', label: 'Pop', icon: '' }
                 ]
             },
             { id: 'unplugged', label: 'Unplugged', icon: '🎙️' },
@@ -489,7 +855,7 @@
                 subChoices: [
                     { id: 'groupe', label: 'Groupe', icon: '👥' },
                     { id: 'duo', label: 'Duo', icon: '👫' },
-                    { id: 'single', label: 'Single', icon: '' }
+                    { id: 'single', label: 'Single', icon: '🧍' }
                 ]
             },
             { 
@@ -558,6 +924,12 @@
                 if (this.stickers.includes(langueId)) return new Track({ ...this, stickers: cleaned });
                 return new Track({ ...this, stickers: [...cleaned, langueId] });
             }
+            updateTitre(nouveauTitre) {
+                return new Track({ ...this, titre: nettoyerTitre(nouveauTitre) });
+            }
+            updateArtiste(nouvelArtiste) {
+                return new Track({ ...this, artiste: nouvelArtiste });
+            }
         }
 
         const normaliser = (texte) => texte.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
@@ -598,7 +970,7 @@
         };
 
         const exportToJson = (tracks, playlists) => {
-            const data = { version: "3.0", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
+            const data = { version: "3.1", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
@@ -654,25 +1026,18 @@
                 localStorage.setItem(THEME_KEY, state.theme);
             }, [state.theme]);
 
-            // 🌟 CHARGEMENT : Utilise les données par défaut si localStorage vide
             useEffect(() => {
                 const saved = loadTracks();
                 const savedPlaylists = loadPlaylists();
                 
-                // Si localStorage vide, utilise les données par défaut
                 const tracksToLoad = saved.length > 0 ? saved : DEFAULT_TRACKS;
                 const playlistsToLoad = savedPlaylists.length > 0 ? savedPlaylists : DEFAULT_PLAYLISTS;
                 
                 dispatch({ type: 'SET_TRACKS', payload: tracksToLoad.map(t => new Track(t)) });
                 dispatch({ type: 'SET_PLAYLISTS', payload: playlistsToLoad });
                 
-                // Sauvegarde les données par défaut si localStorage était vide
-                if (saved.length === 0) {
-                    saveTracks(tracksToLoad);
-                }
-                if (savedPlaylists.length === 0) {
-                    savePlaylists(playlistsToLoad);
-                }
+                if (saved.length === 0) saveTracks(tracksToLoad);
+                if (savedPlaylists.length === 0) savePlaylists(playlistsToLoad);
             }, []);
 
             useEffect(() => {
@@ -689,9 +1054,9 @@
             const addTrack = async (url) => {
                 try {
                     const infos = await recupererInfosYoutube(url);
-                    if (estDoublon(state.tracks, infos)) { showToast("️ Doublon détecté !", "error"); return; }
+                    if (estDoublon(state.tracks, infos)) { showToast("⚠️ Doublon détecté !", "error"); return; }
                     dispatch({ type: 'SET_TRACKS', payload: [...state.tracks, new Track(infos)] });
-                    showToast("🎵 Morceau ajouté !");
+                    showToast(" Morceau ajouté !");
                 } catch (err) { showToast(`❌ ${err.message}`, "error"); }
             };
 
@@ -700,7 +1065,18 @@
             const setFormation = (trackId, formationId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
             const setGenre = (trackId, genreId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setGenre(genreId) : t) });
             const setLangue = (trackId, langueId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setLangue(langueId) : t) });
-            const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("🗑️ Supprimé"); };
+            
+            const updateTrackTitre = (trackId, nouveauTitre) => {
+                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.updateTitre(nouveauTitre) : t) });
+                showToast("️ Titre modifié !");
+            };
+            
+            const updateTrackArtiste = (trackId, nouvelArtiste) => {
+                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.updateArtiste(nouvelArtiste) : t) });
+                showToast("️ Artiste modifié !");
+            };
+
+            const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("️ Supprimé"); };
 
             const addToPlaylist = (track) => { dispatch({ type: 'ADD_TO_PLAYLIST', payload: track }); showToast("➕ Ajouté au panier"); };
             const removeFromPlaylist = (index) => dispatch({ type: 'REMOVE_FROM_PLAYLIST', payload: index });
@@ -725,7 +1101,7 @@
                 const playlist = state.playlists.find(p => p.id === playlistId);
                 if (!playlist) return;
                 dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: [...playlist.tracks] });
-                showToast("🛒 Playlist chargée dans le panier");
+                showToast(" Playlist chargée dans le panier");
             };
 
             const deletePlaylist = (playlistId) => {
@@ -744,6 +1120,7 @@
             return (
                 <MusicContext.Provider value={{ 
                     state, dispatch, addTrack, toggleFavorite, toggleSticker, setFormation, setGenre, setLangue,
+                    updateTrackTitre, updateTrackArtiste,
                     deleteTrack, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
                     saveCurrentPlaylist, duplicatePlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist
                 }}>
@@ -753,27 +1130,126 @@
         }
         const useMusic = () => useContext(MusicContext);
 
+        // 🌟 NOUVEAU : Composant Modal moderne avec timeline
+        function Modal() {
+            const { state, dispatch } = useMusic();
+            if (!state.modal) return null;
+            
+            return (
+                <div className="modal-overlay" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>📜 {state.modal.title}</h3>
+                            <button className="modal-close-btn" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>✕</button>
+                        </div>
+                        <div className="modal-body">
+                            {state.modal.type === 'versions' ? (
+                                <div className="timeline">
+                                    {VERSIONS_HISTORY.map((version, index) => (
+                                        <div key={index} className={`timeline-item ${version.current ? 'current' : ''}`}>
+                                            <div className="timeline-dot"></div>
+                                            <div className="timeline-header">
+                                                <span className="version-tag">v{version.version}</span>
+                                                <span className="version-date">{version.date}</span>
+                                            </div>
+                                            <div className="timeline-title">{version.title}</div>
+                                            <ul className="feature-list">
+                                                {version.features.map((feature, idx) => (
+                                                    <li key={idx} className="feature-item">
+                                                        <span className="feature-icon">✓</span>
+                                                        <span>{feature}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div style={{ whiteSpace: 'pre-wrap', fontFamily: 'Inter, monospace', lineHeight: 1.6, fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                                    {state.modal.content}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function EditableText({ value, onSave, placeholder, isTitle = false }) {
+            const [isEditing, setIsEditing] = useState(false);
+            const [editValue, setEditValue] = useState(value);
+            const inputRef = useRef(null);
+
+            useEffect(() => {
+                setEditValue(value);
+            }, [value]);
+
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+
+            const handleDoubleClick = () => {
+                setIsEditing(true);
+            };
+
+            const handleSave = () => {
+                const trimmed = editValue.trim();
+                if (trimmed && trimmed !== value) {
+                    onSave(trimmed);
+                }
+                setIsEditing(false);
+            };
+
+            const handleCancel = () => {
+                setEditValue(value);
+                setIsEditing(false);
+            };
+
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    handleSave();
+                } else if (e.key === 'Escape') {
+                    handleCancel();
+                }
+            };
+
+            if (isEditing) {
+                return (
+                    <div style={{ width: '100%' }}>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            className="edit-input"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            onBlur={handleSave}
+                            onKeyDown={handleKeyDown}
+                            placeholder={placeholder}
+                        />
+                        <div className="edit-hint">Entrée = valider • Échap = annuler</div>
+                    </div>
+                );
+            }
+
+            return (
+                <div
+                    onDoubleClick={handleDoubleClick}
+                    title="Double-cliquez pour modifier"
+                    style={{ cursor: 'pointer' }}
+                >
+                    {value || placeholder}
+                </div>
+            );
+        }
+
         function Toast() {
             const { state } = useMusic();
             if (!state.toast) return null;
             const isError = state.toast.type === 'error';
             return <div className={`toast ${isError ? 'toast-error' : 'toast-success'}`}>{isError ? '❌' : '✅'} <span>{state.toast.message}</span></div>;
-        }
-
-        function Modal() {
-            const { state, dispatch } = useMusic();
-            if (!state.modal) return null;
-            return (
-                <div className="modal-overlay" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>{state.modal.title}</h3>
-                            <button className="btn-close" onClick={() => dispatch({ type: 'HIDE_MODAL' })}>✕</button>
-                        </div>
-                        <div className="modal-body">{state.modal.content}</div>
-                    </div>
-                </div>
-            );
         }
 
         function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect, onGenreSelect, onLangueSelect }) {
@@ -904,13 +1380,29 @@
         }
 
         function TrackCard({ track }) {
-            const { toggleFavorite, deleteTrack, addToPlaylist } = useMusic();
+            const { toggleFavorite, deleteTrack, addToPlaylist, updateTrackTitre, updateTrackArtiste } = useMusic();
             const [showStickers, setShowStickers] = useState(false);
 
             return (
                 <div className="track-card">
                     <div className="track-info" style={{ flex: 1, minWidth: 0 }}>
-                        <h3 className="track-title" title={track.titre}>{track.titre}</h3>
+                        <div className="track-title">
+                            <EditableText 
+                                value={track.titre} 
+                                onSave={(newValue) => updateTrackTitre(track.id, newValue)}
+                                placeholder="Titre de la chanson"
+                                isTitle={true}
+                            />
+                        </div>
+                        
+                        <div className="track-artist">
+                            <EditableText 
+                                value={track.artiste} 
+                                onSave={(newValue) => updateTrackArtiste(track.id, newValue)}
+                                placeholder="Artiste"
+                            />
+                        </div>
+
                         {track.stickers.length > 0 && (
                             <div className="track-stickers">
                                 {track.stickers.map(stickerId => {
@@ -990,7 +1482,7 @@
                     </div>
                     {state.playlists.length > 0 && (
                         <div className="saved-playlists">
-                            <div className="saved-playlists-title">📁 Playlists sauvegardées :</div>
+                            <div className="saved-playlists-title"> Playlists sauvegardées :</div>
                             {state.playlists.map(playlist => (
                                 <div key={playlist.id} className="saved-playlist-item">
                                     <div className="saved-playlist-info">
@@ -999,9 +1491,9 @@
                                     </div>
                                     <div className="saved-playlist-actions">
                                         <button className="btn-icon-small" onClick={() => loadPlaylistToCart(playlist.id)} title="Charger">📂</button>
-                                        <button className="btn-icon-small" onClick={() => duplicatePlaylist(playlist.id)} title="Dupliquer"></button>
+                                        <button className="btn-icon-small" onClick={() => duplicatePlaylist(playlist.id)} title="Dupliquer">📋</button>
                                         <button className="btn-icon-small" onClick={() => playPlaylist(playlist.tracks)} title="Lire">▶</button>
-                                        <button className="btn-icon-small" onClick={() => deletePlaylist(playlist.id)} title="Supprimer"></button>
+                                        <button className="btn-icon-small" onClick={() => deletePlaylist(playlist.id)} title="Supprimer">🗑</button>
                                     </div>
                                 </div>
                             ))}
@@ -1012,7 +1504,7 @@
         }
 
         function MusicApp() {
-            const { state, dispatch, addTrack, showToast } = useMusic();
+            const { state, dispatch, addTrack, showToast, playPlaylist } = useMusic();
             const [urlInput, setUrlInput] = useState('');
             const fileInputRef = useRef(null);
 
@@ -1029,7 +1521,7 @@
                 } catch (err) { showToast(err.message, 'error'); }
             };
 
-            const openModal = (title, content) => dispatch({ type: 'SHOW_MODAL', payload: { title, content } });
+            const openModal = (title, content, type = 'default') => dispatch({ type: 'SHOW_MODAL', payload: { title, content, type } });
 
             const toggleStickerFilter = (stickerId) => {
                 const current = state.stickerFilter;
@@ -1061,13 +1553,23 @@
                 dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, langueId] });
             };
 
+            const playLibrary = () => {
+                const hasFilter = state.filter !== 'toutes' || state.search.trim() !== '' || state.stickerFilter.length > 0;
+                
+                if (hasFilter) {
+                    playPlaylist(filteredTracks);
+                } else {
+                    playPlaylist(state.tracks);
+                }
+            };
+
             return (
                 <div className="app-container">
                     <header className="app-header">
                         <div className="header-top">
                             <h1>🎵 MUSIK 
-                                <span className="version-badge" onClick={() => openModal('📜 Historique des Versions', `🎵 MUSIK v3.0\n\n✅ Layout 2 colonnes (Bibliothèque / Panier)\n✅ Système Playlist Panier\n✅ Drag & Drop réorganisation\n✅ Nommer/Dupliquer/Supprimer playlists\n✅ Bouton PLAY intégré\n✅ Stickers GENRE (Rock/Reggae/Rap/Pop)\n✅ Sticker LANGUE (ENG/FR)\n✅ Sticker Formation (Groupe/Duo/Single)\n✅ Sticker Lyrics \n✅ Sticker Delire 🎭\n✅ Bibliothèque pré-chargée\n✅ Filtrage cumulatif (AND)\n✅ Nettoyage automatique des titres\n✅ Mode Clair/Sombre`)}>
-                                    v3.0 ℹ️
+                                <span className="version-badge" onClick={() => openModal('Historique des Versions', null, 'versions')}>
+                                    v3.1 ℹ️
                                 </span>
                             </h1>
                             <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Changer le thème">
@@ -1081,11 +1583,11 @@
                         </div>
                         
                         <div className="toolbar">
-                            <div className="search-box">🔍 <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
+                            <div className="search-box"> <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
                             <div className="filter-wrapper">
                                 <span className="filter-label">Filtre :</span>
                                 <select value={state.filter} onChange={(e) => dispatch({ type: 'SET_FILTER', payload: e.target.value })}>
-                                    <option value="toutes">📚 Toutes</option>
+                                    <option value="toutes"> Toutes</option>
                                     <option value="favoris">⭐ Favoris</option>
                                 </select>
                             </div>
@@ -1109,7 +1611,13 @@
                     <div className="main-content">
                         <div className="column">
                             <div className="column-header">
-                                <h2>{state.filter === 'favoris' ? '⭐ Favoris' : '📚 Bibliothèque'} <span className="count">({filteredTracks.length})</span></h2>
+                                <h2>
+                                    {state.filter === 'favoris' ? '⭐ Favoris' : '📚 Bibliothèque'} 
+                                    <span className="count">({filteredTracks.length})</span>
+                                </h2>
+                                <button className="btn-play-library" onClick={playLibrary} disabled={filteredTracks.length === 0}>
+                                    <span className="play-icon">▶</span> PLAY
+                                </button>
                             </div>
                             <div className="column-content">
                                 <div className="track-list">
