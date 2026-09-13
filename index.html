@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎵 MUSIK 3.1</title>
+    <title>🎵 MUSIK 3.8</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
             --bg-primary: #0A0A0C; --bg-secondary: #121216; --bg-card: #1A1A20;
             --bg-hover: #25252D; --text-primary: #F5F5F7; --text-secondary: #A1A1AA;
             --accent: #8B5CF6; --accent-hover: #7C3AED; --success: #10B981;
-            --error: #EF4444; --border: #27272A; --radius: 12px;
+            --error: #EF4444; --warning: #F59E0B; --border: #27272A; --radius: 12px;
             --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
@@ -95,6 +95,17 @@
         }
         .sticker-filter:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
         .sticker-filter.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .sticker-filter.excluded { 
+            background: var(--bg-card); 
+            border-color: var(--error); 
+            color: var(--error);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .sticker-filter.excluded:hover { 
+            background: var(--bg-hover); 
+            opacity: 1;
+        }
         .sticker-filter .sticker-icon { font-size: 0.95rem; }
         
         .sub-menu {
@@ -127,9 +138,31 @@
             font-size: 0.75rem;
             color: var(--text-secondary);
             border: 2px solid transparent;
+            position: relative;
         }
         .sub-menu-item:hover { background: var(--bg-hover); color: var(--text-primary); }
         .sub-menu-item.active { background: var(--accent); color: white; border-color: var(--accent-hover); }
+        .sub-menu-item.excluded { 
+            border-color: var(--error); 
+            color: var(--error);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .sub-menu-item.excluded::after {
+            content: '✕';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .sub-menu-item .sub-icon { font-size: 1.2rem; }
 
         .main-content {
@@ -193,6 +226,39 @@
         }
         .btn-play-library:active { transform: scale(0.98); }
         .btn-play-library .play-icon { font-size: 1.2rem; }
+
+        /* 🌟 NOUVEAU : Bouton Random */
+        .btn-random {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 2px solid var(--border);
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-random:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+        .btn-random.active {
+            background: var(--warning);
+            color: white;
+            border-color: var(--warning);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        .btn-random.active:hover {
+            background: #D97706;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+        }
+        .btn-random .random-icon { font-size: 1.1rem; }
 
         .column-content {
             flex: 1;
@@ -344,17 +410,6 @@
         }
         .track-title:hover { background: rgba(139, 92, 246, 0.1); }
         
-        .track-artist {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: background 0.2s;
-            padding: 2px 4px;
-            border-radius: 4px;
-            margin-bottom: 0.3rem;
-        }
-        .track-artist:hover { background: rgba(139, 92, 246, 0.1); }
-        
         .edit-input {
             width: 100%;
             background: var(--bg-primary);
@@ -394,11 +449,11 @@
         .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.8rem 1.2rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.6rem; font-weight: 500; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); animation: slideIn 0.3s ease-out forwards; z-index: 1000; font-size: 0.9rem; }
         .toast-success { background: #064E3B; color: #A7F3D0; border: 1px solid #10B981; }
         .toast-error { background: #7F1D1D; color: #FCA5A5; border: 1px solid #EF4444; }
+        .toast-warning { background: #78350F; color: #FDE68A; border: 1px solid #F59E0B; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
         .empty-state { text-align: center; color: var(--text-secondary); padding: 3rem 0; font-size: 1rem; }
         
-        /* 🌟 NOUVEAU : Modal moderne v3.1 */
         .modal-overlay { 
             position: fixed; inset: 0; 
             background: rgba(0,0,0,0.6); 
@@ -477,7 +532,6 @@
         .modal-body::-webkit-scrollbar-track { background: transparent; }
         .modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         
-        /* Timeline moderne */
         .timeline {
             position: relative;
             padding-left: 1.5rem;
@@ -582,10 +636,6 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
-        
-        .timeline-item.current .feature-icon {
-            color: var(--success);
-        }
 
         .sticker-box { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
         .sticker-item {
@@ -596,6 +646,12 @@
         }
         .sticker-item:hover { background: var(--bg-hover); border-color: var(--accent); color: var(--text-primary); }
         .sticker-item.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .sticker-item.excluded { 
+            border-color: var(--error); 
+            color: var(--error);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
         .sticker-item .sticker-icon { font-size: 0.9rem; }
         
         .btn-toggle-stickers { 
@@ -622,13 +678,100 @@
     <script type="text/babel">
         const { useState, useEffect, useContext, createContext, useCallback, useRef } = React;
 
-        // 🌟 NOUVEAU : Données de l'historique des versions structurées
         const VERSIONS_HISTORY = [
             {
-                version: "3.1",
+                version: "3.8",
                 date: "Aujourd'hui",
-                title: "Interface & Design",
+                title: "Mode Random (Aléatoire)",
                 current: true,
+                features: [
+                    "Bouton Random 🔀 ajouté dans Bibliothèque et Panier",
+                    "Mode aléatoire avec algorithme Fisher-Yates",
+                    "Toggle ENABLE/DISABLE avec indicateur visuel",
+                    "Toast de confirmation à l'activation",
+                    "Lecture dans l'ordre original ou aléatoire"
+                ]
+            },
+            {
+                version: "3.7",
+                date: "12/09/2026",
+                title: "Filtres inversés (Exclusion)",
+                current: false,
+                features: [
+                    "Logique inversée pour les stickers (mode barré/exclu)",
+                    "Cycle en 3 états : Normal → Actif (inclus) → Exclu (barré)",
+                    "Filtre exclusif : Bibliothèque TOTALE moins les morceaux avec le sticker",
+                    "Indicateur visuel rouge barré pour les exclusions",
+                    "Combinaison libre entre inclusions et exclusions"
+                ]
+            },
+            {
+                version: "3.6",
+                date: "12/09/2026",
+                title: "Nouveau sticker Speed",
+                current: false,
+                features: [
+                    "Ajout du sticker Speed ⚡ avec sous-menu",
+                    "3 options de tempo : Speed ⚡, Average ⏱️, Slow 🐌",
+                    "Sélection exclusive entre les 3 vitesses",
+                    "Filtrage cumulatif par tempo musical"
+                ]
+            },
+            {
+                version: "3.5",
+                date: "12/09/2026",
+                title: "Sticker Time évolutif",
+                current: false,
+                features: [
+                    "Remplacement du sticker OLD par Time ⏳",
+                    "Sous-menu Time avec 3 époques : <2000 📅, <1974 📼, Old 🕰️",
+                    "Sélection exclusive entre les 3 époques",
+                    "Filtrage cumulatif par époque musicale"
+                ]
+            },
+            {
+                version: "3.4",
+                date: "12/09/2026",
+                title: "Restauration des icônes",
+                current: false,
+                features: [
+                    "Icône Rock 🎸 restaurée dans Genre",
+                    "Icône Reggae 🌴 restaurée dans Genre",
+                    "Nouvelle icône Others 🎵 ajoutée",
+                    "Icône Single 🧍 restaurée dans Formation",
+                    "Icône Charger 📂 restaurée dans Playlists"
+                ]
+            },
+            {
+                version: "3.3",
+                date: "12/09/2026",
+                title: "Améliorations Genre & UI",
+                current: false,
+                features: [
+                    "Ajout Blues/Jazz et Others dans Genre",
+                    "Restauration icône Dark/Light Mode ☀️🌙",
+                    "Restauration icône Supprimer 🗑️",
+                    "6 genres musicaux disponibles"
+                ]
+            },
+            {
+                version: "3.2",
+                date: "12/09/2026",
+                title: "Améliorations UI",
+                current: false,
+                features: [
+                    "Inversion Panier/Playlists (Playlists en haut, Panier en bas)",
+                    "Suppression de l'artiste gris clair sur les cards",
+                    "Suppression du bouton Dupliquer dans le Panier",
+                    "Restauration de l'icône Pop 🎶",
+                    "Interface épurée et plus lisible"
+                ]
+            },
+            {
+                version: "3.1",
+                date: "12/09/2026",
+                title: "Interface & Design",
+                current: false,
                 features: [
                     "Modal historique redesignée avec timeline moderne",
                     "Animations fluides (fade, slide, pulse)",
@@ -643,7 +786,7 @@
                 title: "Édition & PLAY intelligent",
                 current: false,
                 features: [
-                    "Édition inline du titre et artiste (double-clic)",
+                    "Édition inline du titre (double-clic)",
                     "Sauvegarde automatique des modifications",
                     "Bouton PLAY Bibliothèque intelligent",
                     "Détection automatique des filtres actifs",
@@ -841,12 +984,14 @@
 
         const STICKERS_DISPONIBLES = [
             { 
-                id: 'genre', label: 'Genre', icon: '', hasSubMenu: true,
+                id: 'genre', label: 'Genre', icon: '🎵', hasSubMenu: true,
                 subChoices: [
                     { id: 'rock', label: 'Rock', icon: '🎸' },
                     { id: 'reggae', label: 'Reggae', icon: '🌴' },
                     { id: 'rap', label: 'Rap', icon: '🎤' },
-                    { id: 'pop', label: 'Pop', icon: '' }
+                    { id: 'pop', label: 'Pop', icon: '🎶' },
+                    { id: 'blues', label: 'Blues/Jazz', icon: '' },
+                    { id: 'others', label: 'Others', icon: '🎵' }
                 ]
             },
             { id: 'unplugged', label: 'Unplugged', icon: '🎙️' },
@@ -854,21 +999,36 @@
                 id: 'groupe', label: 'Formation', icon: '👥', hasSubMenu: true,
                 subChoices: [
                     { id: 'groupe', label: 'Groupe', icon: '👥' },
-                    { id: 'duo', label: 'Duo', icon: '👫' },
+                    { id: 'duo', label: 'Duo', icon: '' },
                     { id: 'single', label: 'Single', icon: '🧍' }
                 ]
             },
             { 
                 id: 'langue', label: 'Langue', icon: '🗣️', hasSubMenu: true,
                 subChoices: [
-                    { id: 'eng', label: 'ENG', icon: '🇬🇧' },
-                    { id: 'fr', label: 'FR', icon: '🇫🇷' }
+                    { id: 'eng', label: 'ENG', icon: '🇧' },
+                    { id: 'fr', label: 'FR', icon: '🇷' }
+                ]
+            },
+            { 
+                id: 'time', label: 'Time', icon: '⏳', hasSubMenu: true,
+                subChoices: [
+                    { id: 'time2000', label: '<2000', icon: '📅' },
+                    { id: 'time1974', label: '<1974', icon: '📼' },
+                    { id: 'old', label: 'Old', icon: '🕰️' }
+                ]
+            },
+            { 
+                id: 'speed', label: 'Speed', icon: '⚡', hasSubMenu: true,
+                subChoices: [
+                    { id: 'speed', label: 'Speed', icon: '⚡' },
+                    { id: 'average', label: 'Average', icon: '⏱️' },
+                    { id: 'slow', label: 'Slow', icon: '' }
                 ]
             },
             { id: 'love', label: 'Love', icon: '❤️' },
-            { id: 'old', label: 'OLD', icon: '🕰️' },
-            { id: 'lyrics', label: 'Lyrics', icon: '📝' },
-            { id: 'delire', label: 'Delire', icon: '🎭' }
+            { id: 'lyrics', label: 'Lyrics', icon: '' },
+            { id: 'delire', label: 'Delire', icon: '' }
         ];
 
         const getStickerInfo = (stickerId) => {
@@ -913,7 +1073,7 @@
                 return new Track({ ...this, stickers: [...cleaned, formationId] });
             }
             setGenre(genreId) {
-                const genres = ['rock', 'reggae', 'rap', 'pop'];
+                const genres = ['rock', 'reggae', 'rap', 'pop', 'blues', 'others'];
                 const cleaned = this.stickers.filter(s => !genres.includes(s));
                 if (this.stickers.includes(genreId)) return new Track({ ...this, stickers: cleaned });
                 return new Track({ ...this, stickers: [...cleaned, genreId] });
@@ -924,27 +1084,68 @@
                 if (this.stickers.includes(langueId)) return new Track({ ...this, stickers: cleaned });
                 return new Track({ ...this, stickers: [...cleaned, langueId] });
             }
+            setTime(timeId) {
+                const times = ['time2000', 'time1974', 'old'];
+                const cleaned = this.stickers.filter(s => !times.includes(s));
+                if (this.stickers.includes(timeId)) return new Track({ ...this, stickers: cleaned });
+                return new Track({ ...this, stickers: [...cleaned, timeId] });
+            }
+            setSpeed(speedId) {
+                const speeds = ['speed', 'average', 'slow'];
+                const cleaned = this.stickers.filter(s => !speeds.includes(s));
+                if (this.stickers.includes(speedId)) return new Track({ ...this, stickers: cleaned });
+                return new Track({ ...this, stickers: [...cleaned, speedId] });
+            }
             updateTitre(nouveauTitre) {
                 return new Track({ ...this, titre: nettoyerTitre(nouveauTitre) });
-            }
-            updateArtiste(nouvelArtiste) {
-                return new Track({ ...this, artiste: nouvelArtiste });
             }
         }
 
         const normaliser = (texte) => texte.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
         const estDoublon = (tracks, nouveau) => tracks.some(t => t.lien === nouveau.lien || normaliser(t.titre) === normaliser(nouveau.titre));
 
+        // 🌟 NOUVEAU : Algorithme de shuffle Fisher-Yates
+        const shuffleArray = (array) => {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        };
+
         const trierEtFiltrer = (tracks, { search, filter, stickerFilter }) => {
             let result = [...tracks];
-            if (filter === 'favoris') result = result.filter(t => t.favori);
+            
+            if (filter === 'favoris') {
+                result = result.filter(t => t.favori);
+            }
+            
             if (search) { 
                 const q = search.toLowerCase(); 
-                result = result.filter(t => t.titre.toLowerCase().includes(q) || t.artiste.toLowerCase().includes(q)); 
+                result = result.filter(t => 
+                    t.titre.toLowerCase().includes(q) || 
+                    t.artiste.toLowerCase().includes(q)
+                ); 
             }
+            
             if (stickerFilter && stickerFilter.length > 0) {
-                result = result.filter(t => stickerFilter.every(sticker => t.stickers.includes(sticker)));
+                const included = stickerFilter.filter(f => !f.excluded).map(f => f.id);
+                const excluded = stickerFilter.filter(f => f.excluded).map(f => f.id);
+                
+                if (included.length > 0) {
+                    result = result.filter(t => 
+                        included.every(sticker => t.stickers.includes(sticker))
+                    );
+                }
+                
+                if (excluded.length > 0) {
+                    result = result.filter(t => 
+                        !excluded.some(sticker => t.stickers.includes(sticker))
+                    );
+                }
             }
+            
             return result.reverse();
         };
 
@@ -970,7 +1171,7 @@
         };
 
         const exportToJson = (tracks, playlists) => {
-            const data = { version: "3.1", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
+            const data = { version: "3.8", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
@@ -994,7 +1195,8 @@
         const initialState = { 
             tracks: [], search: '', filter: 'toutes', stickerFilter: [],
             toast: null, modal: null, theme: localStorage.getItem(THEME_KEY) || 'dark',
-            playlists: [], currentPlaylist: []
+            playlists: [], currentPlaylist: [],
+            randomMode: false  // 🌟 NOUVEAU : Mode random
         };
 
         function reducer(state, action) {
@@ -1013,6 +1215,7 @@
                 case 'ADD_TO_PLAYLIST': return { ...state, currentPlaylist: [...state.currentPlaylist, action.payload] };
                 case 'REMOVE_FROM_PLAYLIST': return { ...state, currentPlaylist: state.currentPlaylist.filter((_, idx) => idx !== action.payload) };
                 case 'REORDER_PLAYLIST': return { ...state, currentPlaylist: action.payload };
+                case 'TOGGLE_RANDOM': return { ...state, randomMode: !state.randomMode };  // 🌟 NOUVEAU
                 default: return state;
             }
         }
@@ -1056,7 +1259,7 @@
                     const infos = await recupererInfosYoutube(url);
                     if (estDoublon(state.tracks, infos)) { showToast("⚠️ Doublon détecté !", "error"); return; }
                     dispatch({ type: 'SET_TRACKS', payload: [...state.tracks, new Track(infos)] });
-                    showToast(" Morceau ajouté !");
+                    showToast("🎵 Morceau ajouté !");
                 } catch (err) { showToast(`❌ ${err.message}`, "error"); }
             };
 
@@ -1065,18 +1268,15 @@
             const setFormation = (trackId, formationId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
             const setGenre = (trackId, genreId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setGenre(genreId) : t) });
             const setLangue = (trackId, langueId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setLangue(langueId) : t) });
+            const setTime = (trackId, timeId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setTime(timeId) : t) });
+            const setSpeed = (trackId, speedId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setSpeed(speedId) : t) });
             
             const updateTrackTitre = (trackId, nouveauTitre) => {
                 dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.updateTitre(nouveauTitre) : t) });
-                showToast("️ Titre modifié !");
-            };
-            
-            const updateTrackArtiste = (trackId, nouvelArtiste) => {
-                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.updateArtiste(nouvelArtiste) : t) });
-                showToast("️ Artiste modifié !");
+                showToast("✏️ Titre modifié !");
             };
 
-            const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("️ Supprimé"); };
+            const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); showToast("🗑️ Supprimé"); };
 
             const addToPlaylist = (track) => { dispatch({ type: 'ADD_TO_PLAYLIST', payload: track }); showToast("➕ Ajouté au panier"); };
             const removeFromPlaylist = (index) => dispatch({ type: 'REMOVE_FROM_PLAYLIST', payload: index });
@@ -1101,7 +1301,7 @@
                 const playlist = state.playlists.find(p => p.id === playlistId);
                 if (!playlist) return;
                 dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: [...playlist.tracks] });
-                showToast(" Playlist chargée dans le panier");
+                showToast("🛒 Playlist chargée dans le panier");
             };
 
             const deletePlaylist = (playlistId) => {
@@ -1109,18 +1309,27 @@
                 showToast("🗑️ Playlist supprimée");
             };
 
-            const playPlaylist = (tracks) => {
+            // 🌟 MODIFIÉ : playPlaylist supporte maintenant le mode random
+            const playPlaylist = (tracks, useRandom = false) => {
                 if (tracks.length === 0) { showToast("Aucun morceau !", "error"); return; }
-                const ids = tracks.map(t => extraireVideoId(t.lien)).filter(id => id);
+                
+                // Appliquer le shuffle si le mode random est activé
+                const tracksToPlay = useRandom ? shuffleArray(tracks) : tracks;
+                
+                const ids = tracksToPlay.map(t => extraireVideoId(t.lien)).filter(id => id);
                 if (ids.length === 0) { showToast("Liens YouTube invalides", "error"); return; }
-                window.open(`https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`, '_blank');
-                showToast(`▶ Lecture de ${ids.length} morceaux...`);
+                
+                const url = `https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`;
+                window.open(url, '_blank');
+                
+                const mode = useRandom ? '🔀 aléatoire' : '▶ normal';
+                showToast(`${mode} : ${ids.length} morceaux`);
             };
 
             return (
                 <MusicContext.Provider value={{ 
-                    state, dispatch, addTrack, toggleFavorite, toggleSticker, setFormation, setGenre, setLangue,
-                    updateTrackTitre, updateTrackArtiste,
+                    state, dispatch, addTrack, toggleFavorite, toggleSticker, setFormation, setGenre, setLangue, setTime, setSpeed,
+                    updateTrackTitre,
                     deleteTrack, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
                     saveCurrentPlaylist, duplicatePlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist
                 }}>
@@ -1130,7 +1339,6 @@
         }
         const useMusic = () => useContext(MusicContext);
 
-        // 🌟 NOUVEAU : Composant Modal moderne avec timeline
         function Modal() {
             const { state, dispatch } = useMusic();
             if (!state.modal) return null;
@@ -1175,7 +1383,7 @@
             );
         }
 
-        function EditableText({ value, onSave, placeholder, isTitle = false }) {
+        function EditableText({ value, onSave, placeholder }) {
             const [isEditing, setIsEditing] = useState(false);
             const [editValue, setEditValue] = useState(value);
             const inputRef = useRef(null);
@@ -1249,10 +1457,11 @@
             const { state } = useMusic();
             if (!state.toast) return null;
             const isError = state.toast.type === 'error';
-            return <div className={`toast ${isError ? 'toast-error' : 'toast-success'}`}>{isError ? '❌' : '✅'} <span>{state.toast.message}</span></div>;
+            const isWarning = state.toast.type === 'warning';
+            return <div className={`toast ${isError ? 'toast-error' : isWarning ? 'toast-warning' : 'toast-success'}`}>{isError ? '' : isWarning ? '🔀' : '✅'} <span>{state.toast.message}</span></div>;
         }
 
-        function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect, onGenreSelect, onLangueSelect }) {
+        function StickerFilterItem({ sticker, activeFilters, onToggle, onSubSelect, onGenreSelect, onLangueSelect, onTimeSelect, onSpeedSelect }) {
             const [showSubMenu, setShowSubMenu] = useState(false);
             const [menuPosition, setMenuPosition] = useState('center');
             const containerRef = useRef(null);
@@ -1276,27 +1485,45 @@
                 }
             }, [showSubMenu]);
 
-            const activeSubChoice = sticker.hasSubMenu ? sticker.subChoices.find(sub => activeFilters.includes(sub.id)) : null;
-            const isActive = sticker.hasSubMenu ? !!activeSubChoice : activeFilters.includes(sticker.id);
+            const activeSubChoice = sticker.hasSubMenu ? sticker.subChoices.find(sub => activeFilters.some(f => f.id === sub.id && !f.excluded)) : null;
+            const excludedSubChoice = sticker.hasSubMenu ? sticker.subChoices.find(sub => activeFilters.some(f => f.id === sub.id && f.excluded)) : null;
+            
+            const isActive = sticker.hasSubMenu ? !!activeSubChoice : activeFilters.some(f => f.id === sticker.id && !f.excluded);
+            const isExcluded = sticker.hasSubMenu ? !!excludedSubChoice : activeFilters.some(f => f.id === sticker.id && f.excluded);
             
             const handleSelect = 
                 sticker.id === 'genre' ? onGenreSelect : 
-                sticker.id === 'langue' ? onLangueSelect : 
+                sticker.id === 'langue' ? onLangueSelect :
+                sticker.id === 'time' ? onTimeSelect :
+                sticker.id === 'speed' ? onSpeedSelect :
                 onSubSelect;
 
             return (
                 <div style={{ position: 'relative' }} ref={containerRef}>
-                    <div className={`sticker-filter ${isActive ? 'active' : ''}`} onClick={() => sticker.hasSubMenu ? setShowSubMenu(!showSubMenu) : onToggle(sticker.id)}>
-                        <span className="sticker-icon">{activeSubChoice ? activeSubChoice.icon : sticker.icon}</span>
-                        <span>{activeSubChoice ? activeSubChoice.label : sticker.label}</span>
+                    <div 
+                        className={`sticker-filter ${isActive ? 'active' : ''} ${isExcluded ? 'excluded' : ''}`} 
+                        onClick={() => sticker.hasSubMenu ? setShowSubMenu(!showSubMenu) : onToggle(sticker.id)}
+                        title={isExcluded ? "Clic pour retirer l'exclusion" : isActive ? "Clic pour exclure" : "Clic pour filtrer"}
+                    >
+                        <span className="sticker-icon">{excludedSubChoice ? excludedSubChoice.icon : activeSubChoice ? activeSubChoice.icon : sticker.icon}</span>
+                        <span>{excludedSubChoice ? excludedSubChoice.label : activeSubChoice ? activeSubChoice.label : sticker.label}</span>
                     </div>
                     {sticker.hasSubMenu && showSubMenu && (
                         <div className={`sub-menu align-${menuPosition}`}>
                             {sticker.subChoices.map(sub => {
-                                const isSubActive = activeFilters.includes(sub.id);
+                                const isSubActive = activeFilters.some(f => f.id === sub.id && !f.excluded);
+                                const isSubExcluded = activeFilters.some(f => f.id === sub.id && f.excluded);
                                 return (
-                                    <div key={sub.id} className={`sub-menu-item ${isSubActive ? 'active' : ''}`}
-                                        onClick={(e) => { e.stopPropagation(); handleSelect(sub.id); setShowSubMenu(false); }}>
+                                    <div 
+                                        key={sub.id} 
+                                        className={`sub-menu-item ${isSubActive ? 'active' : ''} ${isSubExcluded ? 'excluded' : ''}`}
+                                        onClick={(e) => { 
+                                            e.stopPropagation(); 
+                                            handleSelect(sub.id); 
+                                            setShowSubMenu(false); 
+                                        }}
+                                        title={isSubExcluded ? "Clic pour retirer l'exclusion" : isSubActive ? "Clic pour exclure" : "Clic pour filtrer"}
+                                    >
                                         <span className="sub-icon">{sub.icon}</span>
                                         <span>{sub.label}</span>
                                     </div>
@@ -1308,7 +1535,7 @@
             );
         }
 
-        function StickerBoxItem({ sticker, currentStickers, onToggle, onSubSelect, onGenreSelect, onLangueSelect }) {
+        function StickerBoxItem({ sticker, currentStickers, onToggle, onSubSelect, onGenreSelect, onLangueSelect, onTimeSelect, onSpeedSelect }) {
             const [showSubMenu, setShowSubMenu] = useState(false);
             const [menuPosition, setMenuPosition] = useState('center');
             const containerRef = useRef(null);
@@ -1337,7 +1564,9 @@
             
             const handleSelect = 
                 sticker.id === 'genre' ? onGenreSelect : 
-                sticker.id === 'langue' ? onLangueSelect : 
+                sticker.id === 'langue' ? onLangueSelect :
+                sticker.id === 'time' ? onTimeSelect :
+                sticker.id === 'speed' ? onSpeedSelect :
                 onSubSelect;
 
             return (
@@ -1365,7 +1594,7 @@
         }
 
         function StickerBox({ trackId, currentStickers }) {
-            const { toggleSticker, setFormation, setGenre, setLangue } = useMusic();
+            const { toggleSticker, setFormation, setGenre, setLangue, setTime, setSpeed } = useMusic();
             return (
                 <div className="sticker-box">
                     {STICKERS_DISPONIBLES.map(sticker => (
@@ -1373,14 +1602,16 @@
                             onToggle={(id) => toggleSticker(trackId, id)} 
                             onSubSelect={(id) => setFormation(trackId, id)}
                             onGenreSelect={(id) => setGenre(trackId, id)}
-                            onLangueSelect={(id) => setLangue(trackId, id)} />
+                            onLangueSelect={(id) => setLangue(trackId, id)}
+                            onTimeSelect={(id) => setTime(trackId, id)}
+                            onSpeedSelect={(id) => setSpeed(trackId, id)} />
                     ))}
                 </div>
             );
         }
 
         function TrackCard({ track }) {
-            const { toggleFavorite, deleteTrack, addToPlaylist, updateTrackTitre, updateTrackArtiste } = useMusic();
+            const { toggleFavorite, deleteTrack, addToPlaylist, updateTrackTitre } = useMusic();
             const [showStickers, setShowStickers] = useState(false);
 
             return (
@@ -1391,15 +1622,6 @@
                                 value={track.titre} 
                                 onSave={(newValue) => updateTrackTitre(track.id, newValue)}
                                 placeholder="Titre de la chanson"
-                                isTitle={true}
-                            />
-                        </div>
-                        
-                        <div className="track-artist">
-                            <EditableText 
-                                value={track.artiste} 
-                                onSave={(newValue) => updateTrackArtiste(track.id, newValue)}
-                                placeholder="Artiste"
                             />
                         </div>
 
@@ -1427,7 +1649,7 @@
         }
 
         function PlaylistSection() {
-            const { state, removeFromPlaylist, reorderPlaylist, saveCurrentPlaylist, duplicatePlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist, showToast } = useMusic();
+            const { state, removeFromPlaylist, reorderPlaylist, saveCurrentPlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist, showToast } = useMusic();
             const [playlistName, setPlaylistName] = useState('');
             const [draggedIndex, setDraggedIndex] = useState(null);
 
@@ -1451,17 +1673,50 @@
 
             return (
                 <div className="playlist-section">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {state.playlists.length > 0 && (
+                        <div className="saved-playlists" style={{ marginTop: 0, paddingTop: 0, borderTop: 'none' }}>
+                            <div className="saved-playlists-title">📁 Playlists sauvegardées :</div>
+                            {state.playlists.map(playlist => (
+                                <div key={playlist.id} className="saved-playlist-item">
+                                    <div className="saved-playlist-info">
+                                        <div className="saved-playlist-name">{playlist.name}</div>
+                                        <div className="saved-playlist-count">{playlist.tracks.length} morceaux</div>
+                                    </div>
+                                    <div className="saved-playlist-actions">
+                                        <button className="btn-icon-small" onClick={() => loadPlaylistToCart(playlist.id)} title="Charger">📂</button>
+                                        <button className="btn-icon-small" onClick={() => playPlaylist(playlist.tracks, state.randomMode)} title="Lire">▶</button>
+                                        <button className="btn-icon-small" onClick={() => deletePlaylist(playlist.id)} title="Supprimer">🗑</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginTop: state.playlists.length > 0 ? '1rem' : 0 }}>
                         <h2 style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
                             🛒 Panier ({state.currentPlaylist.length})
                         </h2>
-                        <button className="btn-play-playlist" onClick={() => playPlaylist(state.currentPlaylist)} disabled={state.currentPlaylist.length === 0}>
-                            ▶ PLAY
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            {/* 🌟 NOUVEAU : Bouton Random dans le Panier */}
+                            <button 
+                                className={`btn-random ${state.randomMode ? 'active' : ''}`}
+                                onClick={() => {
+                                    dispatch({ type: 'TOGGLE_RANDOM' });
+                                    showToast(state.randomMode ? "🔀 Mode Random DÉSACTIVÉ" : "🔀 Mode Random ACTIVÉ", "warning");
+                                }}
+                                title={state.randomMode ? "Désactiver le mode aléatoire" : "Activer le mode aléatoire"}
+                            >
+                                <span className="random-icon">🔀</span>
+                                {state.randomMode ? 'ON' : 'OFF'}
+                            </button>
+                            <button className="btn-play-playlist" onClick={() => playPlaylist(state.currentPlaylist, state.randomMode)} disabled={state.currentPlaylist.length === 0}>
+                                ▶ PLAY
+                            </button>
+                        </div>
                     </div>
                     <div className="playlist-controls">
                         <input type="text" className="playlist-input" placeholder="Nom de la playlist..." value={playlistName} onChange={(e) => setPlaylistName(e.target.value)} />
-                        <button className="btn-primary" onClick={handleSave} style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}>💾 Sauvegarder</button>
+                        <button className="btn-primary" onClick={handleSave} style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}> Sauvegarder</button>
                     </div>
                     <div className="playlist-items-container">
                         {state.currentPlaylist.length === 0 ? (
@@ -1480,25 +1735,6 @@
                             ))
                         )}
                     </div>
-                    {state.playlists.length > 0 && (
-                        <div className="saved-playlists">
-                            <div className="saved-playlists-title"> Playlists sauvegardées :</div>
-                            {state.playlists.map(playlist => (
-                                <div key={playlist.id} className="saved-playlist-item">
-                                    <div className="saved-playlist-info">
-                                        <div className="saved-playlist-name">{playlist.name}</div>
-                                        <div className="saved-playlist-count">{playlist.tracks.length} morceaux</div>
-                                    </div>
-                                    <div className="saved-playlist-actions">
-                                        <button className="btn-icon-small" onClick={() => loadPlaylistToCart(playlist.id)} title="Charger">📂</button>
-                                        <button className="btn-icon-small" onClick={() => duplicatePlaylist(playlist.id)} title="Dupliquer">📋</button>
-                                        <button className="btn-icon-small" onClick={() => playPlaylist(playlist.tracks)} title="Lire">▶</button>
-                                        <button className="btn-icon-small" onClick={() => deletePlaylist(playlist.id)} title="Supprimer">🗑</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
             );
         }
@@ -1525,41 +1761,94 @@
 
             const toggleStickerFilter = (stickerId) => {
                 const current = state.stickerFilter;
-                const hasSticker = current.includes(stickerId);
-                dispatch({ type: 'SET_STICKER_FILTER', payload: hasSticker ? current.filter(s => s !== stickerId) : [...current, stickerId] });
+                const existing = current.find(f => f.id === stickerId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current, { id: stickerId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => f.id !== stickerId), { id: stickerId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => f.id !== stickerId) });
+                }
             };
 
             const selectFormationFilter = (formationId) => {
                 const formations = ['groupe', 'duo', 'single'];
                 const current = state.stickerFilter;
-                const isCurrentlyActive = current.includes(formationId);
-                const cleaned = current.filter(s => !formations.includes(s));
-                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, formationId] });
+                const existing = current.find(f => f.id === formationId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !formations.includes(f.id)), { id: formationId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !formations.includes(f.id)), { id: formationId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => !formations.includes(f.id)) });
+                }
             };
 
             const selectGenreFilter = (genreId) => {
-                const genres = ['rock', 'reggae', 'rap', 'pop'];
+                const genres = ['rock', 'reggae', 'rap', 'pop', 'blues', 'others'];
                 const current = state.stickerFilter;
-                const isCurrentlyActive = current.includes(genreId);
-                const cleaned = current.filter(s => !genres.includes(s));
-                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, genreId] });
+                const existing = current.find(f => f.id === genreId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !genres.includes(f.id)), { id: genreId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !genres.includes(f.id)), { id: genreId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => !genres.includes(f.id)) });
+                }
             };
 
             const selectLangueFilter = (langueId) => {
                 const langues = ['eng', 'fr'];
                 const current = state.stickerFilter;
-                const isCurrentlyActive = current.includes(langueId);
-                const cleaned = current.filter(s => !langues.includes(s));
-                dispatch({ type: 'SET_STICKER_FILTER', payload: isCurrentlyActive ? cleaned : [...cleaned, langueId] });
+                const existing = current.find(f => f.id === langueId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !langues.includes(f.id)), { id: langueId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !langues.includes(f.id)), { id: langueId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => !langues.includes(f.id)) });
+                }
+            };
+
+            const selectTimeFilter = (timeId) => {
+                const times = ['time2000', 'time1974', 'old'];
+                const current = state.stickerFilter;
+                const existing = current.find(f => f.id === timeId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !times.includes(f.id)), { id: timeId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !times.includes(f.id)), { id: timeId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => !times.includes(f.id)) });
+                }
+            };
+
+            const selectSpeedFilter = (speedId) => {
+                const speeds = ['speed', 'average', 'slow'];
+                const current = state.stickerFilter;
+                const existing = current.find(f => f.id === speedId);
+                
+                if (!existing) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !speeds.includes(f.id)), { id: speedId, excluded: false }] });
+                } else if (!existing.excluded) {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: [...current.filter(f => !speeds.includes(f.id)), { id: speedId, excluded: true }] });
+                } else {
+                    dispatch({ type: 'SET_STICKER_FILTER', payload: current.filter(f => !speeds.includes(f.id)) });
+                }
             };
 
             const playLibrary = () => {
                 const hasFilter = state.filter !== 'toutes' || state.search.trim() !== '' || state.stickerFilter.length > 0;
                 
                 if (hasFilter) {
-                    playPlaylist(filteredTracks);
+                    playPlaylist(filteredTracks, state.randomMode);
                 } else {
-                    playPlaylist(state.tracks);
+                    playPlaylist(state.tracks, state.randomMode);
                 }
             };
 
@@ -1568,8 +1857,8 @@
                     <header className="app-header">
                         <div className="header-top">
                             <h1>🎵 MUSIK 
-                                <span className="version-badge" onClick={() => openModal('Historique des Versions', null, 'versions')}>
-                                    v3.1 ℹ️
+                                <span className="version-badge" onClick={() => openModal('📜 Historique des Versions', null, 'versions')}>
+                                    v3.8 ️
                                 </span>
                             </h1>
                             <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Changer le thème">
@@ -1583,11 +1872,11 @@
                         </div>
                         
                         <div className="toolbar">
-                            <div className="search-box"> <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
+                            <div className="search-box">🔍 <input type="text" placeholder="Rechercher..." value={state.search} onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} /></div>
                             <div className="filter-wrapper">
                                 <span className="filter-label">Filtre :</span>
                                 <select value={state.filter} onChange={(e) => dispatch({ type: 'SET_FILTER', payload: e.target.value })}>
-                                    <option value="toutes"> Toutes</option>
+                                    <option value="toutes">📚 Toutes</option>
                                     <option value="favoris">⭐ Favoris</option>
                                 </select>
                             </div>
@@ -1603,7 +1892,9 @@
                                     onToggle={toggleStickerFilter} 
                                     onSubSelect={selectFormationFilter}
                                     onGenreSelect={selectGenreFilter}
-                                    onLangueSelect={selectLangueFilter} />
+                                    onLangueSelect={selectLangueFilter}
+                                    onTimeSelect={selectTimeFilter}
+                                    onSpeedSelect={selectSpeedFilter} />
                             ))}
                         </div>
                     </header>
@@ -1615,9 +1906,23 @@
                                     {state.filter === 'favoris' ? '⭐ Favoris' : '📚 Bibliothèque'} 
                                     <span className="count">({filteredTracks.length})</span>
                                 </h2>
-                                <button className="btn-play-library" onClick={playLibrary} disabled={filteredTracks.length === 0}>
-                                    <span className="play-icon">▶</span> PLAY
-                                </button>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    {/* 🌟 NOUVEAU : Bouton Random dans la Bibliothèque */}
+                                    <button 
+                                        className={`btn-random ${state.randomMode ? 'active' : ''}`}
+                                        onClick={() => {
+                                            dispatch({ type: 'TOGGLE_RANDOM' });
+                                            showToast(state.randomMode ? "🔀 Mode Random DÉSACTIVÉ" : "🔀 Mode Random ACTIVÉ", "warning");
+                                        }}
+                                        title={state.randomMode ? "Désactiver le mode aléatoire" : "Activer le mode aléatoire"}
+                                    >
+                                        <span className="random-icon">🔀</span>
+                                        {state.randomMode ? 'ON' : 'OFF'}
+                                    </button>
+                                    <button className="btn-play-library" onClick={playLibrary} disabled={filteredTracks.length === 0}>
+                                        <span className="play-icon">▶</span> PLAY
+                                    </button>
+                                </div>
                             </div>
                             <div className="column-content">
                                 <div className="track-list">
