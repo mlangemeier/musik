@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>MUSIK 4.9.1</title>
+    <title>MUSIK 4.9.4</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -81,16 +81,37 @@
 
         .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-bottom: 0.75rem; }
         
-        .btn-secondary, .btn-primary, .btn-cloud, .btn-user-id { 
+        .btn-secondary, .btn-primary, .btn-cloud, .btn-user-id, .btn-reset { 
             background: var(--bg-secondary); border: 1px solid var(--border); 
             color: var(--text-secondary); padding: 0.5rem 0.75rem; 
             border-radius: var(--radius); cursor: pointer; 
             display: flex; align-items: center; gap: 0.4rem; 
             font-size: 0.85rem; font-family: inherit;
+            transition: var(--transition);
         }
         .btn-secondary:hover { background: var(--bg-hover); color: var(--text-primary); }
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
         .btn-primary:hover { background: var(--accent-hover); }
+
+        .btn-reset {
+            background: var(--bg-card);
+            border: 2px solid var(--error);
+            color: var(--error);
+            font-weight: 600;
+        }
+        .btn-reset:hover {
+            background: var(--error);
+            color: white;
+        }
+        .btn-reset .reset-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: var(--error);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .btn-reset:hover .reset-icon { background: white; }
 
         .btn-cloud { opacity: 0.5; }
         .btn-cloud:hover { opacity: 0.8; }
@@ -270,7 +291,7 @@
         }
         .sticker-tag.favori-tag { background: #FBBF24; color: #78350F; }
         
-        .track-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+        .track-actions { display: flex; gap: 0.3rem; flex-shrink: 0; align-items: center; }
         
         .btn-icon { 
             background: transparent; border: none; color: var(--text-secondary); 
@@ -283,6 +304,39 @@
         .btn-play.playing { color: var(--success) !important; }
         .btn-delete:hover { color: var(--error) !important; }
         .btn-add-playlist:hover { color: var(--accent) !important; }
+        
+        /* 🌟 NOUVEAU : Bouton +1 (score) */
+        .btn-score {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            transition: var(--transition);
+            min-width: 40px;
+            justify-content: center;
+        }
+        .btn-score:hover {
+            border-color: var(--success);
+            color: var(--success);
+            transform: scale(1.05);
+        }
+        .btn-score.active {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        .btn-score .score-icon {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
         
         .toast { 
             position: fixed; bottom: 1.5rem; right: 1.5rem; 
@@ -417,7 +471,6 @@
         };
         const setUserId = (newId) => { localStorage.setItem('musik_user_id', newId); };
 
-        // Icônes Unicode universelles
         const ICONS = {
             play: '\u25B6', star: '\u2B50', music: '\uD83C\uDFB5', guitar: '\uD83C\uDFB8',
             notes: '\uD83C\uDFB6', mic: '\uD83C\uDF99\uFE0F', people: '\uD83D\uDC65',
@@ -431,57 +484,58 @@
             cart: '\uD83D\uDECD\uFE0F', trash: '\uD83D\uDDD1\uFE0F', close: '\u2715',
             check: '\u2713', shuffle: '\uD83D\uDD00', save: '\uD83D\uDCBE',
             edit: '\u270F\uFE0F', warning: '\u26A0\uFE0F', error: '\u274C',
-            success: '\u2705', info: '\u2139\uFE0F', sun: '\u2600\uFE0F', moon: '\uD83C\uDF19'
+            success: '\u2705', info: '\u2139\uFE0F', sun: '\u2600\uFE0F', moon: '\uD83C\uDF19',
+            plus: '\u002B'  // +
         };
 
         const VERSIONS_HISTORY = [
-            { version: "4.9.1", date: "Aujourd'hui", title: "API YouTube restaurée", current: true, features: ["Récupération auto du titre et artiste via API YouTube", "Plus besoin de saisir manuellement", "Compatible Safari/Brave iOS"] },
-            { version: "4.9", date: "Aujourd'hui", title: "Cloud Firebase restauré", current: false, features: ["Export local + Firebase", "Bouton Cloud fonctionnel"] },
-            { version: "4.8", date: "Aujourd'hui", title: "Version stable mobile", current: false, features: ["Compatibilité Safari/Brave iOS", "Icônes Unicode universelles"] },
-            { version: "4.7", date: "Aujourd'hui", title: "Sticker SPORT", current: false, features: ["Ajout sticker Sport"] },
+            { version: "4.9.4", date: "Aujourd'hui", title: "Bouton +1 (score)", current: true, features: ["Bouton +1 vert sur chaque carte", "Compteur sauvegardé dans les données", "Incrémentation à chaque clic"] },
+            { version: "4.9.3", date: "Aujourd'hui", title: "Reset complet", current: false, features: ["Bouton Reset vide aussi la barre de recherche"] },
+            { version: "4.9.1", date: "Aujourd'hui", title: "API YouTube restaurée", current: false, features: ["Récupération auto du titre et artiste"] },
+            { version: "4.9", date: "Aujourd'hui", title: "Cloud Firebase restauré", current: false, features: ["Export local + Firebase"] },
             { version: "4.0", date: "12/09/2026", title: "Cloud Firebase", current: false, features: ["Sauvegarde cloud"] },
             { version: "3.0", date: "12/09/2026", title: "Édition & PLAY", current: false, features: ["Édition inline"] },
             { version: "1.0", date: "09/09/2026", title: "Version initiale", current: false, features: ["Base de l'application"] }
         ];
 
         const DEFAULT_TRACKS = [
-            { id: "1", titre: "Fly me to the moon - Frank Sinatra", artiste: "Frank Sinatra", lien: "https://www.youtube.com/watch?v=u910kj9xYSE", stickers: ["old", "single", "eng"] },
-            { id: "2", titre: "Stand By Me - Ben E. King", artiste: "Ben E. King", lien: "https://www.youtube.com/watch?v=hwZNL7QVJjE", stickers: ["old", "eng"] },
-            { id: "3", titre: "Virtual Insanity - Jamiroquai", artiste: "Jamiroquai", lien: "https://www.youtube.com/watch?v=4JkIs37a2JE", stickers: ["favori", "single", "eng"] },
-            { id: "4", titre: "Hotel California - Eagles", artiste: "Eagles", lien: "https://www.youtube.com/watch?v=09839DpTctU", stickers: ["groupe", "eng", "rock"] },
-            { id: "5", titre: "Smells Like Teen Spirit - Nirvana", artiste: "Nirvana", lien: "https://www.youtube.com/watch?v=R3XIGon2RjY", stickers: ["eng", "groupe", "rock"] },
-            { id: "6", titre: "With Or Without You - U2", artiste: "U2", lien: "https://www.youtube.com/watch?v=ujNeHIo7oTE", stickers: ["favori", "rock", "groupe", "eng"] },
-            { id: "7", titre: "Bohemian Rhapsody - Queen", artiste: "Queen", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", stickers: ["love", "groupe", "eng", "rock"] },
-            { id: "8", titre: "Nothing Else Matters - Metallica", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", stickers: ["rock", "groupe", "eng", "love"] },
-            { id: "9", titre: "Wonderwall - Oasis", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", stickers: ["rock", "groupe", "eng"] },
-            { id: "10", titre: "Creep - Radiohead", artiste: "Radiohead", lien: "https://www.youtube.com/watch?v=XFkzRNyygfk", stickers: ["rock", "eng", "groupe"] },
-            { id: "11", titre: "Lose Yourself - Eminem", artiste: "Eminem", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", stickers: ["single", "eng", "rock"] },
-            { id: "12", titre: "Back To Black - Amy Winehouse", artiste: "Amy Winehouse", lien: "https://www.youtube.com/watch?v=TJAfLE39ZZ8", stickers: ["eng", "single"] },
-            { id: "13", titre: "Heroes - David Bowie", artiste: "David Bowie", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", stickers: ["rock", "single", "eng"] },
-            { id: "14", titre: "Brothers In Arms - Mark Knopfler", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", stickers: ["rock", "single", "love", "eng"] },
-            { id: "15", titre: "Thunderstruck - AC/DC", artiste: "AC/DC", lien: "https://www.youtube.com/watch?v=n_GFN3a0yj0", stickers: ["rock", "groupe", "eng"] },
-            { id: "16", titre: "Imagine - John Lennon", artiste: "John Lennon", lien: "https://www.youtube.com/watch?v=iOs9Osz3UFQ", stickers: ["lyrics", "single", "eng"] },
-            { id: "17", titre: "Les mots bleus - Christophe", artiste: "Christophe", lien: "https://www.youtube.com/watch?v=OqZY0Kztm3Q", stickers: ["lyrics", "fr", "single"] },
-            { id: "18", titre: "Comme D'Habitude - Claude Francois", artiste: "Claude Francois", lien: "https://www.youtube.com/watch?v=w22haP4hgsQ", stickers: ["love", "fr", "old", "lyrics"] },
-            { id: "19", titre: "Redemption Song - Bob Marley", artiste: "Bob Marley", lien: "https://www.youtube.com/watch?v=kOFu6b3w6c0", stickers: ["reggae", "eng"] },
-            { id: "20", titre: "No Woman No Cry - Bob Marley", artiste: "Bob Marley", lien: "https://www.youtube.com/watch?v=mZ6VezKMoRY", stickers: ["single", "eng", "reggae"] }
+            { id: "1", titre: "Fly me to the moon - Frank Sinatra", artiste: "Frank Sinatra", lien: "https://www.youtube.com/watch?v=u910kj9xYSE", stickers: ["old", "single", "eng"], score: 0 },
+            { id: "2", titre: "Stand By Me - Ben E. King", artiste: "Ben E. King", lien: "https://www.youtube.com/watch?v=hwZNL7QVJjE", stickers: ["old", "eng"], score: 0 },
+            { id: "3", titre: "Virtual Insanity - Jamiroquai", artiste: "Jamiroquai", lien: "https://www.youtube.com/watch?v=4JkIs37a2JE", stickers: ["favori", "single", "eng"], score: 0 },
+            { id: "4", titre: "Hotel California - Eagles", artiste: "Eagles", lien: "https://www.youtube.com/watch?v=09839DpTctU", stickers: ["groupe", "eng", "rock"], score: 0 },
+            { id: "5", titre: "Smells Like Teen Spirit - Nirvana", artiste: "Nirvana", lien: "https://www.youtube.com/watch?v=R3XIGon2RjY", stickers: ["eng", "groupe", "rock"], score: 0 },
+            { id: "6", titre: "With Or Without You - U2", artiste: "U2", lien: "https://www.youtube.com/watch?v=ujNeHIo7oTE", stickers: ["favori", "rock", "groupe", "eng"], score: 0 },
+            { id: "7", titre: "Bohemian Rhapsody - Queen", artiste: "Queen", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", stickers: ["love", "groupe", "eng", "rock"], score: 0 },
+            { id: "8", titre: "Nothing Else Matters - Metallica", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", stickers: ["rock", "groupe", "eng", "love"], score: 0 },
+            { id: "9", titre: "Wonderwall - Oasis", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", stickers: ["rock", "groupe", "eng"], score: 0 },
+            { id: "10", titre: "Creep - Radiohead", artiste: "Radiohead", lien: "https://www.youtube.com/watch?v=XFkzRNyygfk", stickers: ["rock", "eng", "groupe"], score: 0 },
+            { id: "11", titre: "Lose Yourself - Eminem", artiste: "Eminem", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", stickers: ["single", "eng", "rock"], score: 0 },
+            { id: "12", titre: "Back To Black - Amy Winehouse", artiste: "Amy Winehouse", lien: "https://www.youtube.com/watch?v=TJAfLE39ZZ8", stickers: ["eng", "single"], score: 0 },
+            { id: "13", titre: "Heroes - David Bowie", artiste: "David Bowie", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", stickers: ["rock", "single", "eng"], score: 0 },
+            { id: "14", titre: "Brothers In Arms - Mark Knopfler", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", stickers: ["rock", "single", "love", "eng"], score: 0 },
+            { id: "15", titre: "Thunderstruck - AC/DC", artiste: "AC/DC", lien: "https://www.youtube.com/watch?v=n_GFN3a0yj0", stickers: ["rock", "groupe", "eng"], score: 0 },
+            { id: "16", titre: "Imagine - John Lennon", artiste: "John Lennon", lien: "https://www.youtube.com/watch?v=iOs9Osz3UFQ", stickers: ["lyrics", "single", "eng"], score: 0 },
+            { id: "17", titre: "Les mots bleus - Christophe", artiste: "Christophe", lien: "https://www.youtube.com/watch?v=OqZY0Kztm3Q", stickers: ["lyrics", "fr", "single"], score: 0 },
+            { id: "18", titre: "Comme D'Habitude - Claude Francois", artiste: "Claude Francois", lien: "https://www.youtube.com/watch?v=w22haP4hgsQ", stickers: ["love", "fr", "old", "lyrics"], score: 0 },
+            { id: "19", titre: "Redemption Song - Bob Marley", artiste: "Bob Marley", lien: "https://www.youtube.com/watch?v=kOFu6b3w6c0", stickers: ["reggae", "eng"], score: 0 },
+            { id: "20", titre: "No Woman No Cry - Bob Marley", artiste: "Bob Marley", lien: "https://www.youtube.com/watch?v=mZ6VezKMoRY", stickers: ["single", "eng", "reggae"], score: 0 }
         ];
 
         const DEFAULT_PLAYLISTS = [
             {
                 id: "p1", name: "ma premiere", createdAt: Date.now(),
                 tracks: [
-                    { id: "13", titre: "Heroes - David Bowie", artiste: "David Bowie", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", stickers: ["rock", "single", "eng"] },
-                    { id: "11", titre: "Lose Yourself - Eminem", artiste: "Eminem", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", stickers: ["single", "eng", "rock"] },
-                    { id: "14", titre: "Brothers In Arms - Mark Knopfler", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", stickers: ["rock", "single", "love", "eng"] },
-                    { id: "9", titre: "Wonderwall - Oasis", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", stickers: ["rock", "groupe", "eng"] }
+                    { id: "13", titre: "Heroes - David Bowie", artiste: "David Bowie", lien: "https://www.youtube.com/watch?v=bsYp9q3QNaQ", stickers: ["rock", "single", "eng"], score: 0 },
+                    { id: "11", titre: "Lose Yourself - Eminem", artiste: "Eminem", lien: "https://www.youtube.com/watch?v=xFYQQPAOz7Y", stickers: ["single", "eng", "rock"], score: 0 },
+                    { id: "14", titre: "Brothers In Arms - Mark Knopfler", artiste: "Mark Knopfler", lien: "https://www.youtube.com/watch?v=EMRJT2ebvAk", stickers: ["rock", "single", "love", "eng"], score: 0 },
+                    { id: "9", titre: "Wonderwall - Oasis", artiste: "Oasis", lien: "https://www.youtube.com/watch?v=6hzrDeceEKc", stickers: ["rock", "groupe", "eng"], score: 0 }
                 ]
             },
             {
                 id: "p2", name: "love", createdAt: Date.now(),
                 tracks: [
-                    { id: "8", titre: "Nothing Else Matters - Metallica", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", stickers: ["rock", "groupe", "eng", "love"] },
-                    { id: "7", titre: "Bohemian Rhapsody - Queen", artiste: "Queen", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", stickers: ["love", "groupe", "eng", "rock"] }
+                    { id: "8", titre: "Nothing Else Matters - Metallica", artiste: "Metallica", lien: "https://www.youtube.com/watch?v=tAGnKpE4NCI", stickers: ["rock", "groupe", "eng", "love"], score: 0 },
+                    { id: "7", titre: "Bohemian Rhapsody - Queen", artiste: "Queen", lien: "https://www.youtube.com/watch?v=mPbclTnMLlc", stickers: ["love", "groupe", "eng", "rock"], score: 0 }
                 ]
             }
         ];
@@ -564,6 +618,7 @@
                 this.artiste = data.artiste || '';
                 this.lien = data.lien || ''; 
                 this.stickers = data.stickers || [];
+                this.score = data.score || 0;  // 🌟 NOUVEAU : Score/likes
             }
             toggleSticker(stickerId) {
                 const hasSticker = this.stickers.includes(stickerId);
@@ -603,6 +658,10 @@
             updateTitre(nouveauTitre) {
                 return new Track({ ...this, titre: nettoyerTitre(nouveauTitre) });
             }
+            //  NOUVEAU : Incrémenter le score
+            incrementScore() {
+                return new Track({ ...this, score: this.score + 1 });
+            }
         }
 
         const trierEtFiltrer = (tracks, { search, stickerFilter }) => {
@@ -620,8 +679,8 @@
             return result.reverse();
         };
 
-        const STORAGE_KEY = 'musik_library_v491';
-        const PLAYLISTS_KEY = 'musik_playlists_v491';
+        const STORAGE_KEY = 'musik_library_v494';
+        const PLAYLISTS_KEY = 'musik_playlists_v494';
         const THEME_KEY = 'musik_theme';
         
         const loadTracks = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; } };
@@ -632,7 +691,6 @@
         const API_KEY = "AIzaSyDToXoQ5a9-rRz9dkUre-HP6yJTSjeX-FM";
         const extraireVideoId = (url) => { const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/; const match = url.match(regex); return match ? match[1] : null; };
         
-        // ✅ API YouTube restaurée pour récupérer titre et artiste automatiquement
         const recupererInfosYoutube = async (url) => {
             const videoId = extraireVideoId(url);
             if (!videoId) throw new Error("Lien YouTube invalide");
@@ -653,7 +711,7 @@
         };
 
         const exportToJson = (tracks, playlists) => {
-            const data = { version: "4.9.1", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
+            const data = { version: "4.9.4", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
@@ -674,18 +732,17 @@
             reader.readAsText(file);
         });
 
-        // 🔥 FIREBASE FUNCTIONS
         const saveToFirebase = async (tracks, playlists) => {
             if (!firebaseReady) return false;
             try {
                 const userId = getUserId();
-                const tracksPlain = tracks.map(t => ({ id: t.id, titre: t.titre, artiste: t.artiste, lien: t.lien, stickers: t.stickers }));
+                const tracksPlain = tracks.map(t => ({ id: t.id, titre: t.titre, artiste: t.artiste, lien: t.lien, stickers: t.stickers, score: t.score }));
                 const playlistsPlain = playlists.map(p => ({
                     id: p.id, name: p.name, createdAt: p.createdAt,
-                    tracks: p.tracks.map(t => ({ id: t.id, titre: t.titre, artiste: t.artiste, lien: t.lien, stickers: t.stickers }))
+                    tracks: p.tracks.map(t => ({ id: t.id, titre: t.titre, artiste: t.artiste, lien: t.lien, stickers: t.stickers, score: t.score }))
                 }));
                 const data = {
-                    version: "4.9.1",
+                    version: "4.9.4",
                     dateExport: new Date().toISOString(),
                     morceaux: tracksPlain,
                     playlists: playlistsPlain,
@@ -716,7 +773,7 @@
                 const stickers = [...(t.stickers || [])];
                 if (t.favori === true && !stickers.includes('favori')) stickers.push('favori');
                 const { favori, ordrePlaylist, dateSelectionPlaylist, playlist, ...cleanTrack } = t;
-                return { ...cleanTrack, stickers };
+                return { ...cleanTrack, stickers, score: t.score || 0 };
             });
         };
 
@@ -781,7 +838,6 @@
                 setTimeout(() => dispatch({ type: 'HIDE_TOAST' }), 2500);
             }, []);
 
-            // ✅ NOUVEAU : Ajout de chanson avec récupération API YouTube
             const addTrack = useCallback(async (url) => {
                 try {
                     const infos = await recupererInfosYoutube(url);
@@ -808,6 +864,12 @@
                 dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.updateTitre(nouveauTitre) : t) });
             };
             const deleteTrack = (id) => { dispatch({ type: 'SET_TRACKS', payload: state.tracks.filter(t => t.id !== id) }); };
+            
+            //  NOUVEAU : Incrémenter le score
+            const incrementScore = (trackId) => {
+                dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.incrementScore() : t) });
+            };
+            
             const addToPlaylist = (track) => { dispatch({ type: 'ADD_TO_PLAYLIST', payload: track }); };
             const removeFromPlaylist = (index) => dispatch({ type: 'REMOVE_FROM_PLAYLIST', payload: index });
             const reorderPlaylist = (newOrder) => dispatch({ type: 'REORDER_PLAYLIST', payload: newOrder });
@@ -850,7 +912,7 @@
             return (
                 <MusicContext.Provider value={{ 
                     state, dispatch, addTrack, toggleSticker, setFormation, setGenre, setLangue, setTime, setSpeed,
-                    updateTrackTitre, deleteTrack, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
+                    updateTrackTitre, deleteTrack, incrementScore, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
                     saveCurrentPlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist
                 }}>
                     {children}
@@ -1039,7 +1101,7 @@
         }
 
         function TrackCard({ track }) {
-            const { toggleSticker, deleteTrack, addToPlaylist, updateTrackTitre, state, dispatch, showToast } = useMusic();
+            const { toggleSticker, deleteTrack, addToPlaylist, updateTrackTitre, incrementScore, state, dispatch, showToast } = useMusic();
             const [showStickers, setShowStickers] = useState(false);
             const isNowPlaying = state.nowPlayingLink === track.lien;
             const handlePlay = () => {
@@ -1048,6 +1110,14 @@
             };
             const handleAddToPlaylist = () => { addToPlaylist(track); showToast('Ajoute au panier'); };
             const handleDelete = () => { deleteTrack(track.id); showToast('Supprime'); };
+            
+            // 🌟 NOUVEAU : Gérer le clic sur +1
+            const handleScoreClick = () => {
+                incrementScore(track.id);
+                const newScore = track.score + 1;
+                showToast('+' + newScore + ' pour ' + track.titre.substring(0, 20) + '...');
+            };
+
             return (
                 <div className={'track-card' + (isNowPlaying ? ' now-playing' : '')}>
                     <div className="track-info" style={{ flex: 1, minWidth: 0 }}>
@@ -1077,6 +1147,15 @@
                     <div className="track-actions">
                         <button onClick={handlePlay} className={'btn-icon btn-play' + (isNowPlaying ? ' playing' : '')} title="Ecouter">{ICONS.play}</button>
                         <button onClick={handleAddToPlaylist} className="btn-icon btn-add-playlist" title="Ajouter au panier">{ICONS.cart}</button>
+                        {/* 🌟 NOUVEAU : Bouton +1 avec score */}
+                        <button 
+                            onClick={handleScoreClick} 
+                            className={'btn-score' + (track.score > 0 ? ' active' : '')} 
+                            title={'Score: ' + track.score + (track.score === 0 ? ' - Cliquez pour +1' : ' - Cliquez pour +1')}
+                        >
+                            <span className="score-icon">+</span>
+                            <span>{track.score}</span>
+                        </button>
                         <button onClick={handleDelete} className="btn-icon btn-delete" title="Supprimer">{ICONS.trash}</button>
                     </div>
                 </div>
@@ -1159,17 +1238,27 @@
             );
         }
 
-        function UnifiedBar({ onAddTrack, onSearch }) {
+        function UnifiedBar({ onAddTrack, onSearch, resetTrigger }) {
             const [inputValue, setInputValue] = useState('');
             const [isYoutubeLink, setIsYoutubeLink] = useState(false);
             const [isAdding, setIsAdding] = useState(false);
             const youtubeRegex = /(?:youtube\.com|youtu\.be)/i;
+
+            useEffect(() => {
+                if (resetTrigger > 0) {
+                    setInputValue('');
+                    setIsYoutubeLink(false);
+                    onSearch('');
+                }
+            }, [resetTrigger]);
+
             const handleChange = (e) => {
                 const value = e.target.value;
                 setInputValue(value);
                 setIsYoutubeLink(youtubeRegex.test(value));
                 if (!youtubeRegex.test(value)) onSearch(value);
             };
+
             const handleAction = async () => {
                 if (isYoutubeLink) {
                     if (!inputValue.trim()) return;
@@ -1182,11 +1271,14 @@
                     if (!inputValue.trim()) onSearch('');
                 }
             };
+
             const handleKeyDown = (e) => { if (e.key === 'Enter') handleAction(); };
+
             const placeholder = isYoutubeLink ? "Lien YouTube - Entree pour ajouter..." : "Rechercher ou coller un lien YouTube...";
             const icon = isYoutubeLink ? ICONS.play : '\uD83D\uDD0D';
             const buttonText = isYoutubeLink ? '+ Ajouter' : 'Rechercher';
             const buttonClass = isYoutubeLink ? 'unified-action-btn youtube-mode' : 'unified-action-btn';
+
             return (
                 <div className={'unified-bar ' + (isYoutubeLink ? 'is-youtube' : 'is-search')}>
                     <div className="unified-input-wrapper">
@@ -1207,10 +1299,10 @@
             const [cloudLoading, setCloudLoading] = useState(false);
             const [showUserIdModal, setShowUserIdModal] = useState(false);
             const [userIdInput, setUserIdInput] = useState(getUserId());
+            const [resetCounter, setResetCounter] = useState(0);
 
             const filteredTracks = trierEtFiltrer(state.tracks, { search: state.search, stickerFilter: state.stickerFilter });
 
-            // Auto-chargement Cloud après 2 secondes
             useEffect(() => {
                 if (!firebaseReady) return;
                 const timer = setTimeout(async () => {
@@ -1241,7 +1333,6 @@
 
             const handleSearch = (searchText) => { dispatch({ type: 'SET_SEARCH', payload: searchText }); };
 
-            // ✅ handleAddTrack utilise maintenant addTrack du context (avec API YouTube)
             const handleAddTrack = async (url) => {
                 await addTrack(url);
             };
@@ -1310,6 +1401,14 @@
                 }
             };
 
+            const handleReset = () => {
+                dispatch({ type: 'SET_SEARCH', payload: '' });
+                dispatch({ type: 'SET_NOW_PLAYING', payload: null });
+                dispatch({ type: 'SET_STICKER_FILTER', payload: [] });
+                setResetCounter(prev => prev + 1);
+                showToast('Reset effectue - Tous les filtres supprimes', 'info');
+            };
+
             const openModal = (title, content, type = 'default') => dispatch({ type: 'SHOW_MODAL', payload: { title, content, type } });
 
             const toggleStickerFilter = (stickerId) => {
@@ -1376,13 +1475,13 @@
                 <div className="app-container">
                     <header className="app-header">
                         <div className="header-top">
-                            <h1>MUSIK <span className="version-badge" onClick={() => openModal('Historique', null, 'versions')}>v4.9.1 {ICONS.info}</span></h1>
+                            <h1>MUSIK <span className="version-badge" onClick={() => openModal('Historique', null, 'versions')}>v4.9.4 {ICONS.info}</span></h1>
                             <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Theme">
                                 {state.theme === 'dark' ? ICONS.sun : ICONS.moon}
                             </button>
                         </div>
 
-                        <UnifiedBar onAddTrack={handleAddTrack} onSearch={handleSearch} />
+                        <UnifiedBar onAddTrack={handleAddTrack} onSearch={handleSearch} resetTrigger={resetCounter} />
                         
                         <div className="toolbar">
                             <button onClick={handleExport} className="btn-secondary" title="Exporter (Local + Cloud)">{ICONS.download} Exporter</button>
@@ -1398,6 +1497,10 @@
                             </button>
                             <button className="btn-user-id" onClick={() => { setUserIdInput(currentUserId); setShowUserIdModal(true); }} title="Utilisateur">
                                 {ICONS.user} {currentUserId}
+                            </button>
+                            <button className="btn-reset" onClick={handleReset} title="Reset : vider recherche, lecture et filtres">
+                                <span className="reset-icon"></span>
+                                Reset
                             </button>
                             <input type="file" ref={fileInputRef} accept=".json" onChange={handleImport} style={{ display: 'none' }} />
                         </div>
