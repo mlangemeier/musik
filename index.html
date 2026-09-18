@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>MUSIK 4.9</title>
+    <title>MUSIK 4.9.1</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -385,7 +385,7 @@
     <script type="text/babel">
         const { useState, useEffect, useContext, createContext, useCallback, useRef } = React;
 
-        //  FIREBASE CONFIGURATION
+        // 🔥 FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyDbNONH0SLIK1okUsGSS9gMSKbLB9DgQ0s",
             authDomain: "musik-cloud.firebaseapp.com",
@@ -417,7 +417,7 @@
         };
         const setUserId = (newId) => { localStorage.setItem('musik_user_id', newId); };
 
-        // Icônes Unicode universelles (compatibles tous navigateurs)
+        // Icônes Unicode universelles
         const ICONS = {
             play: '\u25B6', star: '\u2B50', music: '\uD83C\uDFB5', guitar: '\uD83C\uDFB8',
             notes: '\uD83C\uDFB6', mic: '\uD83C\uDF99\uFE0F', people: '\uD83D\uDC65',
@@ -435,7 +435,8 @@
         };
 
         const VERSIONS_HISTORY = [
-            { version: "4.9", date: "Aujourd'hui", title: "Cloud Firebase restauré", current: true, features: ["Export local + Firebase simultané", "Bouton Cloud charge depuis Firebase", "Auto-chargement au démarrage", "Compatible Safari/Brave iOS"] },
+            { version: "4.9.1", date: "Aujourd'hui", title: "API YouTube restaurée", current: true, features: ["Récupération auto du titre et artiste via API YouTube", "Plus besoin de saisir manuellement", "Compatible Safari/Brave iOS"] },
+            { version: "4.9", date: "Aujourd'hui", title: "Cloud Firebase restauré", current: false, features: ["Export local + Firebase", "Bouton Cloud fonctionnel"] },
             { version: "4.8", date: "Aujourd'hui", title: "Version stable mobile", current: false, features: ["Compatibilité Safari/Brave iOS", "Icônes Unicode universelles"] },
             { version: "4.7", date: "Aujourd'hui", title: "Sticker SPORT", current: false, features: ["Ajout sticker Sport"] },
             { version: "4.0", date: "12/09/2026", title: "Cloud Firebase", current: false, features: ["Sauvegarde cloud"] },
@@ -619,8 +620,8 @@
             return result.reverse();
         };
 
-        const STORAGE_KEY = 'musik_library_v49';
-        const PLAYLISTS_KEY = 'musik_playlists_v49';
+        const STORAGE_KEY = 'musik_library_v491';
+        const PLAYLISTS_KEY = 'musik_playlists_v491';
         const THEME_KEY = 'musik_theme';
         
         const loadTracks = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; } };
@@ -628,10 +629,31 @@
         const loadPlaylists = () => { try { return JSON.parse(localStorage.getItem(PLAYLISTS_KEY) || '[]'); } catch(e) { return []; } };
         const savePlaylists = (playlists) => { try { localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(playlists)); } catch(e) {} };
 
+        const API_KEY = "AIzaSyDToXoQ5a9-rRz9dkUre-HP6yJTSjeX-FM";
         const extraireVideoId = (url) => { const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/; const match = url.match(regex); return match ? match[1] : null; };
+        
+        // ✅ API YouTube restaurée pour récupérer titre et artiste automatiquement
+        const recupererInfosYoutube = async (url) => {
+            const videoId = extraireVideoId(url);
+            if (!videoId) throw new Error("Lien YouTube invalide");
+            const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${API_KEY}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (!data.items || data.items.length === 0) throw new Error("Vidéo introuvable");
+            return { 
+                titre: data.items[0].snippet.title, 
+                artiste: data.items[0].snippet.channelTitle, 
+                lien: url 
+            };
+        };
+
+        const estDoublon = (tracks, nouveau) => {
+            const normaliser = (texte) => texte.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            return tracks.some(t => t.lien === nouveau.lien || normaliser(t.titre) === normaliser(nouveau.titre));
+        };
 
         const exportToJson = (tracks, playlists) => {
-            const data = { version: "4.9", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
+            const data = { version: "4.9.1", dateExport: new Date().toISOString(), morceaux: tracks, playlists: playlists };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'musik.json'; a.click();
@@ -663,7 +685,7 @@
                     tracks: p.tracks.map(t => ({ id: t.id, titre: t.titre, artiste: t.artiste, lien: t.lien, stickers: t.stickers }))
                 }));
                 const data = {
-                    version: "4.9",
+                    version: "4.9.1",
                     dateExport: new Date().toISOString(),
                     morceaux: tracksPlain,
                     playlists: playlistsPlain,
@@ -759,6 +781,23 @@
                 setTimeout(() => dispatch({ type: 'HIDE_TOAST' }), 2500);
             }, []);
 
+            // ✅ NOUVEAU : Ajout de chanson avec récupération API YouTube
+            const addTrack = useCallback(async (url) => {
+                try {
+                    const infos = await recupererInfosYoutube(url);
+                    if (estDoublon(state.tracks, infos)) { 
+                        showToast('Doublon detecte !', 'error'); 
+                        return false; 
+                    }
+                    dispatch({ type: 'SET_TRACKS', payload: [...state.tracks, new Track(infos)] });
+                    showToast('Morceau ajoute : ' + infos.titre.substring(0, 30) + '...');
+                    return true;
+                } catch (err) { 
+                    showToast('Erreur: ' + err.message, 'error'); 
+                    return false;
+                }
+            }, [state.tracks, showToast]);
+
             const toggleSticker = (trackId, stickerId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.toggleSticker(stickerId) : t) });
             const setFormation = (trackId, formationId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setFormation(formationId) : t) });
             const setGenre = (trackId, genreId) => dispatch({ type: 'SET_TRACKS', payload: state.tracks.map(t => t.id === trackId ? t.setGenre(genreId) : t) });
@@ -810,7 +849,7 @@
 
             return (
                 <MusicContext.Provider value={{ 
-                    state, dispatch, toggleSticker, setFormation, setGenre, setLangue, setTime, setSpeed,
+                    state, dispatch, addTrack, toggleSticker, setFormation, setGenre, setLangue, setTime, setSpeed,
                     updateTrackTitre, deleteTrack, showToast, addToPlaylist, removeFromPlaylist, reorderPlaylist,
                     saveCurrentPlaylist, loadPlaylistToCart, deletePlaylist, playPlaylist
                 }}>
@@ -1162,7 +1201,7 @@
         }
 
         function MusicApp() {
-            const { state, dispatch, showToast, playPlaylist } = useMusic();
+            const { state, dispatch, addTrack, showToast, playPlaylist } = useMusic();
             const fileInputRef = useRef(null);
             const [cloudActive, setCloudActive] = useState(false);
             const [cloudLoading, setCloudLoading] = useState(false);
@@ -1202,12 +1241,9 @@
 
             const handleSearch = (searchText) => { dispatch({ type: 'SET_SEARCH', payload: searchText }); };
 
+            // ✅ handleAddTrack utilise maintenant addTrack du context (avec API YouTube)
             const handleAddTrack = async (url) => {
-                const videoId = extraireVideoId(url);
-                if (!videoId) { showToast('Lien invalide', 'error'); return; }
-                const newTrack = new Track({ titre: 'Nouvelle chanson', artiste: 'Inconnu', lien: url });
-                dispatch({ type: 'SET_TRACKS', payload: [...state.tracks, newTrack] });
-                showToast('Morceau ajoute');
+                await addTrack(url);
             };
 
             const handleImport = async (e) => {
@@ -1221,7 +1257,6 @@
                 } catch (err) { showToast(err.message, 'error'); }
             };
 
-            // ✅ Export LOCAL + FIREBASE
             const handleExport = async () => {
                 exportToJson(state.tracks, state.playlists);
                 if (firebaseReady) {
@@ -1236,7 +1271,6 @@
                 }
             };
 
-            // ✅ Chargement depuis Firebase
             const handleCloudClick = async () => {
                 if (cloudActive || cloudLoading) return;
                 if (!firebaseReady) {
@@ -1342,7 +1376,7 @@
                 <div className="app-container">
                     <header className="app-header">
                         <div className="header-top">
-                            <h1>MUSIK <span className="version-badge" onClick={() => openModal('Historique', null, 'versions')}>v4.9 {ICONS.info}</span></h1>
+                            <h1>MUSIK <span className="version-badge" onClick={() => openModal('Historique', null, 'versions')}>v4.9.1 {ICONS.info}</span></h1>
                             <button onClick={() => dispatch({ type: 'TOGGLE_THEME' })} className="btn-secondary" title="Theme">
                                 {state.theme === 'dark' ? ICONS.sun : ICONS.moon}
                             </button>
