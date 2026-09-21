@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MUSIK 4.9.6</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- 🔥 FIREBASE CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Initialisation Firebase globale
+    const firebaseConfig = {
+      apiKey: "AIzaSyDbNONH0SLIK1okUsGSS9gMSKbLB9DgQ0s",
+      authDomain: "musik-cloud.firebaseapp.com",
+      projectId: "musik-cloud",
+      storageBucket: "musik-cloud.firebasestorage.app",
+      messagingSenderId: "1070295108266",
+      appId: "1:1070295108266:web:fb61c2a2f68153f30d1ed3",
+      measurementId: "G-WJSSLQW2MS"
+    };
+
+    let db = null;
+    let firebaseReady = false;
+    let firebaseError = null;
+    
+    try {
+      if (typeof firebase !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        window.firebase = firebase;
+        window.db = db;
+        
+        db.collection('musik_data').limit(1).get()
+          .then(() => { 
+            firebaseReady = true; 
+            firebaseError = null; 
+            window.firebaseReady = true;
+            window.firebaseError = null;
+            console.log('✅ Firebase connecté'); 
+          })
+          .catch((error) => { 
+            firebaseReady = false; 
+            firebaseError = error.message; 
+            window.firebaseReady = false;
+            window.firebaseError = error.message;
+            console.error(' Erreur Firebase:', error); 
+          });
+      } else {
+        firebaseError = 'Firebase SDK non chargé';
+        window.firebaseError = firebaseError;
+      }
+    } catch (e) {
+      firebaseReady = false;
+      firebaseError = e.message;
+      window.firebaseReady = false;
+      window.firebaseError = e.message;
+    }
+  </script>
+  <script type="module" crossorigin src="/assets/index-DlCyX99o.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-rnMVLBWX.css">
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
